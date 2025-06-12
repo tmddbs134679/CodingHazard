@@ -12,3 +12,13 @@ public class FindTarget : ConditionNode
 
     
 }
+public class ListenSoundTarget :ConditionNode
+{
+
+    public override BT.State Run(EnemyBase enemy)
+    {
+        throw new System.NotImplementedException();
+    }
+
+
+}

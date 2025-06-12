@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class EnemyBase : MonoBehaviour
 {
@@ -10,7 +11,8 @@ public class EnemyBase : MonoBehaviour
     private EnemyStatus status;
     public EnemyController Controller {  get { return controller; } }
     public EnemyStatus Status { get { return status; } }
-    
+    [SerializeField]
+    private LayerMask targetMask;
     private BT bt;
     void Awake()
     {
@@ -25,5 +27,16 @@ public class EnemyBase : MonoBehaviour
         bt.MakeBT();
         bt.StartBT(this);
     }
+    public void FindTarget()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, status.SightRange, targetMask);
+        foreach(var hit in hits)
+        {
+            Vector3 dir = (hit.transform.position-transform.position).normalized;
+           
+            //if(Angle>angle*0.5f)
+                //continue;
 
+        }
+    }
 }
