@@ -25,6 +25,8 @@ public class UI_GameScene : UI_Base
     {
        PrimarySlot,
        MeleeSlot,
+       OpenEye,
+       CloseEye,
     }
     #endregion
 
@@ -43,6 +45,7 @@ public class UI_GameScene : UI_Base
 
         GetImage((int)Images.MeleeSlot).gameObject.SetActive(false);
         GetImage((int)Images.PrimarySlot).gameObject.SetActive(false);
+        GetImage((int)Images.OpenEye).gameObject.SetActive(false);
 
         weaponIcons.Add(GetImage((int)Images.PrimarySlot));
         weaponIcons.Add(GetImage((int)Images.MeleeSlot));
@@ -67,6 +70,11 @@ public class UI_GameScene : UI_Base
         else if(Input.GetKeyDown(KeyCode.Alpha2))
         {
             UpdateQuickSlot(1);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            DetectionEyeVisible(true);
         }
     }
 
@@ -113,6 +121,16 @@ public class UI_GameScene : UI_Base
             }
         });
     }
+
+
+
+    private void DetectionEyeVisible(bool isVisible)
+    {
+        GetImage((int)Images.OpenEye).gameObject.SetActive(isVisible);
+        GetImage((int)Images.CloseEye).gameObject.SetActive(!isVisible);
+    }
+
+
 
 
 }
