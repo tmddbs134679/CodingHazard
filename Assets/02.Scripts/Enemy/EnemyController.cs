@@ -17,11 +17,19 @@ public class EnemyController : MonoBehaviour
     {
         moveSpeed = _moveSpeed;
     }
+    public void Look(Vector3 dir)
+    {
+        dir.y = 0;
+        Quaternion targetRotation = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 100f * Time.deltaTime);
+        //transform.rotation = Quaternion.LookRotation(dir);
+    }
     public void Move(Vector3 dir)
     {
-
+        //이거 좀 변경할 필요 있음
         Vector3 velocity = dir * moveSpeed * Time.deltaTime;
         controller.Move(velocity);
         Debug.Log(velocity);
+        Look(dir);
     }
 }

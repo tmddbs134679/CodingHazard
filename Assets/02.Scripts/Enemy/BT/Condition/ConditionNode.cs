@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class ConditionNode : INode
 {
-  
+    
     public abstract BT.State Run(EnemyBase enemy);
 
 

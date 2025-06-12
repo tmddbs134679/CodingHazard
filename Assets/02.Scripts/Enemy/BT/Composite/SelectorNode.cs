@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class SelectorNode : CompositeNode
 {
+    public SelectorNode(List<INode> nodes) : base(nodes)
+    {
+
+    }
     public override BT.State Run(EnemyBase enemy)
     {
         foreach (INode child in children) {
