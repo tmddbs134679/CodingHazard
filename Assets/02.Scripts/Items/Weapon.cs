@@ -13,6 +13,8 @@ public abstract class Weapon : MonoBehaviour
 
     [SerializeField] protected Animator WeaponAnimator;
 
+    [SerializeField] protected GameObject DropObject;
+
     protected static readonly int IsAming = Animator.StringToHash("IsAiming");
     protected static readonly int IsMoving = Animator.StringToHash("IsMoving");
     protected static readonly int IsFire = Animator.StringToHash("IsFire");
@@ -53,8 +55,20 @@ public abstract class Weapon : MonoBehaviour
         {
             Fire();
         }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            DropItem();
+        }
+        
     }
 
+    protected void DropItem()
+    {
+        Instantiate(DropObject, transform.position + transform.forward ,Quaternion.identity);
+        Destroy(this.gameObject);
+    }
 
+   
 
 }
