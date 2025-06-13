@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dba814351f461864fa6b4acba781e5c8, type: 3}
   m_Name: AudioData
   m_EditorClassIdentifier: 
-  <Entries>k__BackingField: []
+  <Entries>k__BackingField:
+  - id: 0
+    type: 0
+    clip: {fileID: 0}
+    volume: 1
+    isLoop: 0
