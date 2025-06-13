@@ -71,7 +71,7 @@ public class FPSVirtualCamera : MonoBehaviour
 
     public void SetMouseSensitivity(float value)
     {
-        value = Mathf.Clamp(value, Constants.MinFOV, Constants.MaxFOV);
+        value = Mathf.Clamp(value, Constants.MinMouseSensitivity, Constants.MaxMouseSensitivity);
         
         _mouseSensitivity = value;
     }
