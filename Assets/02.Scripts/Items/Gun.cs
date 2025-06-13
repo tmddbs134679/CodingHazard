@@ -5,14 +5,23 @@ using UnityEngine;
 
 public class Gun : Weapon
 {
+    public enum FireMode { Single, Auto}
+
+    [SerializeField] private FireMode fireMode;
     [SerializeField] private Transform firePoint;
    
 
     [Header("Weapon Pos")]
     [SerializeField] private Transform weaponPos;
-    [SerializeField] private Vector3 normalPos;
+    [SerializeField] private Transform normalPos;
     [SerializeField] private Vector3 zoomPos;
 
+
+    [Header("Camera")]
+    [SerializeField] private float normalFOV = 60f;
+    [SerializeField] private float zoomFOV = 40;
+    [SerializeField] private float zoomSpeed = 10f;
+   
 
 
     private Camera mainCam;
@@ -21,17 +30,19 @@ public class Gun : Weapon
 
     protected void Start()
     {
-      
         mainCam = Camera.main;
-        if (weaponPos != null)
-        { 
-        weaponPos.localPosition = normalPos;
-        }
+
+
     }
 
     protected void Update()
     {
+
         base.Update();
+
+        HandleFireInput();
+
+
         if (Input.GetMouseButtonDown(1))
         {
             isZoom = !isZoom;
@@ -45,12 +56,30 @@ public class Gun : Weapon
 
     private void ZoomWeapon()
     {
-        if (weaponPos == null) return;
+      //  weaponPos.localPosition = Vector3.Lerp(weaponPos.localPosition, targetPos, Time.deltaTime);
+        WeaponAnimator.SetBool(IsAiming, isZoom);
+        float targetFOV = isZoom ? zoomFOV : normalFOV;
+        if (mainCam != null)
+        {
+            mainCam.fieldOfView = targetFOV;
+        }
 
-        Vector3 targetPos = isZoom ? zoomPos : normalPos;
-        weaponPos.localPosition = Vector3.Lerp(weaponPos.localPosition, targetPos, Time.deltaTime);
-        WeaponAnimator.SetBool(IsAming, isZoom);
+    }
 
+
+    private void HandleFireInput()
+    {
+        switch (fireMode)
+        {
+            case FireMode.Single:
+                if (Input.GetMouseButtonDown(0))
+                    Fire();
+                break;
+            case FireMode.Auto:
+                if (Input.GetMouseButton(0))
+                    Fire();
+                break;
+        }
     }
 
     public override void Fire()
@@ -60,18 +89,22 @@ public class Gun : Weapon
         {
             return;
         }
-        //부모에서 딜레이가 되면 그냥 리턴되고 연사를 구현할때 다시 봐야할듯하다. 
+       
         Ray ray = new Ray(firePoint.position, firePoint.forward);
         Debug.DrawRay(firePoint.position, firePoint.forward* range, Color.red); //나중에 제거 예정
-
+        PlaySound(audioClip);
         if (isZoom == false)
-        { 
-        WeaponAnimator.SetTrigger(IsFire);
+        {
+            WeaponAnimator.SetTrigger(FireTrigger);
+        }
+        else if (isZoom == true)
+        {
+            WeaponAnimator.SetTrigger(AimFireTrigger);
         }
 
         if (Physics.Raycast(ray, out RaycastHit hit, range))
         {
-             
+
             if (hit.collider.CompareTag("Enemy"))
             {
                 Debug.Log(hit.collider.gameObject.name);
@@ -84,7 +117,7 @@ public class Gun : Weapon
                 
             }
             */
-             
+
         }
         
             

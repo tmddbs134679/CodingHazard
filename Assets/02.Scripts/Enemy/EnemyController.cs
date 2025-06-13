@@ -27,7 +27,10 @@ public class EnemyController : MonoBehaviour
     public void Move(Vector3 dir)
     {
         //이거 좀 변경할 필요 있음
+      
         Vector3 velocity = dir * moveSpeed * Time.deltaTime;
+        if (!controller.isGrounded)
+            velocity.y = -1;
         controller.Move(velocity);
         Debug.Log(velocity);
         Look(dir);

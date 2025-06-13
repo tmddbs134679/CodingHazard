@@ -18,7 +18,7 @@ public class BT : MonoBehaviour
         SequenceNode attack = new SequenceNode(new List<INode>{ new canAttackNode(), new AttackNode() });
         SelectorNode attackF=new SelectorNode( new List<INode> {attack,new StopAttackNode() });
         SequenceNode find = new SequenceNode(new List<INode> { new LookTargetNode(),new ChaseNode() });
-        root = new SelectorNode(new List<INode> { attackF, find,new PatrolNode() });
+        root = new SelectorNode(new List<INode> { attackF, find,new IdleNode() });
     }
     public void StartBT(EnemyBase enemy)
     {

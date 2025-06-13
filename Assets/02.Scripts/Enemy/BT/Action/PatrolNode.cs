@@ -35,7 +35,11 @@ public class PatrolNode : ActionNode
 
         enemy.Controller.Look(dir);
         enemy.Controller.Move(dir);
-        float distance = Vector3.Distance(targetPos, enemy.transform.position);
+        var a = enemy.transform.position;
+        a.y = 0;
+        var b = targetPos;
+        b.y = 0;
+        float distance = Vector3.Distance(b,a );
         
         if (distance < 0.1f)
         {
