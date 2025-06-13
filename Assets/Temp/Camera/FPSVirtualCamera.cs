@@ -22,7 +22,7 @@ public class FPSVirtualCamera : MonoBehaviour
     [SerializeField] private float lookSensitivity;
     
     [Space(10f)]
-    [SerializeField] private Vector3 recoil;
+    [SerializeField] private Vector3 testRecoil;
 
     
     private CinemachineVirtualCamera _virtualCamera;
@@ -35,6 +35,8 @@ public class FPSVirtualCamera : MonoBehaviour
     
     private float _defaultFOV;
     private float _camCurXRot;
+    
+    [SerializeField] private CinemachineImpulseSource impulse;
 
 
     private void Awake()
@@ -55,9 +57,11 @@ public class FPSVirtualCamera : MonoBehaviour
         
         _mouseDelta = new Vector2(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"));
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
-            _curRecoil = new Vector3(recoil.x, Random.Range(-recoil.y, recoil.y), Random.Range(-recoil.z, recoil.z));
+            //SetFireRecoil(testRecoil);
+            
+            impulse.GenerateImpulse();
         }
     }
 
@@ -66,6 +70,12 @@ public class FPSVirtualCamera : MonoBehaviour
         CameraLook();
 
         _curRecoil = Vector3.zero;
+    }
+
+
+    public void SetFireRecoil(Vector3 recoil)
+    {
+        _curRecoil = new Vector3(recoil.x, Random.Range(-recoil.y, recoil.y), Random.Range(-recoil.z, recoil.z));
     }
 
     public void SetFOV(float fov)
