@@ -27,6 +27,7 @@ public class UI_GameScene : UI_Base
        MeleeSlot,
        OpenEye,
        CloseEye,
+       BloodScreen,
     }
     #endregion
 
@@ -78,10 +79,19 @@ public class UI_GameScene : UI_Base
         {
             DetectionEyeVisible(true);
         }
-
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
+            DetectionEyeVisible(false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
             testHP.GetComponent<UI_HPBar>().SetHpRatio(50f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            UpdateBloodScreen();
         }
     }
 
@@ -130,14 +140,41 @@ public class UI_GameScene : UI_Base
     }
 
 
-
+    private Tween pulseTween;
     private void DetectionEyeVisible(bool isVisible)
     {
         GetImage((int)Images.OpenEye).gameObject.SetActive(isVisible);
         GetImage((int)Images.CloseEye).gameObject.SetActive(!isVisible);
+
+        if (isVisible)
+        {
+            
+            if (pulseTween == null || !pulseTween.IsActive())
+            {
+                pulseTween = GetImage((int)Images.OpenEye).transform.DOScale(1.2f, 0.2f)
+                    .SetLoops(-1, LoopType.Yoyo) //루프
+                    .SetEase(Ease.InOutSine);   //속도
+            }
+        }
+        else
+        {
+          
+            if (pulseTween != null) pulseTween.Kill();
+            pulseTween = null;
+            GetImage((int)Images.OpenEye).transform.localScale = Vector3.one;
+        }
     }
 
-
+    private void UpdateBloodScreen()
+    {
+       
+        Color color = GetImage((int)Images.BloodScreen).color;
+        color.a = 0f;
+        GetImage((int)Images.BloodScreen).color = color;
+        GetImage((int)Images.BloodScreen).DOFade(0.3f, 0.2f)
+            .SetLoops(2, LoopType.Yoyo)
+            .SetEase(Ease.InOutSine);
+    }
 
 
 }
