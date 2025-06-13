@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -42,10 +43,15 @@ public class EnemyBase : MonoBehaviour
         controller.Init(status.MoveSpeed);
         bt.MakeBT();
         bt.StartBT(this);
+        hp=status.HP;
     }
     public void Damaged(float dmg)
     {
+        if (invincibility)
+            return;
+        Debug.Log(dmg + " 입음");
         isDamaged=true;
+        invincibility=false;
         hp-=dmg;
         if (hp <= 0) {
             Dead();
@@ -58,14 +64,60 @@ public class EnemyBase : MonoBehaviour
        
         
     }
-    
+    bool invincibility = false;
+    IEnumerator MotionE(int para)
+    {
+        Debug.Log("데미지 모션");
+        animator.SetBool(para, true);
+        invincibility=true;
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        
+        yield return null;
+
+        stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        while (!stateInfo.IsName("Damaged")||stateInfo.normalizedTime < 1f)
+        {
+            yield return null;
+            stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        }
+        animator.SetBool(para, false);
+        isDamaged = false;
+        invincibility = false;
+        DmdC = null;
+    }
+    Coroutine DmdC;
     public void DamagedMotion()
     {
+        if(DmdC == null) 
+        DmdC = StartCoroutine(MotionE(aniPara.DamagedParaHash));
+    }
+    Coroutine DeadC;
+    IEnumerator MotionE2(int para)
+    {
+
+        animator.SetBool(para, true);
+
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        yield return null;
+
+        stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        while (!stateInfo.IsName("Dead")||stateInfo.normalizedTime < 1f)
+        {
+            yield return null;
+            stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        }
+        Destroy(this.gameObject);
+        animator.SetBool(aniPara.DamagedParaHash, false);
         
     }
     public void DeadMotion()
     {
-        Destroy(this);
+        if (DeadC == null)
+            DeadC = StartCoroutine(MotionE2(aniPara.DeadParaHash));
+       
     }
     public bool FindTarget()
     {
@@ -137,5 +189,11 @@ public class EnemyBase : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, status.SightRange);
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, status.AttackRange);
+    }
+    public void Update()
+    {
+       // if (Input.GetKeyDown(KeyCode.A)) {
+       //     Damaged(5);
+      //  }
     }
 }
