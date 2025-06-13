@@ -21,6 +21,8 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected AudioClip audioClip;
     [SerializeField] protected GameObject playerArm;
 
+    //Aciont
+
     protected static readonly int IsAiming = Animator.StringToHash("IsAiming");
     //protected static readonly int IsMoving = Animator.StringToHash("IsMoving");
    protected static readonly int AimFireTrigger = Animator.StringToHash("AimFire");
@@ -88,6 +90,11 @@ public abstract class Weapon : MonoBehaviour
             DropItem();
         }
 
+    }
+
+    public void Damage()
+    { 
+        
     }
 
 

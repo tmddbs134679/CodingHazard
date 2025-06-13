@@ -106,7 +106,10 @@ public class Gun : Weapon
         {
             if (hit.collider.gameObject.layer != 9)
             {
+
                 return;
+
+               
             }
 
             Debug.Log("공격 성공");
