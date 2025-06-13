@@ -19,11 +19,13 @@ public class EnemyBase : MonoBehaviour
     private BT bt;
     private GameObject target; //아직 모르겠지만 플레이어 스크립트로 변경 필요
     public GameObject Target { get { return target; } }
+    public Vector3 startPos;
     void Awake()
     {
         controller = GetComponent<EnemyController>();
         animator = GetComponentInChildren<Animator>();
         bt = GetComponent<BT>();
+        startPos = transform.position;
         
     }
     private void Start()
@@ -90,7 +92,7 @@ public class EnemyBase : MonoBehaviour
     {
         Debug.Log("공격 실패");
         animator.SetBool(aniPara.AttackParaHash, false);
-        animator.SetBool(aniPara.RunParaHash, true);
+      
         if (attack != null) { 
             StopCoroutine(attack);
         }
