@@ -68,7 +68,8 @@ public class UI_CrossHair : UI_Base
         }
         else if(Input.GetMouseButtonDown(1))
         {
-            OnAimStart();
+            AinmateAimCrosshair();
+            
         }
         else if (Input.GetKeyDown(KeyCode.M))
         {
@@ -95,8 +96,26 @@ public class UI_CrossHair : UI_Base
         Vector3 Objectscale = crossHair.GetComponent<RectTransform>().localScale;
         seq.Append(crossHair.transform.DOScale(Objectscale * recoilScaleAmount, tweenDuration).SetEase(Ease.OutQuad));
         seq.Append(crossHair.transform.DOScale(Objectscale, tweenDuration).SetEase(Ease.InQuad));
+  
+      
     }
 
+
+    [SerializeField] private float aimTweenDuration = 0.2f; // 트윈 시간
+    [SerializeField] private float aimShrinkScale = 0.5f;   // 작아질 비율
+    private void AinmateAimCrosshair()
+    {
+        GetObject((int)GameObjects.AimHair).transform.DOKill();
+
+
+        Sequence seq = DOTween.Sequence();
+        seq.Join(GetObject((int)GameObjects.AimHair).transform.DOScale(_originalScale * aimShrinkScale, aimTweenDuration).SetEase(Ease.InOutSine));
+
+        seq.OnComplete(() =>
+        {
+            OnAimStart();
+        });
+    }
     public void OnAimStart()
     {
         GetObject((int)GameObjects.CrossHair).SetActive(false);
