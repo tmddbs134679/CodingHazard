@@ -22,3 +22,5 @@ MonoBehaviour:
   attackCoolTime: 5
   moveSpeed: 0.5
   lostCoolTime: 30
+  PatrolNodes:
+  - {x: 30, y: 0, z: 5}
