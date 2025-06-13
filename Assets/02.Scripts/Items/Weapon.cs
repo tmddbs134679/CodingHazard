@@ -17,12 +17,35 @@ public abstract class Weapon : MonoBehaviour
 
     [SerializeField] protected GameObject muzzleFlash;
 
-    protected static readonly int IsAming = Animator.StringToHash("IsAiming");
-    protected static readonly int IsMoving = Animator.StringToHash("IsMoving");
-    protected static readonly int IsFire = Animator.StringToHash("IsFire");
+    [SerializeField] protected AudioSource audioSource;
+    [SerializeField] protected AudioClip audioClip;
+    [SerializeField] protected GameObject playerArm;
+
+    protected static readonly int IsAiming = Animator.StringToHash("IsAiming");
+    //protected static readonly int IsMoving = Animator.StringToHash("IsMoving");
+   protected static readonly int AimFireTrigger = Animator.StringToHash("AimFire");
+    protected static readonly int FireTrigger = Animator.StringToHash("Fire");
 
     protected bool isShootable;
     protected float lastFireTime;
+
+    protected void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    protected void OnEnable()
+    {
+ 
+    }
+    protected void PlaySound(AudioClip clip)
+    {
+        audioSource.Stop();
+        audioSource.clip = audioClip;
+        audioSource.Play();
+    }
+
+
     public virtual void Fire()
     {
         if (Time.time < lastFireTime + fireRate)
@@ -67,9 +90,12 @@ public abstract class Weapon : MonoBehaviour
 
     }
 
+
+
     protected void DropItem()
     {
         Instantiate(DropObject, transform.position + transform.forward, Quaternion.identity);
+        playerArm.SetActive(false);
         Destroy(this.gameObject);
     }
 
