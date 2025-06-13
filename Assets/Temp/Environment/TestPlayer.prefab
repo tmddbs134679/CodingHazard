@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 959157872418658657}
   - component: {fileID: 6136697747470030196}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: MainCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,7 +48,7 @@ Camera:
   m_BackGroundColor: {r: 0.7169812, g: 0.46896505, b: 0.33481666, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
-  m_FOVAxisMode: 1
+  m_FOVAxisMode: 0
   m_Iso: 200
   m_ShutterSpeed: 0.005
   m_Aperture: 16
@@ -314,10 +314,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  cameraContainer: {fileID: 8802121027538961764}
-  minXLook: -85
-  maxXLook: 85
-  lookSensitivity: 1
+  fpsVirtualCamera: {fileID: 4057450577224914854}
 --- !u!1 &8273567647458082944
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,6 +325,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5433107109100456447}
   - component: {fileID: 4491533587558405642}
+  - component: {fileID: 4472267366599108906}
   - component: {fileID: 4057450577224914854}
   m_Layer: 0
   m_Name: FPSVirtualCamera
@@ -391,6 +389,29 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 2984157758731689802}
+--- !u!114 &4472267366599108906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8273567647458082944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ApplyAfter: 2
+  m_ChannelMask: 1
+  m_Gain: 1
+  m_Use2DDistance: 0
+  m_UseCameraSpace: 1
+  m_ReactionSettings:
+    m_SecondaryNoise: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_Duration: 1
+    m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!114 &4057450577224914854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,6 +424,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43d5e89e7951fee4687cda04f773cb13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testRatio: 0
+  headbobFrequency: 10
+  headbobAmplitude: 0.05
+  player: {fileID: 3797000011525703524}
+  cameraRoot: {fileID: 8802121027538961764}
+  minXLook: -85
+  maxXLook: 85
+  lookSensitivity: 1
+  recoil: {x: 1, y: 1, z: 1}
 --- !u!1 &8318982696127272444
 GameObject:
   m_ObjectHideFlags: 0

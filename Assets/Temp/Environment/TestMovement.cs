@@ -6,19 +6,13 @@ using UnityEngine;
 public class TestMovement : MonoBehaviour
 {
     [Header("Movement")]
-    public float moveSpeed;
     private Vector2 curMovementInput;
 
-    [Header("Look")]
-    public Transform cameraContainer;
-    public float minXLook;
-    public float maxXLook;
-    private float camCurXRot;
-    public float lookSensitivity;
-
-    private Vector2 mouseDelta;
-
     private Rigidbody rigidbody;
+
+    [SerializeField] private float moveSpeed;
+
+    [SerializeField] private FPSVirtualCamera fpsVirtualCamera;
 
     private void Awake()
     {
@@ -33,17 +27,21 @@ public class TestMovement : MonoBehaviour
     private void Update()
     {
         curMovementInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-    }
 
+        if (Input.GetMouseButtonDown(1))
+        {
+            fpsVirtualCamera.ZoomIn(-20);
+        }
+        
+        if (Input.GetMouseButtonUp(1))
+        {
+            fpsVirtualCamera.ZoomOut();
+        }
+    }
+    
     private void FixedUpdate()
     {
         Move();
-    }
-
-    private void LateUpdate()
-    {
-        CameraLook();
     }
 
     private void Move()
@@ -55,16 +53,6 @@ public class TestMovement : MonoBehaviour
         dir.y = rigidbody.velocity.y;
 
         rigidbody.velocity = dir;
-    }
-
-    void CameraLook()
-    {
-        camCurXRot += mouseDelta.y * lookSensitivity;
-        camCurXRot = Mathf.Clamp(camCurXRot, minXLook, maxXLook);
-        
-        cameraContainer.localEulerAngles = new Vector3(-camCurXRot, 0, 0);
-
-        transform.eulerAngles += new Vector3(0, mouseDelta.x * lookSensitivity, 0);
     }
 
     public void ToggleCursor(bool toggle)
