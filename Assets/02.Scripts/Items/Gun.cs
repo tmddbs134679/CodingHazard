@@ -111,18 +111,17 @@ public class Gun : Weapon
 
                
             }
-
-            Debug.Log("공격 성공");
-            //Attack;
-            
-            /*
-             좀비 확장  벽이면 패스 이렇게 할둣
-            if (hit.collider.TryGetComponent(Monster))
-            { 
-                
+            if (hit.collider.TryGetComponent<EnemyBase>(out var enemy))
+            {
+                if (!enemy.IsDead)
+                {
+                    //나중에 변경될 수 있음 
+                    enemy.Damaged(damage);
+                  Debug.Log("공격 성공");
+                }
             }
-            */
 
+          
         }
         
             
