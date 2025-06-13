@@ -30,16 +30,10 @@ public class TestMovement : MonoBehaviour
         ToggleCursor(false);
     }
 
-    [SerializeField] private float volume;
     private void Update()
     {
         curMovementInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            AudioManager.Instance.PlayAudio(AudioID.PistolFire);
-        }
     }
 
     private void FixedUpdate()
