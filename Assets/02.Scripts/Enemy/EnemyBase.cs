@@ -50,7 +50,7 @@ public class EnemyBase : MonoBehaviour
     }
     public bool CanAttack()
     {
-        if(target == null)
+        if(!FindTarget())
             return false;
         if(Vector3.Distance(target.transform.position,transform.position)<=status.AttackRange)
         {
@@ -90,6 +90,7 @@ public class EnemyBase : MonoBehaviour
     {
         Debug.Log("공격 실패");
         animator.SetBool(aniPara.AttackParaHash, false);
+        animator.SetBool(aniPara.RunParaHash, true);
         if (attack != null) { 
             StopCoroutine(attack);
         }
