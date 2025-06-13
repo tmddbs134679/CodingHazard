@@ -34,6 +34,8 @@ public class UI_GameScene : UI_Base
     private Color whiteColor = Color.white;
     private Color choiceColor = new Color32(0x9C, 0xCF, 0x42, 0xFF);
     private const float fadeDuration = 5f;
+
+    [SerializeField] private UI_HPBar testHP;
     public override bool Init()
     {
         if (base.Init() == false)
@@ -75,6 +77,11 @@ public class UI_GameScene : UI_Base
         if(Input.GetKeyDown(KeyCode.Alpha3))
         {
             DetectionEyeVisible(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            testHP.GetComponent<UI_HPBar>().SetHpRatio(50f);
         }
     }
 
