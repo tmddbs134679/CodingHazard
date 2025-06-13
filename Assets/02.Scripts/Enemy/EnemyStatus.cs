@@ -35,4 +35,5 @@ public class EnemyStatus : ScriptableObject
     [SerializeField]
     private float lostCoolTime;
     public float LostCoolTime { get {return lostCoolTime; } }
+    public List<Vector3> PatrolNodes;
 }
