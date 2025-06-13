@@ -542,16 +542,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43d5e89e7951fee4687cda04f773cb13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testRatio: 0
   headbobFrequency: 10
   headbobAmplitude: 0.05
-  player: {fileID: 3797000011525703524}
+  playerTransform: {fileID: 6061770144207188009}
   cameraRoot: {fileID: 8802121027538961764}
   minXLook: -85
   maxXLook: 85
-  lookSensitivity: 1
-  testRecoil: {x: 1, y: 1, z: 1}
-  impulse: {fileID: 5444247528698302133}
+  hitImpulseSource: {fileID: 5444247528698302133}
 --- !u!1 &8318982696127272444
 GameObject:
   m_ObjectHideFlags: 0

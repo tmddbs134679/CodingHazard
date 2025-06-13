@@ -1,28 +1,24 @@
-using System;
 using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class FPSVirtualCamera : MonoBehaviour
 {
-    [SerializeField] private float testRatio;
-    
-    [Space(10f)]
+    public CinemachineImpulseSource HitImpulseSource => hitImpulseSource;
+
     [SerializeField] private float headbobFrequency = 10f;
     [SerializeField] private float headbobAmplitude = 0.05f;
     
     [Space(10f)]
-    [SerializeField] private TestMovement player;
+    [SerializeField] private Transform playerTransform;
     [SerializeField] private Transform cameraRoot;
     
     [Space(10f)]
     [SerializeField] private float minXLook;
     [SerializeField] private float maxXLook;
-    [SerializeField] private float lookSensitivity;
     
     [Space(10f)]
-    [SerializeField] private Vector3 testRecoil;
+    [SerializeField] private CinemachineImpulseSource hitImpulseSource;
 
     
     private CinemachineVirtualCamera _virtualCamera;
@@ -31,12 +27,9 @@ public class FPSVirtualCamera : MonoBehaviour
     private Vector3 _curRecoil;
     private Vector2 _mouseDelta;
 
-    private Tween _zoomTween;
-    
     private float _defaultFOV;
     private float _camCurXRot;
-    
-    [SerializeField] private CinemachineImpulseSource impulse;
+    private float _mouseSensitivity;
 
 
     private void Awake()
@@ -51,42 +44,42 @@ public class FPSVirtualCamera : MonoBehaviour
         _defaultLocalPos = cameraRoot.localPosition;
     }
 
-    private void Update()
-    {
-        //UpdateHeadBob(true, testRatio);
-        
-        _mouseDelta = new Vector2(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X"));
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            //SetFireRecoil(testRecoil);
-            
-            impulse.GenerateImpulse();
-        }
-    }
 
     private void LateUpdate()
     {
         CameraLook();
 
         _curRecoil = Vector3.zero;
+        
+        cameraRoot.localPosition = Vector3.Lerp(cameraRoot.localPosition, _defaultLocalPos, Time.deltaTime * 5f);
     }
 
 
-    public void SetFireRecoil(Vector3 recoil)
+    public void PlayRecoilToFire(Vector3 recoil)
     {
         _curRecoil = new Vector3(recoil.x, Random.Range(-recoil.y, recoil.y), Random.Range(-recoil.z, recoil.z));
     }
 
-    public void SetFOV(float fov)
+    public void SetFOV(float value)
     {
-        fov = Mathf.Clamp(fov, Constants.MinFOV, Constants.MaxFOV);
+        value = Mathf.Clamp(value, Constants.MinFOV, Constants.MaxFOV);
 
-        _virtualCamera.m_Lens.FieldOfView = fov;
+        _virtualCamera.m_Lens.FieldOfView = value;
 
-        _defaultFOV = fov;
+        _defaultFOV = value;
     }
 
+    public void SetMouseSensitivity(float value)
+    {
+        value = Mathf.Clamp(value, Constants.MinFOV, Constants.MaxFOV);
+        
+        _mouseSensitivity = value;
+    }
+
+
+    public void SetLookMouseDelta(Vector2 delta)
+        => _mouseDelta = delta;
+    
 
     public void ZoomIn(float zoomValue, float duration = 0.5f)
     {
@@ -99,6 +92,7 @@ public class FPSVirtualCamera : MonoBehaviour
             duration);
     }
     
+    
     public void ZoomOut(float duration = 0.5f)
     {
         DOTween.To(
@@ -109,36 +103,29 @@ public class FPSVirtualCamera : MonoBehaviour
     }
     
   
-    public void UpdateHeadBob(bool isMove, float ratio)
+    public void UpdateHeadBob(float ratio)
     {
         float frequency = headbobFrequency * Mathf.Lerp(0.5f, 1.5f, ratio); 
         
-        if (isMove)
-        {
-            float bobY = Mathf.Sin(Time.time * frequency) * headbobAmplitude;
-            float bobX = Mathf.Cos(Time.time * frequency * 0.5f) * headbobAmplitude * 0.5f;
+        float headbobY = Mathf.Sin(Time.time * frequency) * headbobAmplitude;
+        float headbobX = Mathf.Cos(Time.time * frequency * 0.5f) * headbobAmplitude * 0.5f;
             
-            cameraRoot.localPosition = _defaultLocalPos + new Vector3(bobX, bobY, 0);
-        }
-        else
-        {
-            cameraRoot.localPosition = Vector3.Lerp(cameraRoot.localPosition, _defaultLocalPos, Time.deltaTime * 5f);
-        }
+        cameraRoot.localPosition = _defaultLocalPos + new Vector3(headbobX, headbobY, 0);
     }
     
     
     private void CameraLook()
     {
-        var mouseDelta = new Vector3(_mouseDelta.x, _mouseDelta.y, 0);
+        var camDelta = new Vector3(_mouseDelta.y, _mouseDelta.x, 0);
         
-        Vector3 totalInput = mouseDelta * lookSensitivity + _curRecoil; 
+        Vector3 totalMouseDelta = camDelta * _mouseSensitivity + _curRecoil; 
         
-        _camCurXRot -= totalInput.x;
+        _camCurXRot -= totalMouseDelta.x;
         _camCurXRot = Mathf.Clamp(_camCurXRot, minXLook, maxXLook); 
         
         cameraRoot.localRotation = Quaternion.Euler(_camCurXRot, 0f, 0f);
 
-        player.transform.Rotate(Vector3.up * totalInput.y);
+        playerTransform.Rotate(Vector3.up * totalMouseDelta.y);
     }
     
 }
