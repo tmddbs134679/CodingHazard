@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerReloadingState : State
+public class PlayerReloadingState : PlayerBaseState
 {
     private float timer; 
     
-    public PlayerReloadingState(PlayerStateMachine stateMachine, PlayerController controller) : base(stateMachine, controller)
+    public PlayerReloadingState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
     }
 
@@ -28,7 +28,7 @@ public class PlayerReloadingState : State
         timer -= Time.deltaTime;
         if (timer <= 0f)
         {
-            _stateMachine.ChangeState(new PlayerIdleState(_stateMachine, _controller));
+            _stateMachine.ChangeState(new PlayerIdleState(_stateMachine));
         }
     }
     
