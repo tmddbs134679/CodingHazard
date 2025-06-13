@@ -18,7 +18,7 @@ public class Gun : Weapon
 
 
     [Header("Camera")]
-    [SerializeField] private float normalFOV = 60f;
+    [SerializeField] private float normalFOV = 50f;
     [SerializeField] private float zoomFOV = 40;
     [SerializeField] private float zoomSpeed = 10f;
    
@@ -89,9 +89,9 @@ public class Gun : Weapon
         {
             return;
         }
-       
-        Ray ray = new Ray(firePoint.position, firePoint.forward);
-        Debug.DrawRay(firePoint.position, firePoint.forward* range, Color.red); //나중에 제거 예정
+
+        Ray ray = mainCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+        Debug.DrawRay(ray.origin,ray.direction*range, Color.red); //나중에 제거 예정
         PlaySound(audioClip);
         if (isZoom == false)
         {
@@ -104,12 +104,16 @@ public class Gun : Weapon
 
         if (Physics.Raycast(ray, out RaycastHit hit, range))
         {
+            if (!hit.collider.CompareTag("Enemy"))
+            {
+                return;
+            }
 
-            if (hit.collider.CompareTag("Enemy"))
+            else if (hit.collider.CompareTag("Enemy"))
             {
                 Debug.Log(hit.collider.gameObject.name);
             }
-
+            
             /*
              좀비 확장  벽이면 패스 이렇게 할둣
             if (hit.collider.TryGetComponent(Monster))
