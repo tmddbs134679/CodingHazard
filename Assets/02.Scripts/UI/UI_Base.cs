@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UI_Base : MonoBehaviour
@@ -60,5 +61,37 @@ public class UI_Base : MonoBehaviour
     protected Button GetButton(int idx) { return Get<Button>(idx); }
     protected Image GetImage(int idx) { return Get<Image>(idx); }
     protected Toggle GetToggle(int idx) { return Get<Toggle>(idx); }
+    public static void BindEvent(GameObject go, Action action = null, Action<BaseEventData> dragAction = null, ect.EUIEvent type = ect.EUIEvent.Click)
+    {
+        UI_EventHandler evt = ect.GetOrAddComponent<UI_EventHandler>(go);
+
+        switch (type)
+        {
+            case ect.EUIEvent.Click:
+                evt.OnClickHandler -= action;
+                evt.OnClickHandler += action;
+                break;
+            case ect.EUIEvent.Preseed:
+                evt.OnPressedHandler -= action;
+                evt.OnPressedHandler += action;
+                break;
+            case ect.EUIEvent.PointerDown:
+                evt.OnPointerDownHandler -= action;
+                evt.OnPointerDownHandler += action;
+                break;
+            case ect.EUIEvent.PointerUp:
+                evt.OnPointerUpHandler -= action;
+                evt.OnPointerUpHandler += action;
+                break;
+            case ect.EUIEvent.PointerEnter:
+                evt.OnPointerEnterHandler -= action;
+                evt.OnPointerEnterHandler += action;
+                break;
+            case ect.EUIEvent.PointerExit:
+                evt.OnPointerExitHandler -= action;
+                evt.OnPointerExitHandler += action;
+                break;
+        }
+    }
 
 }
