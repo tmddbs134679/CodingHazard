@@ -64,7 +64,11 @@ public class Gun : Weapon
         Ray ray = new Ray(firePoint.position, firePoint.forward);
         Debug.DrawRay(firePoint.position, firePoint.forward* range, Color.red); //나중에 제거 예정
 
+        if (isZoom == false)
+        { 
         WeaponAnimator.SetTrigger(IsFire);
+        }
+
         if (Physics.Raycast(ray, out RaycastHit hit, range))
         {
              

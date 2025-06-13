@@ -32,22 +32,16 @@ public abstract class Weapon : MonoBehaviour
         else
         {
 
+            StartCoroutine("OnMuzzleFlashEffect");
             isShootable = true;
             lastFireTime = Time.time;
         }
 
-        if (muzzleFlash != null)
-        {
 
-            muzzleFlash.SetActive(true);
-        }
-        StartCoroutine("OnMuzzleFlashEffect");
+        //사운드도 나중에 추가
+        //디테일 맞추면서 하는것도 나중에 
 
 
-        //이펙트 및 사운드도 나중에 추가
-
-
-        //여기서 판단하면 안될듯 하다. 
 
     }
 
@@ -58,6 +52,8 @@ public abstract class Weapon : MonoBehaviour
     }
     protected void Update()
     {
+
+       
         //test
         if (Input.GetMouseButton(0))
         {
@@ -81,7 +77,7 @@ public abstract class Weapon : MonoBehaviour
     {
         muzzleFlash.SetActive(true);
 
-        yield return new WaitForSeconds(fireRate *1.2f);
+        yield return new WaitForSeconds(fireRate * 1.2f);
 
         muzzleFlash.SetActive(false);
     }
