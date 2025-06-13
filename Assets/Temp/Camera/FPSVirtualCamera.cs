@@ -13,21 +13,24 @@ public class FPSVirtualCamera : MonoBehaviour
         _virtualCamera = GetComponent<CinemachineVirtualCamera>();
     }
 
-    private void Update()
+    public void SetFOV(float fov, float duration = 0)
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            _virtualCamera.m_Lens.FieldOfView = 70;
-        }
-        
-        if (Input.GetMouseButtonUp(0))
-        {
-            _virtualCamera.m_Lens.FieldOfView = 80;
-        }
-    }
+        fov = Mathf.Clamp(fov, Constants.MinFOV, Constants.MaxFOV);
 
-    public void SetFOV(float fo)
-    {
-        
+        if (duration > 0)
+        {
+            _virtualCamera.m_Lens.FieldOfView = fov;
+        }
+        else
+        {
+            float currentFov = _virtualCamera.m_Lens.FieldOfView;
+            
+            /*DOTween.To(
+                () => virtualCamera.m_Lens.FieldOfView,
+                x => virtualCamera.m_Lens.FieldOfView = x,
+                targetFOV,
+                duration*/
+                
+        }
     }
 }
