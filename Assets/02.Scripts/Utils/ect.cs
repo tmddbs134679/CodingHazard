@@ -4,6 +4,17 @@ using UnityEngine;
 
 public static class ect 
 {
+    public enum EUIEvent
+    {
+        Click,
+        Preseed,
+        PointerDown,
+        PointerUp,
+        PointerEnter,
+        PointerExit,    
+
+    }
+
     public static GameObject FindChild(GameObject go, string name = null, bool recursive = false)
     {
         Transform transform = FindChild<Transform>(go, name, recursive);
@@ -42,5 +53,11 @@ public static class ect
 
         return null;
     }
-
+    public static T GetOrAddComponent<T>(GameObject go) where T : UnityEngine.Component
+    {
+        T component = go.GetComponent<T>();
+        if (component == null)
+            component = go.AddComponent<T>();
+        return component;
+    }
 }
