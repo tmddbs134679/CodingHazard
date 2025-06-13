@@ -37,6 +37,8 @@ public class Gun : Weapon
             isZoom = !isZoom;
             ZoomWeapon();
         }
+
+
         //업데이트에서 하면 너무 많이 입력됨
        
     }

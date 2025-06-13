@@ -15,6 +15,8 @@ public abstract class Weapon : MonoBehaviour
 
     [SerializeField] protected GameObject DropObject;
 
+    [SerializeField] protected GameObject muzzleFlash;
+
     protected static readonly int IsAming = Animator.StringToHash("IsAiming");
     protected static readonly int IsMoving = Animator.StringToHash("IsMoving");
     protected static readonly int IsFire = Animator.StringToHash("IsFire");
@@ -34,6 +36,12 @@ public abstract class Weapon : MonoBehaviour
             lastFireTime = Time.time;
         }
 
+        if (muzzleFlash != null)
+        {
+
+            muzzleFlash.SetActive(true);
+        }
+        StartCoroutine("OnMuzzleFlashEffect");
 
 
         //이펙트 및 사운드도 나중에 추가
@@ -60,15 +68,22 @@ public abstract class Weapon : MonoBehaviour
         {
             DropItem();
         }
-        
+
     }
 
     protected void DropItem()
     {
-        Instantiate(DropObject, transform.position + transform.forward ,Quaternion.identity);
+        Instantiate(DropObject, transform.position + transform.forward, Quaternion.identity);
         Destroy(this.gameObject);
     }
 
-   
+    private IEnumerator OnMuzzleFlashEffect()
+    {
+        muzzleFlash.SetActive(true);
+
+        yield return new WaitForSeconds(fireRate *1.2f);
+
+        muzzleFlash.SetActive(false);
+    }
 
 }
