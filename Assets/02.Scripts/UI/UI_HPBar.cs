@@ -20,8 +20,9 @@ public class UI_HPBar : UI_Base
         BindImage(typeof(Images));
         return true;
     }
-    public void SetHpRatio(float hp)
+    public void SetHpRatio(ref float hp)
     {
+        hp -= 20;
         float maxHp = 100f;
         float ratio = Mathf.Clamp01(hp / maxHp);      
         float scaledRatio = ratio * clampratio;

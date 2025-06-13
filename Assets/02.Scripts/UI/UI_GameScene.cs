@@ -9,10 +9,7 @@ using Sequence = DG.Tweening.Sequence;
 public class UI_GameScene : UI_Base
 {
     #region Enum
-    enum GameObjects
-    {
-    
-    }
+  
     enum Buttons
     {
   
@@ -35,8 +32,11 @@ public class UI_GameScene : UI_Base
     private Color whiteColor = Color.white;
     private Color choiceColor = new Color32(0x9C, 0xCF, 0x42, 0xFF);
     private const float fadeDuration = 5f;
-
+    private float testhp = 100f;
     [SerializeField] private UI_HPBar testHP;
+
+
+
     public override bool Init()
     {
         if (base.Init() == false)
@@ -59,7 +59,7 @@ public class UI_GameScene : UI_Base
     private void Awake()
     {
         Init();
-
+       
     }
 
     private void Update()
@@ -86,13 +86,14 @@ public class UI_GameScene : UI_Base
 
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            testHP.GetComponent<UI_HPBar>().SetHpRatio(50f);
+            testHP.GetComponent<UI_HPBar>().SetHpRatio(ref testhp);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             UpdateBloodScreen();
         }
+
     }
 
 
@@ -175,6 +176,7 @@ public class UI_GameScene : UI_Base
             .SetLoops(2, LoopType.Yoyo)
             .SetEase(Ease.InOutSine);
     }
+
 
 
 }
