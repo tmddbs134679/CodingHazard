@@ -11,6 +11,11 @@ public class EnemyBase : MonoBehaviour
     private EnemyStatus status;
     [SerializeField]
     public EnemyAnimation aniPara;
+    bool isDamaged;
+    public bool IsDamaged { set { isDamaged = value; }  get { return isDamaged; } }
+    bool isDead;
+    public bool IsDead { get { return isDead; } }
+
     public EnemyController Controller {  get { return controller; } }
     public EnemyStatus Status { get { return status; } }
     public Animator animator;
@@ -20,6 +25,9 @@ public class EnemyBase : MonoBehaviour
     private GameObject target; //아직 모르겠지만 플레이어 스크립트로 변경 필요
     public GameObject Target { get { return target; } }
     public Vector3 startPos;
+
+    float hp;
+   
     void Awake()
     {
         controller = GetComponent<EnemyController>();
@@ -34,6 +42,30 @@ public class EnemyBase : MonoBehaviour
         controller.Init(status.MoveSpeed);
         bt.MakeBT();
         bt.StartBT(this);
+    }
+    public void Damaged(float dmg)
+    {
+        isDamaged=true;
+        hp-=dmg;
+        if (hp <= 0) {
+            Dead();
+        }
+    }
+    public void Dead()
+    {
+        isDead=true;
+        Debug.Log("사망");
+       
+        
+    }
+    
+    public void DamagedMotion()
+    {
+        
+    }
+    public void DeadMotion()
+    {
+        Destroy(this);
     }
     public bool FindTarget()
     {
