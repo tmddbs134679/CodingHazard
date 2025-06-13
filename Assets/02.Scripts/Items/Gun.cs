@@ -104,15 +104,13 @@ public class Gun : Weapon
 
         if (Physics.Raycast(ray, out RaycastHit hit, range))
         {
-            if (!hit.collider.CompareTag("Enemy"))
+            if (hit.collider.gameObject.layer != 9)
             {
                 return;
             }
 
-            else if (hit.collider.CompareTag("Enemy"))
-            {
-                Debug.Log(hit.collider.gameObject.name);
-            }
+            Debug.Log("공격 성공");
+            //Attack;
             
             /*
              좀비 확장  벽이면 패스 이렇게 할둣
