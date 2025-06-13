@@ -5,9 +5,9 @@ using UnityEngine;
 public class AudioEntry
 {
     public AudioID id;
-
-    public AudioType type;
     
+    public AudioType audioType;
+
     public AudioClip clip;
     
     public float volume = 1f;

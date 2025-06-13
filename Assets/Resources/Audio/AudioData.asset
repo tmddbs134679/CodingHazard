@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Entries>k__BackingField:
   - id: 0
-    type: 0
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: be64544bade297e4d872dd74c66256d2, type: 3}
     volume: 1
     isLoop: 0

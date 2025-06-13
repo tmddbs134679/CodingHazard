@@ -1,12 +1,8 @@
 
 
+public enum AudioType { Master, BGM, SFX }
+
 public enum AudioID
 {
-    
-}
-
-public enum AudioType
-{
-    BGM,
-    SFX,
+    PistolFire
 }
