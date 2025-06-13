@@ -2,33 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerIdleState : State
+public class PlayerIdleState : PlayerBaseState
 {
-    public PlayerIdleState(PlayerStateMachine stateMachine, PlayerController controller) : base(stateMachine, controller)
+    public PlayerIdleState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
     }
 
     public override void Enter()
     {
-        _controller.Animator.SetBool("isAiming", false);
-        _controller.Animator.SetBool("isReloading", false);
+        Debug.Log("Enter IdleState");
     }
 
     public override void Update()
     {
-        if (_controller.playerActions.Reloading.WasPressedThisFrame())
+        Vector2 input = GetMovementInput();
+
+        // wasd input 들어온 건지 확인하고 change State
+        if (input.magnitude > 0.1f)
         {
-            Debug.Log("Change State to Reloading");
-            _stateMachine.ChangeState(new PlayerReloadingState(_stateMachine, _controller));
+            // move가 기본, walk가 슬로우, run은 뛰기, dash는 질주
+            _stateMachine.ChangeState(new PlayerWalkState(_stateMachine));
             return;
         }
-        
-        if (_controller.playerActions.Aiming.ReadValue<float>() > 0)
+
+        if (IsAttackTriggered())
         {
-            Debug.Log("Change State to Aiming");
-            _stateMachine.ChangeState(new PlayerAimingState(_stateMachine, _controller));
+            OnAttackInput();
         }
     }
-    
-    
+
+    public override void OnAttackInput()
+    {
+        _controller.Attack();
+    }
 }

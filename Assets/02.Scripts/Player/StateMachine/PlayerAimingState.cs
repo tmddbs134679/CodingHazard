@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAimingState : State
+public class PlayerAimingState : PlayerBaseState
 {
-    public PlayerAimingState(PlayerStateMachine stateMachine, PlayerController controller) : base(stateMachine, controller)
+    public PlayerAimingState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
     }
 
@@ -20,7 +20,7 @@ public class PlayerAimingState : State
         base.Update();
         if (_controller.playerActions.Aiming.ReadValue<float>() == 0f)
         {
-            _stateMachine.ChangeState(new PlayerIdleState(_stateMachine, _controller));
+            _stateMachine.ChangeState(new PlayerIdleState(_stateMachine));
         }
     }
 

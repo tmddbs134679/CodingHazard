@@ -17,12 +17,35 @@ public abstract class Weapon : MonoBehaviour
 
     [SerializeField] protected GameObject muzzleFlash;
 
-    protected static readonly int IsAming = Animator.StringToHash("IsAiming");
-    protected static readonly int IsMoving = Animator.StringToHash("IsMoving");
-    protected static readonly int IsFire = Animator.StringToHash("IsFire");
+    [SerializeField] protected AudioSource audioSource;
+    [SerializeField] protected AudioClip audioClip;
+    [SerializeField] protected GameObject playerArm;
+
+    protected static readonly int IsAiming = Animator.StringToHash("IsAiming");
+    //protected static readonly int IsMoving = Animator.StringToHash("IsMoving");
+   protected static readonly int AimFireTrigger = Animator.StringToHash("AimFire");
+    protected static readonly int FireTrigger = Animator.StringToHash("Fire");
 
     protected bool isShootable;
     protected float lastFireTime;
+
+    protected void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    protected void OnEnable()
+    {
+ 
+    }
+    protected void PlaySound(AudioClip clip)
+    {
+        audioSource.Stop();
+        audioSource.clip = audioClip;
+        audioSource.Play();
+    }
+
+
     public virtual void Fire()
     {
         if (Time.time < lastFireTime + fireRate)
@@ -32,22 +55,16 @@ public abstract class Weapon : MonoBehaviour
         else
         {
 
+            StartCoroutine("OnMuzzleFlashEffect");
             isShootable = true;
             lastFireTime = Time.time;
         }
 
-        if (muzzleFlash != null)
-        {
 
-            muzzleFlash.SetActive(true);
-        }
-        StartCoroutine("OnMuzzleFlashEffect");
+        //사운드도 나중에 추가
+        //디테일 맞추면서 하는것도 나중에 
 
 
-        //이펙트 및 사운드도 나중에 추가
-
-
-        //여기서 판단하면 안될듯 하다. 
 
     }
 
@@ -58,6 +75,8 @@ public abstract class Weapon : MonoBehaviour
     }
     protected void Update()
     {
+
+       
         //test
         if (Input.GetMouseButton(0))
         {
@@ -71,9 +90,12 @@ public abstract class Weapon : MonoBehaviour
 
     }
 
+
+
     protected void DropItem()
     {
         Instantiate(DropObject, transform.position + transform.forward, Quaternion.identity);
+        playerArm.SetActive(false);
         Destroy(this.gameObject);
     }
 
@@ -81,7 +103,7 @@ public abstract class Weapon : MonoBehaviour
     {
         muzzleFlash.SetActive(true);
 
-        yield return new WaitForSeconds(fireRate *1.2f);
+        yield return new WaitForSeconds(fireRate * 1.2f);
 
         muzzleFlash.SetActive(false);
     }
