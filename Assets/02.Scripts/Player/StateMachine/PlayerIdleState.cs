@@ -35,6 +35,4 @@ public class PlayerIdleState : PlayerBaseState
     {
         _controller.Attack();
     }
-    
-    
 }
