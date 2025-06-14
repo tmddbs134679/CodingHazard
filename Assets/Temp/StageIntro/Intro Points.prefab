@@ -576,7 +576,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8416572624036524552}
   m_Layer: 0
-  m_Name: IntroPoints
+  m_Name: Intro Points
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

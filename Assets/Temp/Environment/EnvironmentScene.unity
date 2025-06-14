@@ -53540,7 +53540,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9178726502112145487, guid: a4f27ac64c021de4d9f7107cad89fdf7, type: 3}
       propertyPath: m_Name
-      value: IntroPoints
+      value: Intro Points
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
