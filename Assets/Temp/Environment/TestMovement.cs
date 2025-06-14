@@ -39,7 +39,7 @@ public class TestMovement : MonoBehaviour
 
         _cameraManager.FPSVirtualCamera.SetLookMouseDelta(mouseDelta);
         
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             _cameraManager.FPSVirtualCamera.PlayRecoilToFire(Vector3.one);
         }
@@ -53,7 +53,6 @@ public class TestMovement : MonoBehaviour
         {
             _cameraManager.FPSVirtualCamera.ZoomOut();
         }
-
 
         if (curMovementInput != Vector2.zero)
         {
