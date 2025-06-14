@@ -6,13 +6,8 @@ public class GraphicsSettingsHandler : MonoBehaviour
 {
     [SerializeField] private VolumeProfile postProcessProfile;
     [SerializeField] private FPSVirtualCamera fpsVirtualCamera;
+    [SerializeField] private UniversalAdditionalCameraData urpCameraData;
 
-    private UniversalAdditionalCameraData _urpCameraData;
-
-    private void Start()
-    {
-        _urpCameraData = Camera.main.GetComponent<UniversalAdditionalCameraData>();
-    }
 
     public void SetFov(float value)
     {
@@ -30,9 +25,9 @@ public class GraphicsSettingsHandler : MonoBehaviour
     
     public void SetAntiAliasing(AntialiasingMode mode)
     {
-        if (_urpCameraData != null)
+        if (urpCameraData != null)
         {
-            _urpCameraData.antialiasing = mode;
+            urpCameraData.antialiasing = mode;
         }
     }
    
