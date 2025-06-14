@@ -16,4 +16,9 @@ public class GameManager : Singleton<GameManager>
 
         GraphicsSettingManager.SetBaseState();
     }
+
+    public void StartStage(int stageLevel)
+    {
+        
+    }
 }

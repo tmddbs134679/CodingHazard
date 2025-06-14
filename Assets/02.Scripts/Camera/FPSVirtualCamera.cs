@@ -24,6 +24,7 @@ public class FPSVirtualCamera : MonoBehaviour
 
     private CinemachineVirtualCamera _virtualCamera;
     private GameSettingManager _gameSettingManager;
+    private DepthOfField _dof;
     
     private Vector3 _defaultLocalPos;
     private Vector3 _curRecoil;
@@ -45,6 +46,11 @@ public class FPSVirtualCamera : MonoBehaviour
     private void Start()
     {
         _gameSettingManager = GameManager.Instance.GraphicsSettingManager;
+
+        if (_gameSettingManager.TryGetVolumeComponent(out DepthOfField dof))
+        {
+            _dof = dof;
+        }
         
 
         _gameSettingManager.OnChangedFOV += ChangeFOV;
@@ -77,6 +83,17 @@ public class FPSVirtualCamera : MonoBehaviour
         _mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
         _mouseDelta *= _lookSensitivity;
+
+
+        if (_dof != null)
+        {
+            Physics.Raycast(transform.position, transform.forward, out RaycastHit hit);
+
+            if (hit.collider != null)
+            {
+                _dof.focusDistance.value = hit.distance;
+            }
+        }
     }
     
     
