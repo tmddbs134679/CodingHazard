@@ -1,12 +1,13 @@
-using System;
 using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
-using Random = UnityEngine.Random;
 
 public class FPSVirtualCamera : MonoBehaviour
 {
+    [SerializeField] private LayerMask dofLayerMask;
+
+    
     [SerializeField] private float headbobFrequency = 10f;
     [SerializeField] private float headbobAmplitude = 0.05f;
     
@@ -21,6 +22,7 @@ public class FPSVirtualCamera : MonoBehaviour
     [Space(10f)]
     [SerializeField] private CinemachineImpulseSource hitImpulseSource;
     [SerializeField] private UniversalAdditionalCameraData urpCameraData;
+    
 
     private CinemachineVirtualCamera _virtualCamera;
     private GameSettingManager _gameSettingManager;
@@ -87,13 +89,18 @@ public class FPSVirtualCamera : MonoBehaviour
 
         if (_dof != null)
         {
-            Physics.Raycast(transform.position, transform.forward, out RaycastHit hit);
+            Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, dofLayerMask);
 
             if (hit.collider != null)
             {
                 _dof.focusDistance.value = hit.distance;
             }
+            else
+            {
+                _dof.focusDistance.value = 100;
+            }
         }
+        
     }
     
     
