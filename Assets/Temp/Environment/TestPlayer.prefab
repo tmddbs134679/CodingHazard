@@ -433,7 +433,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   fpsVirtualCamera: {fileID: 4057450577224914854}
-  graphicsSettings: {fileID: 0}
 --- !u!1 &8273567647458082944
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,6 +549,7 @@ MonoBehaviour:
   minXLook: -85
   maxXLook: 85
   hitImpulseSource: {fileID: 5444247528698302133}
+  urpCameraData: {fileID: 959157872418658657}
 --- !u!1 &8318982696127272444
 GameObject:
   m_ObjectHideFlags: 0

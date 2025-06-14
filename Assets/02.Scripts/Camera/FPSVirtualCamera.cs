@@ -2,6 +2,7 @@ using System;
 using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using Random = UnityEngine.Random;
 
 public class FPSVirtualCamera : MonoBehaviour
@@ -10,18 +11,19 @@ public class FPSVirtualCamera : MonoBehaviour
     [SerializeField] private float headbobAmplitude = 0.05f;
     
     [Space(10f)]
-    [SerializeField] private Transform playerTransform;
-    [SerializeField] private Transform cameraRoot;
-    
-    [Space(10f)]
     [SerializeField] private float minXLook;
     [SerializeField] private float maxXLook;
     
     [Space(10f)]
-    [SerializeField] private CinemachineImpulseSource hitImpulseSource;
-
+    [SerializeField] private Transform playerTransform;
+    [SerializeField] private Transform cameraRoot;
     
+    [Space(10f)]
+    [SerializeField] private CinemachineImpulseSource hitImpulseSource;
+    [SerializeField] private UniversalAdditionalCameraData urpCameraData;
+
     private CinemachineVirtualCamera _virtualCamera;
+    private GameSettingManager _gameSettingManager;
     
     private Vector3 _defaultLocalPos;
     private Vector3 _curRecoil;
@@ -35,14 +37,40 @@ public class FPSVirtualCamera : MonoBehaviour
     private void Awake()
     {
         _virtualCamera = GetComponent<CinemachineVirtualCamera>();
-        
+
         _defaultFOV = _virtualCamera.m_Lens.FieldOfView;
     }
+    
 
     private void Start()
     {
+        _gameSettingManager = GameManager.Instance.GraphicsSettingManager;
+        
+
+        _gameSettingManager.OnChangedFOV += ChangeFOV;
+        
+        _gameSettingManager.OnChangedAntialiasingMode += ChangeAntiMode;
+
+        _gameSettingManager.OnChangedMouseSensitivity += ChangeMouseSensitivity;
+        
+        
+        ChangeFOV(_gameSettingManager.FOV);
+        ChangeAntiMode(_gameSettingManager.AntialiasingMode);
+        ChangeMouseSensitivity(_gameSettingManager.MouseSensitivity);
+        
+        
         _defaultLocalPos = cameraRoot.localPosition;
     }
+
+    private void OnDestroy()
+    {
+        _gameSettingManager.OnChangedFOV -= ChangeFOV;
+        
+        _gameSettingManager.OnChangedAntialiasingMode -= ChangeAntiMode;
+
+        _gameSettingManager.OnChangedMouseSensitivity -= ChangeMouseSensitivity;
+    }
+
 
     private void Update()
     {
@@ -50,34 +78,16 @@ public class FPSVirtualCamera : MonoBehaviour
 
         _mouseDelta *= _lookSensitivity;
     }
-
-
+    
+    
     private void LateUpdate()
     {
         LateUpdateCamera();
 
         _curRecoil = Vector3.zero;
     }
+ 
     
-
-    public void PlayHitFeedback()
-        => hitImpulseSource.GenerateImpulse();
-
-    public void PlayRecoilToFire(Vector3 recoil)
-        =>  _curRecoil = new Vector3(recoil.x, Random.Range(-recoil.y, recoil.y), -recoil.z);
-
-    
-    public void SetFOV(float value)
-    {
-        _virtualCamera.m_Lens.FieldOfView = value;
-
-        _defaultFOV = value;
-    }
-
-    public void SetLookSensitivity(float value)
-       =>  _lookSensitivity = value;
-
-
     public void ZoomIn(float zoomValue, float duration)
     {
         float targetFov = _defaultFOV + zoomValue;
@@ -88,7 +98,6 @@ public class FPSVirtualCamera : MonoBehaviour
             targetFov,
             duration);
     }
-    
     
     public void ZoomOut(float duration)
     {
@@ -110,6 +119,24 @@ public class FPSVirtualCamera : MonoBehaviour
         cameraRoot.localPosition = _defaultLocalPos + new Vector3(headbobX, headbobY, 0);
     }
     
+    public void PlayHitFeedback() => hitImpulseSource.GenerateImpulse();
+    
+    public void PlayRecoilToFire(Vector3 recoil) => _curRecoil = new Vector3(recoil.x, Random.Range(-recoil.y, recoil.y), -recoil.z);
+    
+    
+    
+
+    private void ChangeAntiMode(AntialiasingMode mode) => urpCameraData.antialiasing = mode;
+    
+    private void ChangeMouseSensitivity(float mouseSensitivity) => _lookSensitivity = mouseSensitivity;
+    
+    private void ChangeFOV(float fov)
+    {
+        _virtualCamera.m_Lens.FieldOfView = fov;
+
+        _defaultFOV = fov;
+    }
+
     
     private void LateUpdateCamera()
     {

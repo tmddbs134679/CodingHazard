@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class TestMovement : MonoBehaviour
 {
@@ -13,7 +14,6 @@ public class TestMovement : MonoBehaviour
     [SerializeField] private float moveSpeed;
 
     [SerializeField] private FPSVirtualCamera fpsVirtualCamera;
-    [SerializeField] private GraphicsSettingsHandler graphicsSettings;
 
     private void Awake()
     {
@@ -22,8 +22,6 @@ public class TestMovement : MonoBehaviour
 
     void Start()
     {
-        graphicsSettings.SetMouseSensitivity(1);
-        
         ToggleCursor(false);
     }
 
