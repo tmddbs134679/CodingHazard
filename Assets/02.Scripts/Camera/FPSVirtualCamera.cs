@@ -29,7 +29,7 @@ public class FPSVirtualCamera : MonoBehaviour
 
     private float _defaultFOV;
     private float _camCurXRot;
-    private float _mouseSensitivity;
+    private float _lookSensitivity;
 
 
     private void Awake()
@@ -48,7 +48,7 @@ public class FPSVirtualCamera : MonoBehaviour
     {
         _mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
-        _mouseDelta *= _mouseSensitivity;
+        _mouseDelta *= _lookSensitivity;
     }
 
 
@@ -58,14 +58,14 @@ public class FPSVirtualCamera : MonoBehaviour
 
         _curRecoil = Vector3.zero;
     }
+    
 
+    public void PlayHitFeedback()
+        => hitImpulseSource.GenerateImpulse();
 
     public void PlayRecoilToFire(Vector3 recoil)
         =>  _curRecoil = new Vector3(recoil.x, Random.Range(-recoil.y, recoil.y), -recoil.z);
 
-    public void PlayHitFeedback()
-        => hitImpulseSource.GenerateImpulse();
-    
     
     public void SetFOV(float value)
     {
@@ -74,8 +74,8 @@ public class FPSVirtualCamera : MonoBehaviour
         _defaultFOV = value;
     }
 
-    public void SetMouseSensitivity(float value)
-       =>  _mouseSensitivity = value;
+    public void SetLookSensitivity(float value)
+       =>  _lookSensitivity = value;
 
 
     public void ZoomIn(float zoomValue, float duration)

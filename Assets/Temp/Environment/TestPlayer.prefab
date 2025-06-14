@@ -433,6 +433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   fpsVirtualCamera: {fileID: 4057450577224914854}
+  graphicsSettings: {fileID: 0}
 --- !u!1 &8273567647458082944
 GameObject:
   m_ObjectHideFlags: 0

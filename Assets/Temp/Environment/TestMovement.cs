@@ -10,11 +10,10 @@ public class TestMovement : MonoBehaviour
 
     private Rigidbody rigidbody;
 
-    private CameraManager _cameraManager;
-
     [SerializeField] private float moveSpeed;
 
     [SerializeField] private FPSVirtualCamera fpsVirtualCamera;
+    [SerializeField] private GraphicsSettingsHandler graphicsSettings;
 
     private void Awake()
     {
@@ -23,9 +22,7 @@ public class TestMovement : MonoBehaviour
 
     void Start()
     {
-        _cameraManager = CameraManager.Instance;
-
-        _cameraManager.SetMouseSensitivity(1);
+        graphicsSettings.SetMouseSensitivity(1);
         
         ToggleCursor(false);
     }
@@ -36,22 +33,22 @@ public class TestMovement : MonoBehaviour
         
         if (Input.GetMouseButton(0))
         {
-            _cameraManager.PlayRecoilToFire(Vector3.one);
+            fpsVirtualCamera.PlayRecoilToFire(Vector3.one);
         }
         
         if (Input.GetMouseButtonDown(1))
         {
-            _cameraManager.ZoomIn(-20f);
+            fpsVirtualCamera.ZoomIn(-20f, 0.5f);
         }
         
         if (Input.GetMouseButtonUp(1))
         {
-            _cameraManager.ZoomOut();
+            fpsVirtualCamera.ZoomOut(0.5f);
         }
 
         if (curMovementInput != Vector2.zero)
         {
-            _cameraManager.UpdateHeadBob(1);
+            fpsVirtualCamera.UpdateHeadBob(1);
         }
     }
     
