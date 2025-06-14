@@ -25,7 +25,7 @@ public class TestMovement : MonoBehaviour
     {
         _cameraManager = CameraManager.Instance;
 
-        _cameraManager.FPSVirtualCamera.SetMouseSensitivity(1);
+        _cameraManager.SetMouseSensitivity(1);
         
         ToggleCursor(false);
     }
@@ -33,30 +33,25 @@ public class TestMovement : MonoBehaviour
     private void Update()
     {
         curMovementInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-
-        
-        var mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-
-        _cameraManager.FPSVirtualCamera.SetLookMouseDelta(mouseDelta);
         
         if (Input.GetMouseButton(0))
         {
-            _cameraManager.FPSVirtualCamera.PlayRecoilToFire(Vector3.one);
+            _cameraManager.PlayRecoilToFire(Vector3.one);
         }
         
         if (Input.GetMouseButtonDown(1))
         {
-            _cameraManager.FPSVirtualCamera.ZoomIn(-20f);
+            _cameraManager.ZoomIn(-20f);
         }
         
         if (Input.GetMouseButtonUp(1))
         {
-            _cameraManager.FPSVirtualCamera.ZoomOut();
+            _cameraManager.ZoomOut();
         }
 
         if (curMovementInput != Vector2.zero)
         {
-            _cameraManager.FPSVirtualCamera.UpdateHeadBob(1);
+            _cameraManager.UpdateHeadBob(1);
         }
     }
     
@@ -81,5 +76,4 @@ public class TestMovement : MonoBehaviour
         Cursor.lockState = toggle ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = toggle;
     }
-
 }

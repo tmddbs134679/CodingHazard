@@ -1,11 +1,11 @@
+using System;
 using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class FPSVirtualCamera : MonoBehaviour
 {
-    public CinemachineImpulseSource HitImpulseSource => hitImpulseSource;
-
     [SerializeField] private float headbobFrequency = 10f;
     [SerializeField] private float headbobAmplitude = 0.05f;
     
@@ -44,44 +44,41 @@ public class FPSVirtualCamera : MonoBehaviour
         _defaultLocalPos = cameraRoot.localPosition;
     }
 
+    private void Update()
+    {
+        _mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+
+        _mouseDelta *= _mouseSensitivity;
+    }
+
 
     private void LateUpdate()
     {
-        CameraLook();
+        LateUpdateCamera();
 
         _curRecoil = Vector3.zero;
-        
-        cameraRoot.localPosition = Vector3.Lerp(cameraRoot.localPosition, _defaultLocalPos, Time.deltaTime * 5f);
     }
 
 
     public void PlayRecoilToFire(Vector3 recoil)
-    {
-        _curRecoil = new Vector3(recoil.x, Random.Range(-recoil.y, recoil.y), Random.Range(-recoil.z, recoil.z));
-    }
+        =>  _curRecoil = new Vector3(recoil.x, Random.Range(-recoil.y, recoil.y), -recoil.z);
 
+    public void PlayHitFeedback()
+        => hitImpulseSource.GenerateImpulse();
+    
+    
     public void SetFOV(float value)
     {
-        value = Mathf.Clamp(value, Constants.MinFOV, Constants.MaxFOV);
-
         _virtualCamera.m_Lens.FieldOfView = value;
 
         _defaultFOV = value;
     }
 
     public void SetMouseSensitivity(float value)
-    {
-        value = Mathf.Clamp(value, Constants.MinMouseSensitivity, Constants.MaxMouseSensitivity);
-        
-        _mouseSensitivity = value;
-    }
+       =>  _mouseSensitivity = value;
 
 
-    public void SetLookMouseDelta(Vector2 delta)
-        => _mouseDelta = delta;
-    
-
-    public void ZoomIn(float zoomValue, float duration = 0.5f)
+    public void ZoomIn(float zoomValue, float duration)
     {
         float targetFov = _defaultFOV + zoomValue;
         
@@ -93,7 +90,7 @@ public class FPSVirtualCamera : MonoBehaviour
     }
     
     
-    public void ZoomOut(float duration = 0.5f)
+    public void ZoomOut(float duration)
     {
         DOTween.To(
             () => _virtualCamera.m_Lens.FieldOfView,
@@ -114,11 +111,11 @@ public class FPSVirtualCamera : MonoBehaviour
     }
     
     
-    private void CameraLook()
+    private void LateUpdateCamera()
     {
         var camDelta = new Vector3(_mouseDelta.y, _mouseDelta.x, 0);
         
-        Vector3 totalMouseDelta = camDelta * _mouseSensitivity + _curRecoil; 
+        Vector3 totalMouseDelta = camDelta + _curRecoil; 
         
         _camCurXRot -= totalMouseDelta.x;
         _camCurXRot = Mathf.Clamp(_camCurXRot, minXLook, maxXLook); 
