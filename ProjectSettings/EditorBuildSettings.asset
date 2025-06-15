@@ -9,9 +9,9 @@ EditorBuildSettings:
     path: Assets/01.Scenes/MainScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
+    path: Assets/01.Scenes/LoadingScene.unity
+    guid: 1811febca1cf353448ec75011ca67564
+  - enabled: 1
     path: Assets/01.Scenes/StageScene_1.unity
     guid: d506b8410a80ece478fe8cd1177dfcbf
-  - enabled: 1
-    path: Assets/ThirdParty/RPG_FPS_game_assets_industrial/Map_v2.unity
-    guid: 1d35c8ff8df44934ab0d5619746c0699
   m_configObjects: {}
