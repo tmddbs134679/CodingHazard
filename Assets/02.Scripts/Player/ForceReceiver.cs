@@ -20,7 +20,7 @@ public class ForceReceiver : MonoBehaviour
         }
         else
         {
-            verticalVelocity += -9.81f * Time.deltaTime;
+            verticalVelocity += -20f * Time.deltaTime;
         }
     }
 
