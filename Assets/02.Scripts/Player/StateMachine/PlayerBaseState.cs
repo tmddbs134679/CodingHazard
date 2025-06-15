@@ -10,10 +10,6 @@ public abstract class PlayerBaseState : State
     }
     
     public virtual void OnAttackInput() { }
-    public virtual void OnJumpInput() { }
-    public virtual void OnSprintInput() { }
-    public virtual void OnSitInput() { }
-    public virtual  void OnMoveInput(Vector2 input) { }
 
     protected Vector2 GetMovementInput()
     {

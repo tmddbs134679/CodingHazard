@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 524243938}
   - component: {fileID: 524243937}
   - component: {fileID: 524243936}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,29 +334,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1565124502 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4430118988471167130, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
-  m_PrefabInstance: {fileID: 8728110880608243322}
-  m_PrefabAsset: {fileID: 0}
---- !u!143 &1565124504 stripped
-CharacterController:
-  m_CorrespondingSourceObject: {fileID: 2935734520205779656, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
-  m_PrefabInstance: {fileID: 8728110880608243322}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1565124506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1565124502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93b7fa5577a4f453daf27bd07b440256, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 1565124504}
 --- !u!1 &2022552712
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,10 +507,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4430118988471167130, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1565124506}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
