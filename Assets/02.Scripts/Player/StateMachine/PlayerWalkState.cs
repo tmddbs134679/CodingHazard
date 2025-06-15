@@ -11,6 +11,7 @@ public class PlayerWalkState : PlayerBaseState
 
     public override void Enter()
     {
+        _controller.isWalking = true;
         Debug.Log("Enter WalkState");
     }
 
@@ -24,24 +25,28 @@ public class PlayerWalkState : PlayerBaseState
         if (input.magnitude <= 0.1f)
         {
             // 입력 안 들어온 거면 Idle
+            _controller.isWalking = false;
             _stateMachine.ChangeState(new PlayerIdleState(_stateMachine));
             return;
         }
 
         if (!_controller.isWalkingHold)
         {
+            _controller.isWalking = false;
             _stateMachine.ChangeState(new PlayerMoveState(_stateMachine));
         }
         
         // shift 누르면 대시
         if (_controller.playerActions.Sprint.IsPressed()) 
         {
+            _controller.isWalking = false;
             _stateMachine.ChangeState(new PlayerSprintState(_stateMachine));
         }
 
         // C 누르면 앉기
         if (_controller.playerActions.Sit.IsPressed())
         {
+            _controller.isWalking = false;
             _stateMachine.ChangeState(new PlayerSitState(_stateMachine));
         }
 
@@ -55,5 +60,4 @@ public class PlayerWalkState : PlayerBaseState
     {
         _controller.Attack();
     }
-
 }

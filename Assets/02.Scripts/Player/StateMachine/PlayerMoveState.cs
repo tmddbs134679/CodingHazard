@@ -32,7 +32,7 @@ public class PlayerMoveState : PlayerBaseState
         }
         
         // sprint 가능
-        if (_controller.playerActions.Sprint.IsPressed())
+        if (_controller.isSprintHold)
         {
             _controller.isMoving = false;
             _stateMachine.ChangeState(new PlayerSprintState(_stateMachine));

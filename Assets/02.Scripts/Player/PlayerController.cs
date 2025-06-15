@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Range(-90f, 0f)] private float minXLook = -60f;
     [SerializeField, Range(0f, 90f)] private float maxXLook = 30f;
     [SerializeField, Range(50f, 300f)] private float lookSensitivity = 100f;
-    private Transform playerTrans;
+    public Transform playerTrans;
     private Transform camTrans;
     private float xRotation = 0f;
 
@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     public bool isMoving = false;
     public bool isSitting = false;
     public bool isSprinting = false;
+    public bool isSprintHold => playerActions.Sprint.IsPressed();
     public bool isReloading = false;
     public bool isAttacking = false;
 
