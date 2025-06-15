@@ -1,4 +1,4 @@
-using DG.Tweening;
+ï»¿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -86,7 +86,7 @@ public class UI_CrossHair : UI_Base
 
     private const float tweenDuration = 0.1f;
 
-    //ÃÑ¾ËÀÌ ¹ß»çµÉ ¶§ ½ÇÇà
+    //ì´ì•Œì´ ë°œì‚¬ë  ë•Œ ì‹¤í–‰
     private void AnimateRecoilCrosshair(GameObject crossHair)
     {
         crossHair.transform.DOKill();
@@ -101,8 +101,8 @@ public class UI_CrossHair : UI_Base
     }
 
 
-    [SerializeField] private float aimTweenDuration = 0.2f; // Æ®À© ½Ã°£
-    [SerializeField] private float aimShrinkScale = 0.5f;   // ÀÛ¾ÆÁú ºñÀ²
+    [SerializeField] private float aimTweenDuration = 0.2f; // íŠ¸ìœˆ ì‹œê°„
+    [SerializeField] private float aimShrinkScale = 0.5f;   // ì‘ì•„ì§ˆ ë¹„ìœ¨
     private void AinmateAimCrosshair()
     {
         GetObject((int)GameObjects.AimHair).transform.DOKill();

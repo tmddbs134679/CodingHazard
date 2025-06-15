@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+
+public enum WeaponType
+{
+    Gun,
+    Knife
+}
 public abstract class Weapon : MonoBehaviour
 {
     [field: Header("WeaponInfo")]
@@ -20,12 +26,13 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected AudioSource audioSource;
     [SerializeField] protected AudioClip audioClip;
     [SerializeField] protected GameObject playerArm;
+    [SerializeField] protected WeaponType weapontype;
 
     //Aciont
 
     protected static readonly int IsAiming = Animator.StringToHash("IsAiming");
     //protected static readonly int IsMoving = Animator.StringToHash("IsMoving");
-   protected static readonly int AimFireTrigger = Animator.StringToHash("AimFire");
+    protected static readonly int AimFireTrigger = Animator.StringToHash("AimFire");
     protected static readonly int FireTrigger = Animator.StringToHash("Fire");
 
     protected bool isShootable;
@@ -38,7 +45,7 @@ public abstract class Weapon : MonoBehaviour
 
     protected void OnEnable()
     {
- 
+
     }
     protected void PlaySound(AudioClip clip)
     {
@@ -78,7 +85,7 @@ public abstract class Weapon : MonoBehaviour
     protected void Update()
     {
 
-       
+
         //test
         if (Input.GetMouseButton(0))
         {
@@ -93,8 +100,8 @@ public abstract class Weapon : MonoBehaviour
     }
 
     public void Damage()
-    { 
-        
+    {
+
     }
 
 
@@ -115,4 +122,31 @@ public abstract class Weapon : MonoBehaviour
         muzzleFlash.SetActive(false);
     }
 
+
+
+    protected void PlayAttackAnimation(bool isAiming)
+    {
+        if (WeaponAnimator == null)
+        {
+            return;
+        }
+
+        switch (weapontype)
+        {
+            case WeaponType.Gun:
+                if (isAiming)
+                {
+                    WeaponAnimator.SetTrigger(AimFireTrigger);
+                }
+                else
+                {
+                    WeaponAnimator.SetTrigger(FireTrigger);
+                }
+                break;
+
+            case WeaponType.Knife:
+                WeaponAnimator.SetTrigger(FireTrigger);
+                break;
+        }
+    }
 }

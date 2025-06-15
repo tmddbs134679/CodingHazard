@@ -93,6 +93,10 @@ public class Gun : Weapon
         Ray ray = mainCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
         Debug.DrawRay(ray.origin,ray.direction*range, Color.red); //나중에 제거 예정
         PlaySound(audioClip);
+
+        PlayAttackAnimation(isZoom);
+            
+       /*
         if (isZoom == false)
         {
             WeaponAnimator.SetTrigger(FireTrigger);
@@ -101,6 +105,7 @@ public class Gun : Weapon
         {
             WeaponAnimator.SetTrigger(AimFireTrigger);
         }
+        */
 
         if (Physics.Raycast(ray, out RaycastHit hit, range))
         {
