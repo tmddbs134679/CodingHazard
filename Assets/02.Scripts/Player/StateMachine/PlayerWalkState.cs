@@ -51,11 +51,25 @@ public class PlayerWalkState : PlayerBaseState
             _stateMachine.ChangeState(new PlayerJumpState(_stateMachine));
         }
         
+        // Aim 가능
+        if (_stateMachine.Controller.isAimHold)
+        {
+            _stateMachine.Controller.isMoving = false;
+            _stateMachine.ChangeState(new PlayerAimState(_stateMachine));
+        }
+        
         // shift 
         if (_stateMachine.Controller.isSprintHold) 
         {
             _stateMachine.Controller.isWalking = false;
             _stateMachine.ChangeState(new PlayerSprintState(_stateMachine));
+        }
+        
+        // 장전 가능
+        if (_stateMachine.Controller.isReloadPressed)
+        {
+            _stateMachine.Controller.isMoving = false;
+            _stateMachine.ChangeState(new PlayerReloadState(_stateMachine));    
         }
 
         if (IsAttackTriggered())

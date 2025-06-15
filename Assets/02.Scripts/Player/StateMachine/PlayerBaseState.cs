@@ -15,6 +15,11 @@ public abstract class PlayerBaseState : State
     public virtual void OnSitInput() { }
     public virtual  void OnMoveInput(Vector2 input) { }
 
+    protected Vector2 GetMovementInput()
+    {
+        return _controller.playerActions.Movement.ReadValue<Vector2>();
+    }
+    
     protected Vector3 GetMoveDirection(Vector2 input)
     {
         Vector3 forward = _stateMachine.MainCamTransform.forward;
@@ -31,12 +36,7 @@ public abstract class PlayerBaseState : State
     {
         _controller.Controller.Move(((direction * speed) + _controller.ForceReceiver.Movement) * Time.deltaTime);
     }
-
-    protected Vector2 GetMovementInput()
-    {
-        return _controller.playerActions.Movement.ReadValue<Vector2>();
-    }
-
+    
     protected bool IsAttackTriggered()
     {
         return _controller.playerActions.Attack.triggered;

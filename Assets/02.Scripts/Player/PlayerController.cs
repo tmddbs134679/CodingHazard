@@ -26,6 +26,9 @@ public class PlayerController : MonoBehaviour
     public bool isSprinting = false;
     public bool isSprintHold => playerActions.Sprint.IsPressed();
     public bool isReloading = false;
+    public bool isReloadPressed => playerActions.Reloading.WasPressedThisFrame();
+    public bool isAiming = false;
+    public bool isAimHold => playerActions.Aiming.IsPressed();
     public bool isAttacking = false;
     public bool isJumping = false;
     public bool isJumpPressed => playerActions.Jump.WasPressedThisFrame();
@@ -79,11 +82,6 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log("UnCrouch");
             }
-        }
-
-        if (playerActions.Jump.WasPressedThisFrame())
-        {
-            Debug.Log("isJumpPressed");
         }
     }
     

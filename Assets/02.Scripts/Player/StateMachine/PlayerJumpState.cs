@@ -53,7 +53,23 @@ public class PlayerJumpState : PlayerBaseState
             _stateMachine.Controller.isJumping = false;
             _stateMachine.ChangeState(new PlayerFallState(_stateMachine));
         }
+        
+        // 장전 가능
+        if (_stateMachine.Controller.isReloadPressed)
+        {
+            _stateMachine.Controller.isMoving = false;
+            _stateMachine.ChangeState(new PlayerReloadState(_stateMachine));    
+        }
 
-
+        // 사격 가능
+        if (IsAttackTriggered())
+        {
+            OnAttackInput();
+        }
+    }
+    
+    public override void OnAttackInput()
+    {
+        _controller.Attack();
     }
 }

@@ -1,37 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
 
-public class PlayerFallState : PlayerBaseState
+public class PlayerAimState : PlayerBaseState
 {
-    public PlayerFallState(PlayerStateMachine stateMachine) : base(stateMachine)
+    public PlayerAimState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
     }
 
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("Enter Fall State");
+        Debug.Log("Enter Aim State");
     }
 
     public override void Update()
     {
+        base.Update();
+        
+        // aim 상태로 느린 걸음 가능
         Vector2 input = GetMovementInput();
         Vector3 dir = GetMoveDirection(input);
-        // 점프 땐 좀 느리게 이동 가능
         Move(dir, _stateMachine.WalkSpeed);
         
-        if (_stateMachine.Controller.Controller.isGrounded)
+        // 안 누르고 있으면 idle로
+        if (!_controller.isAimHold)
         {
             _stateMachine.ChangeState(new PlayerIdleState(_stateMachine));
-        }
-        
-        // 장전 가능
-        if (_stateMachine.Controller.isReloadPressed)
-        {
-            _stateMachine.Controller.isMoving = false;
-            _stateMachine.ChangeState(new PlayerReloadState(_stateMachine));    
         }
         
         // 사격 가능

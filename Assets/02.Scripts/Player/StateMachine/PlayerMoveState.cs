@@ -54,6 +54,13 @@ public class PlayerMoveState : PlayerBaseState
             _stateMachine.Controller.isMoving = false;
             _stateMachine.ChangeState(new PlayerSprintState(_stateMachine));
         }
+        
+        // Aim 가능
+        if (_stateMachine.Controller.isAimHold)
+        {
+            _stateMachine.Controller.isMoving = false;
+            _stateMachine.ChangeState(new PlayerAimState(_stateMachine));
+        }
 
         // 걷기 가능
         if (_stateMachine.Controller.isWalkingHold)
@@ -61,11 +68,23 @@ public class PlayerMoveState : PlayerBaseState
             _stateMachine.Controller.isMoving = false;
             _stateMachine.ChangeState(new PlayerWalkState(_stateMachine));    
         }
+        
+        // 장전 가능
+        if (_stateMachine.Controller.isReloadPressed)
+        {
+            _stateMachine.Controller.isMoving = false;
+            _stateMachine.ChangeState(new PlayerReloadState(_stateMachine));    
+        }
 
         // 사격 가능
         if (IsAttackTriggered())
         {
             OnAttackInput();
         }
+    }
+    
+    public override void OnAttackInput()
+    {
+        _controller.Attack();
     }
 }

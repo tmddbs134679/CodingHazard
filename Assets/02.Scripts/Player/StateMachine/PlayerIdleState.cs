@@ -30,6 +30,20 @@ public class PlayerIdleState : PlayerBaseState
             _stateMachine.ChangeState(new PlayerJumpState(_stateMachine));
             return;
         }
+        
+        // 장전 가능
+        if (_stateMachine.Controller.isReloadPressed)
+        {
+            _stateMachine.Controller.isMoving = false;
+            _stateMachine.ChangeState(new PlayerReloadState(_stateMachine));    
+        }
+        
+        // Aim 가능
+        if (_stateMachine.Controller.isAimHold)
+        {
+            _stateMachine.Controller.isMoving = false;
+            _stateMachine.ChangeState(new PlayerAimState(_stateMachine));
+        }
 
         if (IsAttackTriggered())
         {
