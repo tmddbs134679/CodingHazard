@@ -12,15 +12,23 @@ public class PlayerWalkState : PlayerBaseState
     public override void Enter()
     {
         _controller.isWalking = true;
-        Debug.Log("Enter WalkState");
+        Debug.Log("Enter Walk State");
     }
 
     public override void Update()
     {
         Vector2 input = GetMovementInput();
         Vector3 dir = GetMoveDirection(input);
-        Move(dir, _stateMachine.WalkSpeed);
-
+        
+        if (_stateMachine.Controller.isCrouching)
+        {
+            Move(dir, _stateMachine.WalkSpeed / 2);
+        }
+        else
+        {
+            Move(dir, _stateMachine.WalkSpeed);
+        }
+        
         // wasd input 들어온 건지 확인하고 change State
         if (input.magnitude <= 0.1f)
         {
@@ -29,7 +37,7 @@ public class PlayerWalkState : PlayerBaseState
             _stateMachine.ChangeState(new PlayerIdleState(_stateMachine));
             return;
         }
-
+        
         // ctrl 안 누르고 있으면 move로 돌아감
         if (!_stateMachine.Controller.isWalkingHold)
         {
@@ -39,8 +47,8 @@ public class PlayerWalkState : PlayerBaseState
         
         if (_stateMachine.Controller.isJumpPressed)
         {
+            _stateMachine.Controller.isWalking = false;
             _stateMachine.ChangeState(new PlayerJumpState(_stateMachine));
-            return;
         }
         
         // shift 
@@ -48,13 +56,6 @@ public class PlayerWalkState : PlayerBaseState
         {
             _stateMachine.Controller.isWalking = false;
             _stateMachine.ChangeState(new PlayerSprintState(_stateMachine));
-        }
-
-        // C 누르면 앉기
-        if (_controller.playerActions.Sit.IsPressed())
-        {
-            _stateMachine.Controller.isWalking = false;
-            _stateMachine.ChangeState(new PlayerSitState(_stateMachine));
         }
 
         if (IsAttackTriggered())

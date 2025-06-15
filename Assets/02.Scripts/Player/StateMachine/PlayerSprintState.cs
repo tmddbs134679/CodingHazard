@@ -18,6 +18,11 @@ public class PlayerSprintState : PlayerBaseState
         _stateMachine.Controller.isSprinting = true;
         Debug.Log("Enter SprintState");
         time = 0f;
+
+        if (_controller.isCrouching)
+        {
+            _controller.isCrouching = false;
+        }
     }
 
     public override void Update()
@@ -38,12 +43,6 @@ public class PlayerSprintState : PlayerBaseState
         {
             _stateMachine.ChangeState(new PlayerJumpState(_stateMachine));
             return;
-        }
-        
-        if (_controller.playerActions.Sit.IsPressed())
-        {
-            _stateMachine.Controller.isSprinting = false;
-            _stateMachine.ChangeState(new PlayerSitState(_stateMachine));
         }
 
         if (!_controller.isSprintHold)

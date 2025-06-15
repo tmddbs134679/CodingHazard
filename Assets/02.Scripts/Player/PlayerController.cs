@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -25,25 +22,13 @@ public class PlayerController : MonoBehaviour
     public bool isWalking = false;
     public bool isWalkingHold => playerActions.Walk.IsPressed();
     public bool isMoving = false;
-    public bool isSitting = false;
+    public bool isCrouching = false;
     public bool isSprinting = false;
     public bool isSprintHold => playerActions.Sprint.IsPressed();
     public bool isReloading = false;
     public bool isAttacking = false;
     public bool isJumping = false;
     public bool isJumpPressed => playerActions.Jump.WasPressedThisFrame();
-
-    // [SerializeField] private Transform groundCheckPoint;
-    // [SerializeField] private float groundCheckDistance = 0.2f;
-    // [SerializeField] private LayerMask groundMask;
-    //
-    // public bool isGrounded
-    // {
-    //     get
-    //     {
-    //         return Physics.Raycast(groundCheckPoint.position, Vector3.down, groundCheckDistance, groundMask);
-    //     }
-    // }
     
     
     private void Awake()
@@ -82,6 +67,24 @@ public class PlayerController : MonoBehaviour
     {
         Look();
         stateMachine.CurrentState.Update();
+        
+        if (playerActions.Sit.WasPressedThisFrame())
+        {
+            isCrouching = !isCrouching; // 토글
+            if (isCrouching)
+            {
+                Debug.Log("Crouch");
+            }
+            else
+            {
+                Debug.Log("UnCrouch");
+            }
+        }
+
+        if (playerActions.Jump.WasPressedThisFrame())
+        {
+            Debug.Log("isJumpPressed");
+        }
     }
     
     public float GetAnimationClipLength(string clipName)
@@ -122,11 +125,4 @@ public class PlayerController : MonoBehaviour
             // 주/보조 무기(총)일 경우 총을 쏘는 Method 실행
         */
     }
-    
-    // private void OnDrawGizmosSelected()
-    // {
-    //     if (groundCheckPoint == null) return;
-    //     Gizmos.color = Color.green;
-    //     Gizmos.DrawLine(groundCheckPoint.position, groundCheckPoint.position + Vector3.down * groundCheckDistance);
-    // }
 }

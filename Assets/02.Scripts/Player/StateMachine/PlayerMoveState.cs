@@ -20,8 +20,17 @@ public class PlayerMoveState : PlayerBaseState
     {
         Vector2 input = GetMovementInput();
         Vector3 dir = GetMoveDirection(input);
-        Move(dir, _stateMachine.MovementSpeed);
-
+        
+        // 앉았는지 아닌지
+        if (_stateMachine.Controller.isCrouching)
+        {
+            Move(dir, _stateMachine.MovementSpeed / 2);
+        }
+        else
+        {
+            Move(dir, _stateMachine.MovementSpeed);
+        }
+        
         // wasd input 들어온 건지 확인
         if (input.magnitude <= 0.1f)
         {
@@ -34,6 +43,7 @@ public class PlayerMoveState : PlayerBaseState
         // Jump 가능
         if (_stateMachine.Controller.isJumpPressed)
         {
+            _stateMachine.Controller.isMoving = false;
             _stateMachine.ChangeState(new PlayerJumpState(_stateMachine));
             return;
         }
@@ -50,13 +60,6 @@ public class PlayerMoveState : PlayerBaseState
         {
             _stateMachine.Controller.isMoving = false;
             _stateMachine.ChangeState(new PlayerWalkState(_stateMachine));    
-        }
-        
-        // 앉기 가능
-        if (_controller.playerActions.Sit.IsPressed())
-        {
-            _stateMachine.Controller.isMoving = false;
-            _stateMachine.ChangeState(new PlayerSitState(_stateMachine));
         }
 
         // 사격 가능

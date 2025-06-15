@@ -19,6 +19,11 @@ public class PlayerJumpState : PlayerBaseState
         jumpStartTime = Time.time;
         
         Debug.Log("Enter Jump State");
+        
+        if (_controller.isCrouching)
+        {
+            _controller.isCrouching = false;
+        }
     }
 
     public override void Update()
