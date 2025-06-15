@@ -25,6 +25,12 @@ public class PlayerIdleState : PlayerBaseState
             return;
         }
 
+        if (_stateMachine.Controller.isJumpPressed)
+        {
+            _stateMachine.ChangeState(new PlayerJumpState(_stateMachine));
+            return;
+        }
+
         if (IsAttackTriggered())
         {
             OnAttackInput();

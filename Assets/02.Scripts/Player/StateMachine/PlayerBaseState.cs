@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public abstract class PlayerBaseState : State
 {
@@ -10,7 +11,7 @@ public abstract class PlayerBaseState : State
     
     public virtual void OnAttackInput() { }
     public virtual void OnJumpInput() { }
-    public virtual void OnDashInput() { }
+    public virtual void OnSprintInput() { }
     public virtual void OnSitInput() { }
     public virtual  void OnMoveInput(Vector2 input) { }
 

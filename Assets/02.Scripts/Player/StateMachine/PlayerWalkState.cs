@@ -25,28 +25,35 @@ public class PlayerWalkState : PlayerBaseState
         if (input.magnitude <= 0.1f)
         {
             // 입력 안 들어온 거면 Idle
-            _controller.isWalking = false;
+            _stateMachine.Controller.isWalking = false;
             _stateMachine.ChangeState(new PlayerIdleState(_stateMachine));
             return;
         }
 
-        if (!_controller.isWalkingHold)
+        // ctrl 안 누르고 있으면 move로 돌아감
+        if (!_stateMachine.Controller.isWalkingHold)
         {
-            _controller.isWalking = false;
+            _stateMachine.Controller.isWalking = false;
             _stateMachine.ChangeState(new PlayerMoveState(_stateMachine));
         }
         
-        // shift 누르면 대시
-        if (_controller.playerActions.Sprint.IsPressed()) 
+        if (_stateMachine.Controller.isJumpPressed)
         {
-            _controller.isWalking = false;
+            _stateMachine.ChangeState(new PlayerJumpState(_stateMachine));
+            return;
+        }
+        
+        // shift 
+        if (_stateMachine.Controller.isSprintHold) 
+        {
+            _stateMachine.Controller.isWalking = false;
             _stateMachine.ChangeState(new PlayerSprintState(_stateMachine));
         }
 
         // C 누르면 앉기
         if (_controller.playerActions.Sit.IsPressed())
         {
-            _controller.isWalking = false;
+            _stateMachine.Controller.isWalking = false;
             _stateMachine.ChangeState(new PlayerSitState(_stateMachine));
         }
 

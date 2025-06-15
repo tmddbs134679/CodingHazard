@@ -3,7 +3,6 @@ using UnityEngine;
 public class ForceReceiver : MonoBehaviour
 {
     [SerializeField] private CharacterController controller;
-
     private float verticalVelocity;
 
     public Vector3 Movement => Vector3.up * verticalVelocity;
@@ -15,18 +14,18 @@ public class ForceReceiver : MonoBehaviour
 
     void Update()
     {
-        if(controller.isGrounded)
+        if (controller.isGrounded && verticalVelocity < 0f)
         {
-            verticalVelocity = Physics.gravity.y * Time.deltaTime;
+            verticalVelocity = -2f;  // 약간 음수로 고정해 접지 유지
         }
         else
         {
-            verticalVelocity += Physics.gravity.y * Time.deltaTime;
+            verticalVelocity += -9.81f * Time.deltaTime;
         }
     }
 
     public void Jump(float jumpForce)
     {
-        verticalVelocity += jumpForce;
+        verticalVelocity = jumpForce;
     }
 }

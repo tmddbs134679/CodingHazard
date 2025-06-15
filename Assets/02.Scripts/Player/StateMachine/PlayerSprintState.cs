@@ -15,7 +15,7 @@ public class PlayerSprintState : PlayerBaseState
     public override void Enter()
     {
         base.Enter();
-        _controller.isSprinting = true;
+        _stateMachine.Controller.isSprinting = true;
         Debug.Log("Enter SprintState");
         time = 0f;
     }
@@ -23,10 +23,10 @@ public class PlayerSprintState : PlayerBaseState
     public override void Update()
     {
         time += Time.deltaTime;
-        sprintDirection = _controller.playerTrans.forward;
+        sprintDirection = _stateMachine.Controller.playerTrans.forward;
         if (time >= sprintDuration)
         {
-            _controller.isSprinting = false;
+            _stateMachine.Controller.isSprinting = false;
             // Sprint 끝나면 Move 상태로 전환
             _stateMachine.ChangeState(new PlayerMoveState(_stateMachine));
             return;
@@ -34,9 +34,15 @@ public class PlayerSprintState : PlayerBaseState
         
         Move(sprintDirection, _stateMachine.SprintSpeed);
         
+        if (_stateMachine.Controller.isJumpPressed)
+        {
+            _stateMachine.ChangeState(new PlayerJumpState(_stateMachine));
+            return;
+        }
+        
         if (_controller.playerActions.Sit.IsPressed())
         {
-            _controller.isSprinting = false;
+            _stateMachine.Controller.isSprinting = false;
             _stateMachine.ChangeState(new PlayerSitState(_stateMachine));
         }
 

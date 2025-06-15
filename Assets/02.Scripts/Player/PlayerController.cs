@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public CharacterController Controller { get; private set; }
     public ForceReceiver ForceReceiver { get; private set; }
 
+    
     [SerializeField, Range(-90f, 0f)] private float minXLook = -60f;
     [SerializeField, Range(0f, 90f)] private float maxXLook = 30f;
     [SerializeField, Range(50f, 300f)] private float lookSensitivity = 100f;
@@ -29,9 +30,20 @@ public class PlayerController : MonoBehaviour
     public bool isSprintHold => playerActions.Sprint.IsPressed();
     public bool isReloading = false;
     public bool isAttacking = false;
+    public bool isJumping = false;
+    public bool isJumpPressed => playerActions.Jump.WasPressedThisFrame();
 
-    public bool isGrounded = false;
-    
+    // [SerializeField] private Transform groundCheckPoint;
+    // [SerializeField] private float groundCheckDistance = 0.2f;
+    // [SerializeField] private LayerMask groundMask;
+    //
+    // public bool isGrounded
+    // {
+    //     get
+    //     {
+    //         return Physics.Raycast(groundCheckPoint.position, Vector3.down, groundCheckDistance, groundMask);
+    //     }
+    // }
     
     
     private void Awake()
@@ -110,4 +122,11 @@ public class PlayerController : MonoBehaviour
             // 주/보조 무기(총)일 경우 총을 쏘는 Method 실행
         */
     }
+    
+    // private void OnDrawGizmosSelected()
+    // {
+    //     if (groundCheckPoint == null) return;
+    //     Gizmos.color = Color.green;
+    //     Gizmos.DrawLine(groundCheckPoint.position, groundCheckPoint.position + Vector3.down * groundCheckDistance);
+    // }
 }

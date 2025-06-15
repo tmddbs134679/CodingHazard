@@ -12,7 +12,7 @@ public class PlayerMoveState : PlayerBaseState
     public override void Enter()
     {
         base.Enter();
-        _controller.isMoving = true;
+        _stateMachine.Controller.isMoving = true;
         Debug.Log("Enter MoveState");
     }
 
@@ -26,29 +26,36 @@ public class PlayerMoveState : PlayerBaseState
         if (input.magnitude <= 0.1f)
         {
             // 입력 안 들어온 거면 Idle
-            _controller.isMoving = false;
+            _stateMachine.Controller.isMoving = false;
             _stateMachine.ChangeState(new PlayerIdleState(_stateMachine));
             return;
         }
         
-        // sprint 가능
-        if (_controller.isSprintHold)
+        // Jump 가능
+        if (_stateMachine.Controller.isJumpPressed)
         {
-            _controller.isMoving = false;
+            _stateMachine.ChangeState(new PlayerJumpState(_stateMachine));
+            return;
+        }
+        
+        // sprint 가능
+        if (_stateMachine.Controller.isSprintHold)
+        {
+            _stateMachine.Controller.isMoving = false;
             _stateMachine.ChangeState(new PlayerSprintState(_stateMachine));
         }
 
         // 걷기 가능
-        if (_controller.isWalkingHold)
+        if (_stateMachine.Controller.isWalkingHold)
         {
-            _controller.isMoving = false;
+            _stateMachine.Controller.isMoving = false;
             _stateMachine.ChangeState(new PlayerWalkState(_stateMachine));    
         }
         
         // 앉기 가능
         if (_controller.playerActions.Sit.IsPressed())
         {
-            _controller.isMoving = false;
+            _stateMachine.Controller.isMoving = false;
             _stateMachine.ChangeState(new PlayerSitState(_stateMachine));
         }
 
