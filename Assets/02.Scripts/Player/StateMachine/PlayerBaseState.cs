@@ -28,7 +28,7 @@ public abstract class PlayerBaseState : State
     
     protected void Move(Vector3 direction, float speed)
     {
-        _controller.Controller.Move(direction * speed * Time.deltaTime);
+        _controller.Controller.Move(((direction * speed) + _controller.ForceReceiver.Movement) * Time.deltaTime);
     }
 
     protected Vector2 GetMovementInput()

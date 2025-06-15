@@ -73,8 +73,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 316d87c1b82234b588925a14bc380755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minXLook: -60
-  maxXLook: 30
+  minXLook: -30
+  maxXLook: 60
   lookSensitivity: 80
 --- !u!1 &5963799915317392943
 GameObject:

@@ -2,58 +2,60 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 느린 걸음
-public class PlayerWalkState : PlayerBaseState
+// 기본 이동
+public class PlayerMoveState : PlayerBaseState
 {
-    public PlayerWalkState(PlayerStateMachine stateMachine) : base(stateMachine)
+    public PlayerMoveState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
     }
 
     public override void Enter()
     {
-        Debug.Log("Enter WalkState");
+        base.Enter();
+        _controller.isMoving = true;
+        Debug.Log("Enter MoveState");
     }
 
     public override void Update()
     {
         Vector2 input = GetMovementInput();
         Vector3 dir = GetMoveDirection(input);
-        Move(dir, _stateMachine.WalkSpeed);
+        Move(dir, _stateMachine.MovementSpeed);
 
-        // wasd input 들어온 건지 확인하고 change State
+        // wasd input 들어온 건지 확인
         if (input.magnitude <= 0.1f)
         {
             // 입력 안 들어온 거면 Idle
+            _controller.isMoving = false;
             _stateMachine.ChangeState(new PlayerIdleState(_stateMachine));
             return;
         }
-
-        if (!_controller.isWalkingHold)
-        {
-            _stateMachine.ChangeState(new PlayerMoveState(_stateMachine));
-        }
         
-        // shift 누르면 대시
-        if (_controller.playerActions.Sprint.IsPressed()) 
+        // sprint 가능
+        if (_controller.playerActions.Sprint.IsPressed())
         {
+            _controller.isMoving = false;
             _stateMachine.ChangeState(new PlayerSprintState(_stateMachine));
         }
 
-        // C 누르면 앉기
+        // 걷기 가능
+        if (_controller.isWalkingHold)
+        {
+            _controller.isMoving = false;
+            _stateMachine.ChangeState(new PlayerWalkState(_stateMachine));    
+        }
+        
+        // 앉기 가능
         if (_controller.playerActions.Sit.IsPressed())
         {
+            _controller.isMoving = false;
             _stateMachine.ChangeState(new PlayerSitState(_stateMachine));
         }
 
+        // 사격 가능
         if (IsAttackTriggered())
         {
             OnAttackInput();
         }
     }
-
-    public override void OnAttackInput()
-    {
-        _controller.Attack();
-    }
-
 }

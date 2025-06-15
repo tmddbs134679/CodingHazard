@@ -21,7 +21,7 @@ public class PlayerIdleState : PlayerBaseState
         if (input.magnitude > 0.1f)
         {
             // move가 기본, walk가 슬로우, run은 뛰기, dash는 질주
-            _stateMachine.ChangeState(new PlayerWalkState(_stateMachine));
+            _stateMachine.ChangeState(new PlayerMoveState(_stateMachine));
             return;
         }
 
