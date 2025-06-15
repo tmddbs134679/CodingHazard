@@ -53,7 +53,6 @@ public class FPSVirtualCamera : MonoBehaviour
         {
             _dof = dof;
         }
-        
 
         _gameSettingManager.OnChangedFOV += ChangeFOV;
         

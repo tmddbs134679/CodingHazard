@@ -31,7 +31,7 @@ public class TestMovement : MonoBehaviour
         
         if (Input.GetMouseButton(0))
         {
-            fpsVirtualCamera.PlayRecoilToFire(Vector3.one);
+            fpsVirtualCamera.PlayRecoilToFire(Vector3.one * 0.5f);
         }
         
         if (Input.GetMouseButtonDown(1))
