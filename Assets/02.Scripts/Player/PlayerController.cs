@@ -1,6 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -11,13 +8,30 @@ public class PlayerController : MonoBehaviour
     
     public Animator Animator { get; private set; }
     public CharacterController Controller { get; private set; }
+    public ForceReceiver ForceReceiver { get; private set; }
 
+    
     [SerializeField, Range(-90f, 0f)] private float minXLook = -60f;
     [SerializeField, Range(0f, 90f)] private float maxXLook = 30f;
     [SerializeField, Range(50f, 300f)] private float lookSensitivity = 100f;
-    private Transform playerTrans;
+    public Transform playerTrans;
     private Transform camTrans;
     private float xRotation = 0f;
+
+    
+    public bool isWalking = false;
+    public bool isWalkingHold => playerActions.Walk.IsPressed();
+    public bool isMoving = false;
+    public bool isCrouching = false;
+    public bool isSprinting = false;
+    public bool isSprintHold => playerActions.Sprint.IsPressed();
+    public bool isReloading = false;
+    public bool isReloadPressed => playerActions.Reloading.WasPressedThisFrame();
+    public bool isAiming = false;
+    public bool isAimHold => playerActions.Aiming.IsPressed();
+    public bool isAttacking = false;
+    public bool isJumping = false;
+    public bool isJumpPressed => playerActions.Jump.WasPressedThisFrame();
     
     
     private void Awake()
@@ -27,6 +41,7 @@ public class PlayerController : MonoBehaviour
         stateMachine = new PlayerStateMachine(this);
         Animator = GetComponentInChildren<Animator>();
         Controller = GetComponent<CharacterController>();
+        ForceReceiver = GetComponent<ForceReceiver>();
         stateMachine.MainCamTransform = Camera.main?.transform;
     }
 
@@ -55,6 +70,19 @@ public class PlayerController : MonoBehaviour
     {
         Look();
         stateMachine.CurrentState.Update();
+        
+        if (playerActions.Sit.WasPressedThisFrame())
+        {
+            isCrouching = !isCrouching; // 토글
+            if (isCrouching)
+            {
+                Debug.Log("Crouch");
+            }
+            else
+            {
+                Debug.Log("UnCrouch");
+            }
+        }
     }
     
     public float GetAnimationClipLength(string clipName)

@@ -16,7 +16,7 @@
                 },
                 {
                     "name": "Look",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "4e74a6c4-0c18-4234-ac1c-c67b7576a96d",
                     "expectedControlType": "Vector2",
                     "processors": "",
@@ -33,9 +33,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Dash",
+                    "name": "Sprint",
                     "type": "Button",
                     "id": "40f8fc22-0bdd-4481-842b-cc3040fab535",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Sit",
+                    "type": "Button",
+                    "id": "d3a35222-9534-4ff5-b94e-f5fd3554e3c3",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -69,9 +78,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Sit",
+                    "name": "Jump",
                     "type": "Button",
-                    "id": "d3a35222-9534-4ff5-b94e-f5fd3554e3c3",
+                    "id": "3c59017b-3e0c-41c9-9c1b-c987a7ffb0e6",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -174,7 +183,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Dash",
+                    "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -192,7 +201,7 @@
                 {
                     "name": "",
                     "id": "42220af3-c055-4fbf-a5c8-13ed85eedb06",
-                    "path": "<Keyboard>/capsLock",
+                    "path": "<Keyboard>/ctrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -208,6 +217,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Sit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7ce9fdcc-970f-4df8-91fa-f869ca6376e8",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
