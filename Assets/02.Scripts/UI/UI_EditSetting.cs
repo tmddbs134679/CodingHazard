@@ -12,9 +12,8 @@ public class UI_EditSetting : UI_Base
     enum GameObjects
     {
         MenuToggleGroup,
-        CheckGraphicmarkObject,
+        CheckDisplaymarkObject,
         CheckAudiomarkObject,
-        CheckControlmarkObject,
 
     }
     enum Buttons
@@ -27,9 +26,8 @@ public class UI_EditSetting : UI_Base
     }
     enum Toggles
     {
-        GraphicToggle,
+        DisplayToggle,
         AudioToggle,
-        ControlToggle,
     }
     #endregion
 
@@ -48,9 +46,9 @@ public class UI_EditSetting : UI_Base
   
 
         // 토글 클릭 시 행동
-        GetToggle((int)Toggles.GraphicToggle).gameObject.BindEvent(OnClickGraphicToggle);
+        GetToggle((int)Toggles.DisplayToggle).gameObject.BindEvent(OnClickDisplayToggle);
         GetToggle((int)Toggles.AudioToggle).gameObject.BindEvent(OnClickAudioToggle);
-        GetToggle((int)Toggles.ControlToggle).gameObject.BindEvent(OnClickControlToggle);
+
 
 
 
@@ -68,14 +66,13 @@ public class UI_EditSetting : UI_Base
 
     private void TogglesInit()
     {
-        GetObject((int)GameObjects.CheckGraphicmarkObject).SetActive(false);
+        GetObject((int)GameObjects.CheckDisplaymarkObject).SetActive(false);
         GetObject((int)GameObjects.CheckAudiomarkObject).SetActive(false);
-        GetObject((int)GameObjects.CheckControlmarkObject).SetActive(false);
     }
 
-    void OnClickGraphicToggle()
+    void OnClickDisplayToggle()
     {
-        ShowUI(/*GraphicPopupUI.gameobject,*/ GetObject((int)GameObjects.CheckGraphicmarkObject));
+        ShowUI(/*GraphicPopupUI.gameobject,*/ GetObject((int)GameObjects.CheckDisplaymarkObject));
     }
 
     void OnClickAudioToggle()
@@ -83,11 +80,6 @@ public class UI_EditSetting : UI_Base
         ShowUI(/*GraphicPopupUI.gameobject,*/ GetObject((int)GameObjects.CheckAudiomarkObject));
     }
     
-    void OnClickControlToggle()
-    {
-        ShowUI(/*GraphicPopupUI.gameobject,*/ GetObject((int)GameObjects.CheckControlmarkObject));
-    }
-
     private void ShowUI(/*GameObject Popup,*/ GameObject checkmark)
     {
         TogglesInit();
