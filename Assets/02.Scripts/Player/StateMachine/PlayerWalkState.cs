@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 // 느린 걸음
@@ -23,10 +24,12 @@ public class PlayerWalkState : PlayerBaseState
         if (_stateMachine.Controller.isCrouching)
         {
             Move(dir, _stateMachine.WalkSpeed / 2);
+            _stateMachine.Controller.fpsVirtualCamera.UpdateHeadBob(_stateMachine.WalkSpeed / 2);
         }
         else
         {
             Move(dir, _stateMachine.WalkSpeed);
+            _stateMachine.Controller.fpsVirtualCamera.UpdateHeadBob(_stateMachine.WalkSpeed);
         }
         
         // wasd input 들어온 건지 확인하고 change State

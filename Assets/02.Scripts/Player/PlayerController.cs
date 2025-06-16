@@ -90,9 +90,7 @@ public class PlayerController : MonoBehaviour
             isCrouching = !isCrouching; // 토글
             Crouch(isCrouching);
         }
-
-        // Camera 특수 효과
-        CameraMove();
+        
         
         stateMachine.CurrentState.Update();
     }
@@ -126,39 +124,6 @@ public class PlayerController : MonoBehaviour
         playerTrans.Rotate(Vector3.up * mouseX); // 좌우
     }
 
-    private void CameraMove()
-    {
-        curMovementInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        moveSpeed = stateMachine.curMoveSpeed;
-        
-        if (Input.GetMouseButton(0))
-        {
-            fpsVirtualCamera.PlayRecoilToFire(Vector3.one);
-        }
-        
-        if (Input.GetMouseButtonDown(1))
-        {
-            fpsVirtualCamera.ZoomIn(-20f, 0.5f);
-        }
-        
-        if (Input.GetMouseButtonUp(1))
-        {
-            fpsVirtualCamera.ZoomOut(0.5f);
-        }
-
-        if (curMovementInput != Vector2.zero)
-        {
-            fpsVirtualCamera.UpdateHeadBob(moveSpeed);
-        }
-        
-        if (isSprintHold 
-            && stateMachine.CurrentState is PlayerSprintState)
-        {
-            Debug.Log("Sprint Zoom In");
-            fpsVirtualCamera.ZoomIn(20f, 0.5f);
-        }
-    }
-
     void Crouch(bool isCrouch)
     {
         if (isCrouch)
@@ -183,6 +148,8 @@ public class PlayerController : MonoBehaviour
     public void Attack()
     {
         Debug.Log("PlayerController Attack Method");
+        fpsVirtualCamera.PlayRecoilToFire(Vector3.one);
+        
         /*  // 현재 무기가 근접 무기일 경우 MeleeAttackState
          * if (현재 무기 == 근접 무기)
          *      stateMachine.ChangeState(new PlayerMeleeAttackState(stateMachine));

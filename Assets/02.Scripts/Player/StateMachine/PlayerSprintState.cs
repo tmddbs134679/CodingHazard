@@ -18,6 +18,8 @@ public class PlayerSprintState : PlayerBaseState
         {
             _controller.isCrouching = false;
         }
+        
+        _stateMachine.Controller.fpsVirtualCamera.ZoomIn(20f, 0.5f);
     }
 
     public override void Update()
@@ -26,6 +28,7 @@ public class PlayerSprintState : PlayerBaseState
         sprintDirection = _stateMachine.Controller.playerTrans.forward;
         
         Move(sprintDirection, _stateMachine.SprintSpeed);
+        _stateMachine.Controller.fpsVirtualCamera.UpdateHeadBob(_stateMachine.SprintSpeed);
         
         if (_stateMachine.Controller.Condition.stamina.curValue <= 0)
         {
