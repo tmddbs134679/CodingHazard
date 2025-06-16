@@ -27,21 +27,23 @@ public class PlayerInteraction : MonoBehaviour
 
                 if (item != null)
                 {
+                    currentTargetItem = item;
+                    
                     if (currentTargetItem != item)
                     {
-                        currentTargetItem?.ToggleOutline(false);
+                        //currentTargetItem?.ToggleOutline(false);
                         currentTargetItem = item;
-                        currentTargetItem.ToggleOutline(true);
+                        //currentTargetItem.ToggleOutline(true);
                     }
                 }
                 return;
             }
 
-            if (currentTargetItem != null)
+            /*if (currentTargetItem != null)
             {
-                currentTargetItem.ToggleOutline(false);
+                //currentTargetItem.ToggleOutline(false);
                 currentTargetItem = null;
-            }
+            }*/
         }
     }
     
