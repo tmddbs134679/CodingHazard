@@ -11,7 +11,7 @@ public class WeaponManager : MonoBehaviour
 
     private void Awake()
     {
-        weapons = new Weapon[3];
+     //   weapons = new Weapon[3];
     }
 
     private void Start()
