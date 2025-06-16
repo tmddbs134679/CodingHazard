@@ -33,8 +33,10 @@ public class UI_GameScene : UI_Base
     private Color choiceColor = new Color32(0x9C, 0xCF, 0x42, 0xFF);
     private const float fadeDuration = 5f;
     private float testhp = 100f;
+    private float testStaminaF = 100f;
     [SerializeField] private UI_HPBar testHP;
-
+    [SerializeField] private UI_StaminaBar testStamina;
+    [SerializeField] private UI_EditSetting testSetting;
 
 
     public override bool Init()
@@ -88,10 +90,19 @@ public class UI_GameScene : UI_Base
         {
             testHP.GetComponent<UI_HPBar>().SetHpRatio(ref testhp);
         }
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            testStamina.GetComponent<UI_StaminaBar>().SetStaminaRatio(ref testStaminaF);
+        }
 
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             UpdateBloodScreen();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            testSetting.gameObject.SetActive(!testSetting.gameObject.activeSelf);
         }
 
     }
