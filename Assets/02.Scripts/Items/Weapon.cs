@@ -64,9 +64,12 @@ public abstract class Weapon : MonoBehaviour
         else
         {
 
+            if (weapontype == WeaponType.Gun)
+            { 
             StartCoroutine("OnMuzzleFlashEffect");
             isShootable = true;
             lastFireTime = Time.time;
+            }
         }
 
 
@@ -99,12 +102,7 @@ public abstract class Weapon : MonoBehaviour
 
     }
 
-    public void Damage()
-    {
-
-    }
-
-
+   
 
     protected void DropItem()
     {

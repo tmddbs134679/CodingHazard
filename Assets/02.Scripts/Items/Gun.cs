@@ -81,6 +81,7 @@ public class Gun : Weapon
     public override void Fire()
     {
         base.Fire();
+        StartCoroutine("OnMuzzleFlashEffect");
         if (isShootable == false)
         {
             return;
