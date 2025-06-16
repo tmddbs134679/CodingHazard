@@ -28,24 +28,15 @@ public class WeaponManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-          //  EquipWeapon(0);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            //EquipWeapon(1);
-        }
-    }
-
-    private void SwapWeapon()
-    { 
         
     }
 
 
+
+
     private void EquipWeapon(int index)
     {
+
         if (index == curWeaponInedex || index >= weaponPrefabs.Length)
         {
             return;
