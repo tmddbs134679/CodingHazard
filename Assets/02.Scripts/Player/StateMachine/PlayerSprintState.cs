@@ -1,14 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerSprintState : PlayerBaseState
 {
-    private float stamina;
-    public float sprintDuration;
-    private float time = 0f;
     private Vector3 sprintDirection;
-    
     public PlayerSprintState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -19,8 +13,6 @@ public class PlayerSprintState : PlayerBaseState
         Debug.Log("Enter SprintState");
         
         _stateMachine.Controller.isSprinting = true;
-        stamina = _stateMachine.Controller.Condition.stamina.curValue;
-        time = 0f;
 
         if (_controller.isCrouching)
         {
@@ -30,27 +22,37 @@ public class PlayerSprintState : PlayerBaseState
 
     public override void Update()
     {
-        time += Time.deltaTime;
+        _stateMachine.Controller.Condition.stamina.curValue -= _stateMachine.SprintStamina * Time.deltaTime;
         sprintDirection = _stateMachine.Controller.playerTrans.forward;
-        if (stamina <= 0)
-        {
-            _stateMachine.Controller.isSprinting = false;
-            // Sprint 끝나면 Move 상태로 전환
-            _stateMachine.ChangeState(new PlayerMoveState(_stateMachine));
-            return;
-        }
         
         Move(sprintDirection, _stateMachine.SprintSpeed);
         
+        if (_stateMachine.Controller.Condition.stamina.curValue <= 0)
+        {
+            _stateMachine.Controller.isSprinting = false;
+            // Sprint 끝나면 Idle 상태로 전환
+            _stateMachine.ChangeState(new PlayerIdleState(_stateMachine));
+            return;
+        }
+        
         if (_stateMachine.Controller.isJumpPressed)
         {
+            _stateMachine.Controller.isSprinting = false;
             _stateMachine.ChangeState(new PlayerJumpState(_stateMachine));
             return;
         }
 
         if (!_controller.isSprintHold)
         {
+            _stateMachine.Controller.isSprinting = false;
             _stateMachine.ChangeState(new PlayerMoveState(_stateMachine));
         }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        Debug.Log("Sprint Zoom Out");
+        _stateMachine.Controller.fpsVirtualCamera.ZoomOut(0.5f);
     }
 }

@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     #region Camera Move
     private Vector2 curMovementInput;
     [SerializeField] private float moveSpeed;
-    [SerializeField] private FPSVirtualCamera fpsVirtualCamera;
+    [SerializeField] public FPSVirtualCamera fpsVirtualCamera;
     #endregion
 
     #region Components
@@ -156,13 +156,6 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Sprint Zoom In");
             fpsVirtualCamera.ZoomIn(20f, 0.5f);
-        }
-
-        if (!isSprintHold
-            && stateMachine.CurrentState is PlayerSprintState)
-        {
-            Debug.Log("Sprint Zoom Out");
-            fpsVirtualCamera.ZoomOut(0.5f);
         }
     }
 
