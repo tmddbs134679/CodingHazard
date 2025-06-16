@@ -7,10 +7,12 @@ public class PlayerController : MonoBehaviour
     public PlayerInputs.PlayerActions playerActions { get; private set; }
     
     #endregion
-
+    
     #region State Machine & State Flags
     public PlayerStateMachine stateMachine { get; private set; }
     
+    
+    [Header("State Flags")]
     public bool isWalking = false;
     public bool isWalkingHold => playerActions.Walk.IsPressed();
     public bool isMoving = false;

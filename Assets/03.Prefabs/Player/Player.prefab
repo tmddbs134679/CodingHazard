@@ -388,6 +388,7 @@ GameObject:
   - component: {fileID: 8504809558934303775}
   - component: {fileID: 2935734520205779656}
   - component: {fileID: 2695891007372459281}
+  - component: {fileID: 8033334737337003115}
   - component: {fileID: 4950234256913021620}
   m_Layer: 6
   m_Name: Player
@@ -452,10 +453,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 316d87c1b82234b588925a14bc380755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minXLook: -30
-  maxXLook: 60
-  lookSensitivity: 80
-  playerTrans: {fileID: 8504809558934303775}
   isWalking: 0
   isMoving: 0
   isCrouching: 0
@@ -464,8 +461,30 @@ MonoBehaviour:
   isAiming: 0
   isAttacking: 0
   isJumping: 0
+  minXLook: -30
+  maxXLook: 60
+  lookSensitivity: 80
+  playerTrans: {fileID: 8504809558934303775}
   moveSpeed: 0
   fpsVirtualCamera: {fileID: 2372937977120384787}
+--- !u!114 &8033334737337003115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4430118988471167130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8316d0237b5bb40eab70ad109e78b16b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp:
+    maxValue: 0
+    curValue: 0
+  stamina:
+    maxValue: 0
+    curValue: 0
 --- !u!114 &4950234256913021620
 MonoBehaviour:
   m_ObjectHideFlags: 0
