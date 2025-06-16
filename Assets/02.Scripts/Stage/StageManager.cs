@@ -31,6 +31,7 @@ public class StageManager : MonoBehaviour
     public void CollectItem()
     {
         OnCollectedItem?.Invoke();
+        Debug.Log("collect Item");
     }
 
     public void ClearStage()

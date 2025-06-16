@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     public bool isAttacking = false;
     public bool isJumping = false;
     public bool isJumpPressed => playerActions.Jump.WasPressedThisFrame();
+    public bool isInteractPressed => playerActions.Interact.WasPressedThisFrame();
 
     #endregion
 
@@ -46,6 +47,7 @@ public class PlayerController : MonoBehaviour
 
     #region Components
     public PlayerCondition Condition { get; private set; }
+    public PlayerInteraction Interaction { get; private set;  }
     public Animator Animator { get; private set; }
     public CharacterController Controller { get; private set; }
     public ForceReceiver ForceReceiver { get; private set; }
@@ -57,6 +59,7 @@ public class PlayerController : MonoBehaviour
         playerActions = playerInput.Player;
 
         Condition = GetComponent<PlayerCondition>();
+        Interaction = GetComponent<PlayerInteraction>();
         stateMachine = new PlayerStateMachine(this);
         Animator = GetComponentInChildren<Animator>();
         Controller = GetComponent<CharacterController>();
@@ -91,6 +94,11 @@ public class PlayerController : MonoBehaviour
             Crouch(isCrouching);
         }
         
+        // Interact 처리
+        if (playerActions.Interact.WasPressedThisFrame())
+        {
+            Interaction.OnInteractInput();
+        }
         
         stateMachine.CurrentState.Update();
     }
