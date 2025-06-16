@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
         }
         
         // Interact 처리
-        if (playerActions.Interact.WasPressedThisFrame())
+        if (isInteractPressed)
         {
             Interaction.OnInteractInput();
         }
