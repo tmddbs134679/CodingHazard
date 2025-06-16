@@ -88,7 +88,7 @@ public class UI_GameScene : UI_Base
 
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            testHP.GetComponent<UI_HPBar>().SetHpRatio(ref testhp);
+            testHP.GetComponent<UI_HPBar>().SetHpRatio(TestGameManager.Instance.Player.GetComponent<PlayerCondition>().hp.curValue-= 20f);
         }
         if (Input.GetKeyDown(KeyCode.Alpha6))
         {
@@ -177,13 +177,16 @@ public class UI_GameScene : UI_Base
         }
     }
 
+
+    private Tween _bloodTween;
     private void UpdateBloodScreen()
     {
-       
+        _bloodTween?.Kill();
+
         Color color = GetImage((int)Images.BloodScreen).color;
         color.a = 0f;
         GetImage((int)Images.BloodScreen).color = color;
-        GetImage((int)Images.BloodScreen).DOFade(0.3f, 0.2f)
+        _bloodTween = GetImage((int)Images.BloodScreen).DOFade(0.3f, 0.2f)
             .SetLoops(2, LoopType.Yoyo)
             .SetEase(Ease.InOutSine);
     }
