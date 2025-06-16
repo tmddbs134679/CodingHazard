@@ -5,12 +5,11 @@ public class PlayerController : MonoBehaviour
     #region InputSystem
     public PlayerInputs playerInput { get; private set; }
     public PlayerInputs.PlayerActions playerActions { get; private set; }
-    
+    public bool IsInputBlocked { get; private set; } = false;
     #endregion
     
     #region State Machine & State Flags
     public PlayerStateMachine stateMachine { get; private set; }
-    
     
     [Header("State Flags")]
     public bool isWalking = false;
@@ -72,10 +71,10 @@ public class PlayerController : MonoBehaviour
         playerInput.Player.Pistol.performed += index => PlayerEvent.Swap?.Invoke(1);
         playerInput.Player.Knife.performed += index => PlayerEvent.Swap?.Invoke(2);
         //012눌린 인덱스 번호를 주는 느낌으로 
-        
-
     }
 
+    public void BlockInput() => IsInputBlocked = true;
+    public void UnblockInput() => IsInputBlocked = false;
     private void OnEnable() => playerInput.Enable();
     private void OnDisable() => playerInput.Disable();
     
@@ -92,6 +91,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (IsInputBlocked) return;
+        
         // Player 시선에 따른 카메라 이동
         //Look();
         
