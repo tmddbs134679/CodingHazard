@@ -54,6 +54,7 @@ public abstract class Weapon : MonoBehaviour
     protected void OnDisable()
     {
         PlayerEvent.OnAttack -= Fire;
+        StopAllCoroutines();
     }
     protected void PlaySound(AudioClip clip)
     {
