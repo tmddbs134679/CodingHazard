@@ -13567,7 +13567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c952ead9e9faa4784b1b80bea8e8ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponAnchor: {fileID: 479869706}
+  weaponAnchor: {fileID: 1018441198}
   weaponPrefabs:
   - {fileID: 4757154998141492074, guid: 08e63662931172e4788dea77c765acde, type: 3}
   - {fileID: 2323879503507624389, guid: f8d21ded0f4919641b12564b818065ad, type: 3}
@@ -25598,6 +25598,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000012771108642, guid: 9d1bb44d500a3ad489d3cb3a6900199f, type: 3}
   m_PrefabInstance: {fileID: 1016149533}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1018441198 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3454704372264668758, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
+  m_PrefabInstance: {fileID: 479869703}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1019720453
 GameObject:
@@ -41219,7 +41224,7 @@ PrefabInstance:
       objectReference: {fileID: 712628437}
     - target: {fileID: 4200743599343868365, guid: 701019f0cd54f8949aad3412d78b2770, type: 3}
       propertyPath: m_InitialState
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4200743599343868365, guid: 701019f0cd54f8949aad3412d78b2770, type: 3}
       propertyPath: m_SceneBindings.Array.size
