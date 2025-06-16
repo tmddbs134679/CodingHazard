@@ -36,7 +36,7 @@ public class Gun : Weapon
 
         base.Update();
 
-        HandleFireInput();
+      //  HandleFireInput();
 
 
         if (Input.GetMouseButtonDown(1))

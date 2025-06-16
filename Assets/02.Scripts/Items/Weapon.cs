@@ -45,9 +45,15 @@ public abstract class Weapon : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    protected void OnEnable()
+    protected virtual void OnEnable()
     {
+        PlayerEvent.OnAttack += Fire;
+    }
 
+
+    protected void DisEnable()
+    {
+        PlayerEvent.OnAttack -= Fire;
     }
     protected void PlaySound(AudioClip clip)
     {
