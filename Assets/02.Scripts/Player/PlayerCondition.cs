@@ -26,6 +26,8 @@ public class PlayerCondition : MonoBehaviour
     public void TakeDamage(float amount)
     {
         hp.curValue = Mathf.Max(hp.curValue - amount, 0f);
+        PlayerEvent.OnHpChanged?.Invoke(hp.curValue);
+    
     }
 
     public void RecoverStamina(float amount)
