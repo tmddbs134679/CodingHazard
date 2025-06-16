@@ -11,10 +11,6 @@ public class Gun : Weapon
     [SerializeField] private Transform firePoint;
    
 
-    [Header("Weapon Pos")]
-    [SerializeField] private Transform weaponPos;
-    [SerializeField] private Transform normalPos;
-    [SerializeField] private Vector3 zoomPos;
 
 
     [Header("Camera")]
@@ -95,18 +91,8 @@ public class Gun : Weapon
         PlaySound(audioClip);
 
         PlayAttackAnimation(isZoom);
-            
-       /*
-        if (isZoom == false)
-        {
-            WeaponAnimator.SetTrigger(FireTrigger);
-        }
-        else if (isZoom == true)
-        {
-            WeaponAnimator.SetTrigger(AimFireTrigger);
-        }
-        */
-
+         
+       
         if (Physics.Raycast(ray, out RaycastHit hit, range))
         {
             if (hit.collider.gameObject.layer != 9)

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -115,6 +115,8 @@ public class PlayerController : MonoBehaviour
     
     public void Attack()
     {
+        //여기 fire
+
         Debug.Log("PlayerController Attack Method");
         /*  // 현재 무기가 근접 무기일 경우 MeleeAttackState
          * if (현재 무기 == 근접 무기)
