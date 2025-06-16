@@ -30,12 +30,15 @@ public class DroppedItem : MonoBehaviour
 
     public void ToggleOutline(bool state)
     {
+        if (_outline == null) return;
         _outline.enabled = state;
     }
     
     
     public void OnInteract()
     {
+        ToggleOutline(false);
+        
         switch (ItemData.ItemType)
         {
             case ItemType.Collect :
