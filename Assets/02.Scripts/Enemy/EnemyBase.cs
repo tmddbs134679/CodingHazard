@@ -64,7 +64,7 @@ public class EnemyBase : MonoBehaviour
     {
         isDead=true;
         Debug.Log("»ç¸Á");
-       
+       MonsterManager.Instance.Dead();
         
     }
     bool invincibility = false;
@@ -127,6 +127,7 @@ public class EnemyBase : MonoBehaviour
     {
         Debug.Log("°ø°Ý");
         animator.SetBool(aniPara.AttackParaHash, true);
+        detection.Target.TakeDamage(status.DMG);
     }
     IEnumerator AttackE()
     {
@@ -166,12 +167,14 @@ public class EnemyBase : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, status.SightRange);
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, status.AttackRange);
-        
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, status.SoundRange);
+
 
         Vector3 l= Quaternion.Euler(0, status.SightAngle * 0.5f, 0) * transform.forward;
         Vector3 r = Quaternion.Euler(0, -status.SightAngle * 0.5f, 0) * transform.forward;
 
-        Gizmos.color = Color.green;
+        Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, transform.position + l * status.SightRange);
         Gizmos.DrawLine(transform.position, transform.position + r * status.SightRange);
     }

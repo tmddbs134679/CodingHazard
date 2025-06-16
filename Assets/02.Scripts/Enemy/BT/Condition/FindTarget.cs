@@ -21,10 +21,12 @@ public class ListenTargetNode : ConditionNode
         if (enemy.detection.ListenTarget())
         {
             enemy.detection.addAlert(5);
-            return BT.State.Sucess;
+           
         }
-        else
+        if(enemy.detection.State==EnemyDetection.AlertState.Suspicious)
             return BT.State.Sucess;
+        else
+            return BT.State.Failure;
     }
 
 
