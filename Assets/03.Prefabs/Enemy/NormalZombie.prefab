@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7214537198796718081}
   - component: {fileID: 318045827772392430}
+  - component: {fileID: 5106752226988028009}
   m_Layer: 9
   m_Name: Head
   m_TagString: Untagged
@@ -53,6 +54,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.2, y: 0.2, z: 0.2}
   m_Center: {x: 0, y: 1.65, z: 0}
+--- !u!114 &5106752226988028009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3819926868477752158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72dbb354ddf4fbc41b6e30f829feb525, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partType: 0
+  enemy: {fileID: 8744665254089667080}
+  bloodEffectPrefab: {fileID: 1015234100233608938, guid: 06d8d3085cb283c48b5910d2925d5b6a, type: 3}
 --- !u!1 &4035325710203771788
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,7 +232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   partType: 1
   enemy: {fileID: 8744665254089667080}
-  bloodEffectPrefab: {fileID: 0}
+  bloodEffectPrefab: {fileID: 1015234100233608938, guid: 06d8d3085cb283c48b5910d2925d5b6a, type: 3}
 --- !u!1 &7445413985065963529
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,7 +282,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

@@ -28,7 +28,8 @@ public class HitBox : MonoBehaviour
         SpawnBloodEffect(pos,normal);
         if (partType == BodyPart.Head)
             finalDamage *= 2;
-
+        Debug.Log("ÃÑ ¸ÂÀ½");
+        enemy.animator.SetBool(enemy.aniPara.DamagedParaHash, true);
         enemy.Damaged(finalDamage);
     }
     public void Damaged(float dmg, RaycastHit hit)
