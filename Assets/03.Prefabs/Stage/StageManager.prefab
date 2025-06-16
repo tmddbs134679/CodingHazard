@@ -43,7 +43,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 0abb4daeb53503e4bae17c66d80a6187, type: 2}
-  m_InitialState: 1
+  m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
@@ -84,3 +84,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39e51e6f1cbb76c41bf410b9dc6e3a3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <PlayerController>k__BackingField: {fileID: 0}
