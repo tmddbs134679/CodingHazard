@@ -31,6 +31,7 @@ public class Knife : Weapon
 
     private void Update()
     {
+        base.Update();
         if (Input.GetMouseButtonDown(0))
         {
             Fire();

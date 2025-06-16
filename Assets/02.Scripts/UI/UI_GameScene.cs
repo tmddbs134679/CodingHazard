@@ -1,4 +1,4 @@
-using DG.Tweening;
+Ôªøusing DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -153,8 +153,8 @@ public class UI_GameScene : UI_Base
             if (pulseTween == null || !pulseTween.IsActive())
             {
                 pulseTween = GetImage((int)Images.OpenEye).transform.DOScale(1.2f, 0.2f)
-                    .SetLoops(-1, LoopType.Yoyo) //∑Á«¡
-                    .SetEase(Ease.InOutSine);   //º”µµ
+                    .SetLoops(-1, LoopType.Yoyo) //Î£®ÌîÑ
+                    .SetEase(Ease.InOutSine);   //ÏÜçÎèÑ
             }
         }
         else

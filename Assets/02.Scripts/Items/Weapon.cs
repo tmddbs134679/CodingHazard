@@ -102,7 +102,7 @@ public abstract class Weapon : MonoBehaviour
 
    
 
-    protected void DropItem()
+    public void DropItem()
     {
         Instantiate(DropObject, transform.position + transform.forward, Quaternion.identity);
         playerArm.SetActive(false);
@@ -122,7 +122,21 @@ public abstract class Weapon : MonoBehaviour
         muzzleFlash.SetActive(false);
     }
 
+    public WeaponType GetWeaponType()
+    {
+        return weapontype;
+    }
 
+    public void SwapWeaponOff()
+    {
+        playerArm.SetActive(false);
+        this.gameObject.SetActive(false);
+    }
+    public void SwapWeaponON()
+    {
+        playerArm.SetActive(true);
+        this.gameObject.SetActive(true);
+    }
 
     protected void PlayAttackAnimation(bool isAiming)
     {
