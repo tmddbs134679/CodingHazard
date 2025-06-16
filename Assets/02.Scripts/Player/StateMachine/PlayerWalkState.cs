@@ -59,7 +59,8 @@ public class PlayerWalkState : PlayerBaseState
         }
         
         // shift 
-        if (_stateMachine.Controller.isSprintHold) 
+        if (_stateMachine.Controller.isSprintHold
+            && _stateMachine.Controller.Condition.UseStamina(_stateMachine.SprintStamina))
         {
             _stateMachine.Controller.isWalking = false;
             _stateMachine.ChangeState(new PlayerSprintState(_stateMachine));
