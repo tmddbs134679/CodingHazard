@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public static class ect 
 {
@@ -14,7 +16,10 @@ public static class ect
         PointerExit,    
 
     }
-
+    public static void BindEvent(this GameObject go, Action action = null, Action<BaseEventData> dragAction = null, EUIEvent type = EUIEvent.Click)
+    {
+        UI_Base.BindEvent(go, action, dragAction, type);
+    }
     public static GameObject FindChild(GameObject go, string name = null, bool recursive = false)
     {
         Transform transform = FindChild<Transform>(go, name, recursive);
@@ -59,5 +64,10 @@ public static class ect
         if (component == null)
             component = go.AddComponent<T>();
         return component;
+    }
+
+    public static void OnHoverSetting(GameObject HoverObj, bool IsHover)
+    {
+        HoverObj.transform.GetChild(0).gameObject.SetActive(IsHover);
     }
 }

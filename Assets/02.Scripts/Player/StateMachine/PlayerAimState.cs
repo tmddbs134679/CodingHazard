@@ -11,7 +11,8 @@ public class PlayerAimState : PlayerBaseState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("Enter Aim State");
+        Debug.Log("Enter Aim State"); 
+        _stateMachine.Controller.fpsVirtualCamera.ZoomIn(-20f, 0.5f);
     }
 
     public override void Update()
@@ -35,7 +36,13 @@ public class PlayerAimState : PlayerBaseState
             OnAttackInput();
         }
     }
-    
+
+    public override void Exit()
+    {
+        base.Exit();
+        _stateMachine.Controller.fpsVirtualCamera.ZoomOut(0.5f);
+    }
+
     public override void OnAttackInput()
     {
         _controller.Attack();

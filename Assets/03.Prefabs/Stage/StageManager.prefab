@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &639385325565259286
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5093540425760484672}
+  - component: {fileID: 4200743599343868365}
+  - component: {fileID: 3848440280779670826}
+  m_Layer: 0
+  m_Name: StageManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5093540425760484672
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639385325565259286}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &4200743599343868365
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639385325565259286}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 0abb4daeb53503e4bae17c66d80a6187, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -8510249558276104957, guid: 0abb4daeb53503e4bae17c66d80a6187, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -7886709309272176043, guid: 0abb4daeb53503e4bae17c66d80a6187, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 212926228890387631, guid: 0abb4daeb53503e4bae17c66d80a6187, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 6471655532391745811, guid: 0abb4daeb53503e4bae17c66d80a6187, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -4709943566859770384, guid: 0abb4daeb53503e4bae17c66d80a6187, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -7843238964242802976, guid: 0abb4daeb53503e4bae17c66d80a6187, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -3523379381519852035, guid: 0abb4daeb53503e4bae17c66d80a6187, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 0}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References:
+    - f42452ca7646a33478746a5eea73e877: {fileID: 0}
+    - cc30ab11c3fdd804297d1d07d3238819: {fileID: 0}
+    - 79559960dc4b15d4292c70255838cbdd: {fileID: 0}
+    - 489c1d9cb9e10a140a3f3203c204b035: {fileID: 0}
+    - 99979cbbc6f47d343b37566bcbe8cb8e: {fileID: 0}
+    - ac17b54a370d6c24fa736e7656dd0756: {fileID: 0}
+--- !u!114 &3848440280779670826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639385325565259286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39e51e6f1cbb76c41bf410b9dc6e3a3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <PlayerController>k__BackingField: {fileID: 0}

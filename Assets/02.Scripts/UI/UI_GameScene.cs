@@ -33,8 +33,10 @@ public class UI_GameScene : UI_Base
     private Color choiceColor = new Color32(0x9C, 0xCF, 0x42, 0xFF);
     private const float fadeDuration = 5f;
     private float testhp = 100f;
+    private float testStaminaF = 100f;
     [SerializeField] private UI_HPBar testHP;
-
+    [SerializeField] private UI_StaminaBar testStamina;
+    [SerializeField] private UI_EditSetting testSetting;
 
 
     public override bool Init()
@@ -86,12 +88,21 @@ public class UI_GameScene : UI_Base
 
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            testHP.GetComponent<UI_HPBar>().SetHpRatio(ref testhp);
+            testHP.GetComponent<UI_HPBar>().SetHpRatio(TestGameManager.Instance.Player.GetComponent<PlayerCondition>().hp.curValue-= 20f);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            testStamina.GetComponent<UI_StaminaBar>().SetStaminaRatio(ref testStaminaF);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             UpdateBloodScreen();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            testSetting.gameObject.SetActive(!testSetting.gameObject.activeSelf);
         }
 
     }
@@ -166,13 +177,16 @@ public class UI_GameScene : UI_Base
         }
     }
 
+
+    private Tween _bloodTween;
     private void UpdateBloodScreen()
     {
-       
+        _bloodTween?.Kill();
+
         Color color = GetImage((int)Images.BloodScreen).color;
         color.a = 0f;
         GetImage((int)Images.BloodScreen).color = color;
-        GetImage((int)Images.BloodScreen).DOFade(0.3f, 0.2f)
+        _bloodTween = GetImage((int)Images.BloodScreen).DOFade(0.3f, 0.2f)
             .SetLoops(2, LoopType.Yoyo)
             .SetEase(Ease.InOutSine);
     }
