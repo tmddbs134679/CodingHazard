@@ -9,9 +9,9 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
 
     private string loadingScene = "LoadingScene";
     
-    private float minLoadingTime = 2;
+    private float minLoadingTime = 4;
     
-    private WaitForSeconds startLoadingTime = new (1);
+    private WaitForSeconds startLoadingTime = new (2);
     
     
     
@@ -35,7 +35,6 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
 
         float timer = 0f;
         float fakeProgress = 0f;
-
     
         while (!asyncOperation.isDone)
         {
