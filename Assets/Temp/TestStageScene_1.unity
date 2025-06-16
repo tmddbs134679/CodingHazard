@@ -8446,14 +8446,6 @@ PrefabInstance:
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 6061770143166161931}
-    - target: {fileID: 2695891007372459281, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
-      propertyPath: CameraRoot
-      value: 
-      objectReference: {fileID: 8318982697107898846}
-    - target: {fileID: 2695891007372459281, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
-      propertyPath: cameraRoot
-      value: 
-      objectReference: {fileID: 8318982697107898846}
     - target: {fileID: 4430118988471167130, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
       propertyPath: m_Name
       value: Player
@@ -57386,11 +57378,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &8318982697107898846 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4672825554018254697, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
-  m_PrefabInstance: {fileID: 300863947}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
