@@ -68,6 +68,7 @@ public class UI_GameScene : UI_Base
     {
         PlayerEvent.Swap += UpdateQuickSlot;
         PlayerEvent.OnDetectMonster += DetectionEyeVisible;
+        PlayerEvent.OnHpChanged += UpdateBloodScreen;
 
     }
 
@@ -75,43 +76,12 @@ public class UI_GameScene : UI_Base
     {
         PlayerEvent.Swap -= UpdateQuickSlot;
         PlayerEvent.OnDetectMonster -= DetectionEyeVisible;
+        PlayerEvent.OnHpChanged -= UpdateBloodScreen;
     }
 
     private void Update()
     {
-        //Test
-
-        //if(Input.GetKeyDown(KeyCode.Alpha1))
-        //{
-        //    UpdateQuickSlot(0);
-        //}
-        //else if(Input.GetKeyDown(KeyCode.Alpha2))
-        //{
-        //    UpdateQuickSlot(1);
-        //}
-
-        //if(Input.GetKeyDown(KeyCode.Alpha3))
-        //{
-        //    DetectionEyeVisible(true);
-        //}
-        //if (Input.GetKeyDown(KeyCode.Alpha4))
-        //{
-        //    DetectionEyeVisible(false);
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.Alpha5))
-        //{
-        //    testHP.GetComponent<UI_HPBar>().SetHpRatio(StageManager.Instance.PlayerController.GetComponent<PlayerCondition>().hp.curValue-= 20f);
-        //}
-        //if (Input.GetKeyDown(KeyCode.Alpha6))
-        //{
-        //    testStamina.GetComponent<UI_StaminaBar>().SetStaminaRatio(ref testStaminaF);
-        //}
-
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            UpdateBloodScreen();
-        }
+ 
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -192,7 +162,7 @@ public class UI_GameScene : UI_Base
 
 
     private Tween _bloodTween;
-    private void UpdateBloodScreen()
+    private void UpdateBloodScreen(float _)
     {
         _bloodTween?.Kill();
 
