@@ -64,8 +64,8 @@ public class PlayerController : MonoBehaviour
         
         stateMachine.MainCamTransform = Camera.main?.transform;
 
-        playerInput.Player.Rifle.performed += index => PlayerEvent.Swap?.Invoke(1);
-        playerInput.Player.Pistol.performed += index => PlayerEvent.Swap?.Invoke(0);
+        playerInput.Player.Rifle.performed += index => PlayerEvent.Swap?.Invoke(0);
+        playerInput.Player.Pistol.performed += index => PlayerEvent.Swap?.Invoke(1);
         playerInput.Player.Knife.performed += index => PlayerEvent.Swap?.Invoke(2);
         //012눌린 인덱스 번호를 주는 느낌으로 
         
