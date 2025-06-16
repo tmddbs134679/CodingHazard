@@ -34,7 +34,7 @@ public class PatrolNode : ActionNode
         }
 
         enemy.Controller.Look(dir);
-        enemy.Controller.Move(dir);
+        enemy.Controller.MoveTo(dir,true);
         var a = enemy.transform.position;
         a.y = 0;
         var b = targetPos;
