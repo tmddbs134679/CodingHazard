@@ -6,9 +6,9 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     [field: SerializeField] public GameSettingManager GraphicsSettingManager { get; private set; }
+ 
 
-
-    protected override void Awake()
+  protected override void Awake()
     {
         base.Awake();
         
