@@ -98,6 +98,23 @@ public class UI_DisplayPopup : UI_Base
         {
             GameObjects type = kvp.Key;
             kvp.Value.onValueChanged.AddListener((val) => UpdateSliderText(type, val));
+          
+
+          
+            if (type == GameObjects.SensitivitySlider)
+            {
+                kvp.Value.value = GameManager.Instance.GraphicsSettingManager.MouseSensitivity;
+
+                kvp.Value.onValueChanged.AddListener(GameManager.Instance.GraphicsSettingManager.SetMouseSensitivity);
+            }
+              
+
+            else if (type == GameObjects.FovSlider)
+            {
+                kvp.Value.value = GameManager.Instance.GraphicsSettingManager.FOV;
+                kvp.Value.onValueChanged.AddListener(GameManager.Instance.GraphicsSettingManager.SetFov);
+            }
+
             UpdateSliderText(type, kvp.Value.value);
         }
         return true;
