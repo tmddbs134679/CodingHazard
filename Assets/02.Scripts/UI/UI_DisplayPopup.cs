@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using static ect;
 
@@ -98,6 +99,23 @@ public class UI_DisplayPopup : UI_Base
         {
             GameObjects type = kvp.Key;
             kvp.Value.onValueChanged.AddListener((val) => UpdateSliderText(type, val));
+          
+
+          
+            if (type == GameObjects.SensitivitySlider)
+            {
+                kvp.Value.value = GameManager.Instance.GraphicsSettingManager.MouseSensitivity;
+
+                kvp.Value.onValueChanged.AddListener(GameManager.Instance.GraphicsSettingManager.SetMouseSensitivity);
+            }
+              
+
+            else if (type == GameObjects.FovSlider)
+            {
+                kvp.Value.value = GameManager.Instance.GraphicsSettingManager.FOV;
+                kvp.Value.onValueChanged.AddListener(GameManager.Instance.GraphicsSettingManager.SetFov);
+            }
+
             UpdateSliderText(type, kvp.Value.value);
         }
         return true;
@@ -147,6 +165,19 @@ public class UI_DisplayPopup : UI_Base
         bool isOn = tgl.isOn;
         activeObj.SetActive(isOn);
         inactiveObj.SetActive(!isOn);
+
+        if (tgl == GetToggle((int)Toggles.DOFToggle))
+            GameManager.Instance.GraphicsSettingManager.ToggleVolumeComponent<DepthOfField>(isOn);
+
+        else if (tgl == GetToggle((int)Toggles.AAToggle))
+        {
+            AntialiasingMode mode = (AntialiasingMode)(isOn ? 1 : 0);
+            GameManager.Instance.GraphicsSettingManager.SetAntiAliasingMode(mode);
+        }
+           
+
+        else if (tgl == GetToggle((int)Toggles.MotionBlurToggle))
+            GameManager.Instance.GraphicsSettingManager.ToggleVolumeComponent<MotionBlur>(isOn);
     }
 
  

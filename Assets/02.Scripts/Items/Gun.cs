@@ -9,13 +9,9 @@ public class Gun : Weapon
 
     [SerializeField] private FireMode fireMode;
     [SerializeField] private Transform firePoint;
-   
 
-    [Header("Weapon Pos")]
-    [SerializeField] private Transform weaponPos;
-    [SerializeField] private Transform normalPos;
-    [SerializeField] private Vector3 zoomPos;
 
+    [SerializeField] private int Ammo { get; set; }
 
     [Header("Camera")]
     [SerializeField] private float normalFOV = 50f;
@@ -40,7 +36,7 @@ public class Gun : Weapon
 
         base.Update();
 
-        HandleFireInput();
+      //  HandleFireInput();
 
 
         if (Input.GetMouseButtonDown(1))
@@ -85,6 +81,7 @@ public class Gun : Weapon
     public override void Fire()
     {
         base.Fire();
+        StartCoroutine("OnMuzzleFlashEffect");
         if (isShootable == false)
         {
             return;
@@ -95,18 +92,8 @@ public class Gun : Weapon
         PlaySound(audioClip);
 
         PlayAttackAnimation(isZoom);
-            
-       /*
-        if (isZoom == false)
-        {
-            WeaponAnimator.SetTrigger(FireTrigger);
-        }
-        else if (isZoom == true)
-        {
-            WeaponAnimator.SetTrigger(AimFireTrigger);
-        }
-        */
-
+         
+       
         if (Physics.Raycast(ray, out RaycastHit hit, range))
         {
             if (hit.collider.gameObject.layer != 9)

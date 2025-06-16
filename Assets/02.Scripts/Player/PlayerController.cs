@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -147,14 +147,22 @@ public class PlayerController : MonoBehaviour
     
     public void Attack()
     {
+        
         Debug.Log("PlayerController Attack Method");
         fpsVirtualCamera.PlayRecoilToFire(Vector3.one);
-        
+        PlayerEvent.OnAttack?.Invoke();
+        //공격 입력시 호출해주고 무기에서 Fire구독해서 사용할예정
+
+
+
         /*  // 현재 무기가 근접 무기일 경우 MeleeAttackState
          * if (현재 무기 == 근접 무기)
          *      stateMachine.ChangeState(new PlayerMeleeAttackState(stateMachine));
         
             // 주/보조 무기(총)일 경우 총을 쏘는 Method 실행
         */
+
+
+
     }
 }

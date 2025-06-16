@@ -28,10 +28,12 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected GameObject playerArm;
     [SerializeField] protected WeaponType weapontype;
 
+
     //Aciont
 
     protected static readonly int IsAiming = Animator.StringToHash("IsAiming");
-    //protected static readonly int IsMoving = Animator.StringToHash("IsMoving");
+    //protected static readonly int IsMoving = Animator.StringToHash("IsMoving"); 아직 애니메이션x
+    protected static readonly int ReLoadingTrigger = Animator.StringToHash("ReLoad");
     protected static readonly int AimFireTrigger = Animator.StringToHash("AimFire");
     protected static readonly int FireTrigger = Animator.StringToHash("Fire");
 
@@ -43,9 +45,15 @@ public abstract class Weapon : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    protected void OnEnable()
+    protected virtual void OnEnable()
     {
+        PlayerEvent.OnAttack += Fire;
+    }
 
+
+    protected void DisEnable()
+    {
+        PlayerEvent.OnAttack -= Fire;
     }
     protected void PlaySound(AudioClip clip)
     {
@@ -64,9 +72,10 @@ public abstract class Weapon : MonoBehaviour
         else
         {
 
-            StartCoroutine("OnMuzzleFlashEffect");
+
             isShootable = true;
             lastFireTime = Time.time;
+
         }
 
 
@@ -99,14 +108,9 @@ public abstract class Weapon : MonoBehaviour
 
     }
 
-    public void Damage()
-    {
-
-    }
 
 
-
-    protected void DropItem()
+    public void DropItem()
     {
         Instantiate(DropObject, transform.position + transform.forward, Quaternion.identity);
         playerArm.SetActive(false);
@@ -115,6 +119,10 @@ public abstract class Weapon : MonoBehaviour
 
     private IEnumerator OnMuzzleFlashEffect()
     {
+        if (muzzleFlash == null)
+        {
+            yield break;
+        }
         muzzleFlash.SetActive(true);
 
         yield return new WaitForSeconds(fireRate * 1.2f);
@@ -122,7 +130,23 @@ public abstract class Weapon : MonoBehaviour
         muzzleFlash.SetActive(false);
     }
 
+    public WeaponType GetWeaponType()
+    {
+        return weapontype;
+    }
 
+
+    public void SwapWeaponOff()
+    {
+        playerArm.SetActive(false);
+        this.gameObject.SetActive(false);
+    }
+    public void SwapWeaponON()
+    {
+
+        playerArm.SetActive(true);
+        this.gameObject.SetActive(true);
+    }
 
     protected void PlayAttackAnimation(bool isAiming)
     {
@@ -149,4 +173,6 @@ public abstract class Weapon : MonoBehaviour
                 break;
         }
     }
+
+  
 }

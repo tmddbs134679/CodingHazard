@@ -37,6 +37,7 @@ public class EnemyBase : MonoBehaviour
         bt = GetComponent<BT>();
         startPos = transform.position;
         detection = GetComponent<EnemyDetection>();
+        MonsterManager.Instance.AddMon(this);
         
     }
     private void Start()
@@ -64,7 +65,7 @@ public class EnemyBase : MonoBehaviour
     {
         isDead=true;
         Debug.Log("사망");
-       MonsterManager.Instance.Dead();
+       MonsterManager.Instance.Dead(this);
         
     }
     bool invincibility = false;
@@ -152,7 +153,7 @@ public class EnemyBase : MonoBehaviour
     }
     public void StopAttack()
     {
-        Debug.Log("공격 실패");
+      
         animator.SetBool(aniPara.AttackParaHash, false);
       
         if (attack != null) { 

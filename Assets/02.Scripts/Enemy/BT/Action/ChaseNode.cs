@@ -10,7 +10,7 @@ public class ChaseNode : ActionNode
       
         enemy.animator.SetBool(enemy.aniPara.RunParaHash, true);
         enemy.animator.SetBool(enemy.aniPara.walkParaHash, false);
-        Debug.Log("추적 진행중");
+      
         Vector3 dir = (enemy.detection.Target.transform.position - enemy.transform.position).normalized;
 
      
@@ -38,7 +38,7 @@ public class LChaseNode : ActionNode
 
         enemy.animator.SetBool(enemy.aniPara.RunParaHash, false);
         enemy.animator.SetBool(enemy.aniPara.walkParaHash, true);
-        Debug.Log("추적 진행중");
+       
         Vector3 dir = (enemy.detection.Target.transform.position - enemy.transform.position).normalized;
 
 

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -88,6 +88,7 @@ public class PlayerMoveState : PlayerBaseState
     
     public override void OnAttackInput()
     {
+        //이 상태일때 다르게 동작할때 무언가?
         _controller.Attack();
     }
 }
