@@ -64,7 +64,8 @@ public class PlayerController : MonoBehaviour
         Animator = GetComponentInChildren<Animator>();
         Controller = GetComponent<CharacterController>();
         ForceReceiver = GetComponent<ForceReceiver>();
-        
+
+
         stateMachine.MainCamTransform = Camera.main?.transform;
 
         playerInput.Player.Rifle.performed += index => PlayerEvent.Swap?.Invoke(0);
@@ -92,7 +93,9 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         // Player 시선에 따른 카메라 이동
-        Look();
+        //Look();
+        
+        fpsVirtualCamera.MouseDelta = playerActions.Look.ReadValue<Vector2>();
         
         // Crouch 판정 및 처리
         if (playerActions.Sit.WasPressedThisFrame())
@@ -125,7 +128,7 @@ public class PlayerController : MonoBehaviour
         return 2f; // fallback
     }
     
-    private void Look()
+    /*private void Look()
     {
         Vector2 mouseDelta = playerActions.Look.ReadValue<Vector2>();
     
@@ -137,7 +140,7 @@ public class PlayerController : MonoBehaviour
 
         camTrans.localRotation = Quaternion.Euler(xRotation, 0f, 0f); // 상하
         playerTrans.Rotate(Vector3.up * mouseX); // 좌우
-    }
+    }*/
 
     void Crouch(bool isCrouch)
     {
@@ -148,6 +151,7 @@ public class PlayerController : MonoBehaviour
             Animator.SetBool("isCrouching", true);
             Controller.height = 1.1f;
             Controller.center = new Vector3(0, 0.6f, 0f);
+            fpsVirtualCamera.SetCrouchAdjustment(new Vector3(0, -0.8f, 0f));
         }
         else
         {
@@ -155,6 +159,7 @@ public class PlayerController : MonoBehaviour
             Animator.SetBool("isCrouching", false);
             Controller.height = 1.9f;
             Controller.center = new Vector3(0, 1f, 0f);
+            fpsVirtualCamera.SetCrouchAdjustment(Vector3.zero);
         }
         
         // Crouch일 때의 카메라 이동 추가
