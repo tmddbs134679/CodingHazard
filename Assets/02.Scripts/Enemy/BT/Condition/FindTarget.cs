@@ -19,7 +19,7 @@ public class ListenTargetNode : ConditionNode
     {
        
      
-        //enemy.detection.addAlert(enemy.detection.ListenTarget());
+        enemy.detection.addAlert(enemy.detection.ListenTarget());
            
       
         if(enemy.detection.State==EnemyDetection.AlertState.Suspicious)

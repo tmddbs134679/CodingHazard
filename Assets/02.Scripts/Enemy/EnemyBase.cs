@@ -55,6 +55,7 @@ public class EnemyBase : MonoBehaviour
     {
         if (invincibility)
             return;
+        detection.SeeTarget();
         Debug.Log(dmg + " ¿‘¿Ω");
         isDamaged=true;
         invincibility=false;
@@ -148,6 +149,7 @@ public class EnemyBase : MonoBehaviour
     public void StartAttack()
     {
         detection.SeeTarget();
+        controller.Look(detection.Target.gameObject.transform.position-transform.position);
         animator.SetBool(aniPara.AttackParaHash, true);
         animator.SetBool(aniPara.RunParaHash, false);
         if (attack == null) {
