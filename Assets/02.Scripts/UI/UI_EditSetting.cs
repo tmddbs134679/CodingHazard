@@ -34,6 +34,17 @@ public class UI_EditSetting : UI_Base
     //임시 연결
     [SerializeField] private UI_AudioPopup _AudioPopup;
     [SerializeField] private UI_DisplayPopup _DisplayPopup;
+
+    private void OnEnable()
+    {
+        _DisplayPopup.gameObject.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        _DisplayPopup.gameObject.SetActive(false);
+        _AudioPopup.gameObject.SetActive(false);
+    }
     public override bool Init()
     {
         #region Object Bind
