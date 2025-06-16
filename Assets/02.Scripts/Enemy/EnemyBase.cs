@@ -55,6 +55,7 @@ public class EnemyBase : MonoBehaviour
     {
         if (invincibility)
             return;
+        detection.SeeTarget();
         Debug.Log(dmg + " ¿‘¿Ω");
         isDamaged=true;
         invincibility=false;
@@ -133,20 +134,22 @@ public class EnemyBase : MonoBehaviour
     }
     IEnumerator AttackE()
     {
-        while (true)
-        {
+        
             isAttack = true;
             animator.SetBool(aniPara.AttackParaHash, true);
             Attack();
-            animator.SetBool(aniPara.AttackParaHash, false);
+           
            
             yield return new WaitForSeconds(status.AttackCoolTime);
-        }
+            animator.SetBool(aniPara.AttackParaHash, false);
+            isAttack = false;
+        attack= null;
     }
     Coroutine attack=null;
     public void StartAttack()
     {
         detection.SeeTarget();
+        controller.Look(detection.Target.gameObject.transform.position-transform.position);
         animator.SetBool(aniPara.AttackParaHash, true);
         animator.SetBool(aniPara.RunParaHash, false);
         if (attack == null) {
@@ -154,15 +157,7 @@ public class EnemyBase : MonoBehaviour
           }
         
     }
-    public void StopAttack()
-    {
-      isAttack=false;
-        animator.SetBool(aniPara.AttackParaHash, false);
-      
-        if (attack != null) { 
-            StopCoroutine(attack);
-        }
-    }
+ 
     void OnDrawGizmos()
     {
         if (status == null) return;

@@ -104,14 +104,13 @@ public class Gun : Weapon
 
                
             }
-            if (hit.collider.TryGetComponent<EnemyBase>(out var enemy))
+            if (hit.collider.TryGetComponent<HitBox>(out var enemy))
             {
-                if (!enemy.IsDead)
-                {
+                
                     //나중에 변경될 수 있음 
-                    enemy.Damaged(damage);
-                  Debug.Log("공격 성공");
-                }
+                    enemy.Damaged(damage,hit);
+             
+                
             }
 
           
