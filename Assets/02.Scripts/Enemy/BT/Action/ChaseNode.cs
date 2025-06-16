@@ -11,7 +11,7 @@ public class ChaseNode : ActionNode
         enemy.animator.SetBool(enemy.aniPara.RunParaHash, true);
         enemy.animator.SetBool(enemy.aniPara.walkParaHash, false);
         Debug.Log("추적 진행중");
-        Vector3 dir = (enemy.Target.transform.position - enemy.transform.position).normalized;
+        Vector3 dir = (enemy.detection.Target.transform.position - enemy.transform.position).normalized;
 
         Debug.Log(enemy.transform.position);
         Debug.Log(dir);
@@ -20,8 +20,8 @@ public class ChaseNode : ActionNode
         forward.y = 0;
          enemy.Controller.Look(dir);
             
-        enemy.Controller.Move(dir*3f);
-        float distance = Vector3.Distance(enemy.Target.transform.position, enemy.transform.position);
+        enemy.Controller.MoveTo(enemy.detection.Target.transform.position,true);
+        float distance = Vector3.Distance(enemy.detection.Target.transform.position, enemy.transform.position);
 
         if (distance < 0.1f)
         {

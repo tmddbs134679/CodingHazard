@@ -18,9 +18,10 @@ public class BT : MonoBehaviour
         SequenceNode attack = new SequenceNode(new List<INode>{ new canAttackNode(), new AttackNode() });
         SelectorNode attackF=new SelectorNode( new List<INode> {attack,new StopAttackNode() });
         SequenceNode find = new SequenceNode(new List<INode> { new LookTargetNode(),new ChaseNode() });
+        SequenceNode idle = new SequenceNode(new List<INode> {new ListenTargetNode() ,new IdleNode() });
         SequenceNode isDamaged = new SequenceNode(new List<INode> {new IsDamaged(),new DamagedNode() });
         SequenceNode isDead = new SequenceNode(new List<INode> { new IsDeadNode(), new DeadNode() });
-        root = new SelectorNode(new List<INode> { isDead,isDamaged,attackF, find,new IdleNode() });
+        root = new SelectorNode(new List<INode> { isDead, isDamaged, attackF, find, idle });
     }
     public void StartBT(EnemyBase enemy)
     {

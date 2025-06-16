@@ -6,12 +6,15 @@ using UnityEngine.UIElements;
 
 public class EnemyBase : MonoBehaviour
 {
+  
     //[SerializeField]
     private EnemyController controller;
     [SerializeField]
     private EnemyStatus status;
     [SerializeField]
     public EnemyAnimation aniPara;
+    [SerializeField]
+    public EnemyDetection detection;
     bool isDamaged;
     public bool IsDamaged { set { isDamaged = value; }  get { return isDamaged; } }
     bool isDead;
@@ -20,11 +23,9 @@ public class EnemyBase : MonoBehaviour
     public EnemyController Controller {  get { return controller; } }
     public EnemyStatus Status { get { return status; } }
     public Animator animator;
-    [SerializeField]
-    private LayerMask targetMask;
+
     private BT bt;
-    private GameObject target; //아직 모르겠지만 플레이어 스크립트로 변경 필요
-    public GameObject Target { get { return target; } }
+
     public Vector3 startPos;
 
     float hp;
@@ -35,6 +36,7 @@ public class EnemyBase : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         bt = GetComponent<BT>();
         startPos = transform.position;
+        detection = GetComponent<EnemyDetection>();
         
     }
     private void Start()
@@ -43,6 +45,7 @@ public class EnemyBase : MonoBehaviour
         controller.Init(status.MoveSpeed);
         bt.MakeBT();
         bt.StartBT(this);
+        detection.Init(status.SightRange, status.SightAngle, status.SoundRange, status.AttackRange);
         hp=status.HP;
     }
     public void Damaged(float dmg)
@@ -119,33 +122,7 @@ public class EnemyBase : MonoBehaviour
             DeadC = StartCoroutine(MotionE2(aniPara.DeadParaHash));
        
     }
-    public bool FindTarget()
-    {
-        Debug.Log("탐색");
-        Collider[] hits = Physics.OverlapSphere(transform.position, status.SightRange, targetMask);
-        Debug.Log(hits.Length); 
-        foreach(var hit in hits)
-        {
-            Debug.Log("성공");
-            target = hit.gameObject;
-            return true;
-        }
-        target = null;
-       return false;
-       
-    }
-    public bool CanAttack()
-    {
-        if(!FindTarget())
-            return false;
-        if(Vector3.Distance(target.transform.position,transform.position)<=status.AttackRange)
-        {
-          
-            return true;
-        }
-      
-        return false;
-    }
+ 
     void Attack()
     {
         Debug.Log("공격");
@@ -189,6 +166,14 @@ public class EnemyBase : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, status.SightRange);
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, status.AttackRange);
+        
+
+        Vector3 l= Quaternion.Euler(0, status.SightAngle * 0.5f, 0) * transform.forward;
+        Vector3 r = Quaternion.Euler(0, -status.SightAngle * 0.5f, 0) * transform.forward;
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(transform.position, transform.position + l * status.SightRange);
+        Gizmos.DrawLine(transform.position, transform.position + r * status.SightRange);
     }
     public void Update()
     {
