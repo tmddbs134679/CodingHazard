@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static ect;
 
 public class UI_DisplayPopup : UI_Base
 {
@@ -12,6 +13,16 @@ public class UI_DisplayPopup : UI_Base
 
     enum GameObjects
     {
+        MouseSensitivity,
+        FOV,
+        DOF,
+        AA,
+        MotionBlur,
+        Mousebg,
+        FOVbg,
+        DOFbg,
+        AAbg,
+        MotionBlurbg,
         SensitivitySlider,
         FovSlider,
         DOFActiveObject,
@@ -19,7 +30,7 @@ public class UI_DisplayPopup : UI_Base
         AAActiveObject,
         AAInActiveObject,
         MotionBlurActiveObject,
-        MotionBlurInActiveObject
+        MotionBlurInActiveObject,
 
     }
     enum Toggles
@@ -45,7 +56,9 @@ public class UI_DisplayPopup : UI_Base
         BindObject(typeof(GameObjects));
         BindToggle(typeof(Toggles));
         BindText(typeof(Texts));
+
         TogglesInit();
+        BackGroundInit();
 
         #endregion
         GetToggle((int)Toggles.DOFToggle).gameObject.BindEvent(() =>
@@ -78,6 +91,9 @@ public class UI_DisplayPopup : UI_Base
         SliderTexts.Add(GameObjects.SensitivitySlider, GetText((int)Texts.SensitiveValueText));
         SliderTexts.Add(GameObjects.FovSlider, GetText((int)Texts.FovValueText));
 
+        HoverInit();
+
+
         foreach (var kvp in Sliders)
         {
             GameObjects type = kvp.Key;
@@ -87,6 +103,31 @@ public class UI_DisplayPopup : UI_Base
         return true;
     }
 
+    private void BackGroundInit()
+    {
+        GetObject((int)GameObjects.Mousebg).SetActive(false);
+        GetObject((int)GameObjects.FOVbg).SetActive(false);
+        GetObject((int)GameObjects.DOFbg).SetActive(false);
+        GetObject((int)GameObjects.AAbg).SetActive(false);
+        GetObject((int)GameObjects.MotionBlurbg).SetActive(false);
+    }
+
+    private void HoverInit()
+    {
+        GetObject((int)GameObjects.MouseSensitivity).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.MouseSensitivity), true), null, EUIEvent.PointerEnter);
+        GetObject((int)GameObjects.MouseSensitivity).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.MouseSensitivity), false), null, EUIEvent.PointerExit);
+        GetObject((int)GameObjects.FOV).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.FOV), true), null, EUIEvent.PointerEnter);
+        GetObject((int)GameObjects.FOV).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.FOV), false), null, EUIEvent.PointerExit);
+        GetObject((int)GameObjects.DOF).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.DOF), true), null, EUIEvent.PointerEnter);
+        GetObject((int)GameObjects.DOF).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.DOF), false), null, EUIEvent.PointerExit);
+        GetObject((int)GameObjects.AA).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.AA), true), null, EUIEvent.PointerEnter);
+        GetObject((int)GameObjects.AA).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.AA), false), null, EUIEvent.PointerExit);
+        GetObject((int)GameObjects.MotionBlur).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.MotionBlur), true), null, EUIEvent.PointerEnter);
+        GetObject((int)GameObjects.MotionBlur).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.MotionBlur), false), null, EUIEvent.PointerExit);
+
+    }
+
+ 
 
     void UpdateSliderText(GameObjects type, float value)
     {
@@ -108,4 +149,5 @@ public class UI_DisplayPopup : UI_Base
         inactiveObj.SetActive(!isOn);
     }
 
+ 
 }

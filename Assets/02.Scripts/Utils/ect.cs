@@ -65,4 +65,9 @@ public static class ect
             component = go.AddComponent<T>();
         return component;
     }
+
+    public static void OnHoverSetting(GameObject HoverObj, bool IsHover)
+    {
+        HoverObj.transform.GetChild(0).gameObject.SetActive(IsHover);
+    }
 }

@@ -2,14 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static ect;
 
 public class UI_AudioPopup : UI_Base
 {
     #region Enum
     enum GameObjects
     {
+        Master,
+        Bgm,
+        SFX,
+        Voice,
         MasterVloume,
         BGMVloume,
         SFXVolume,
@@ -26,6 +32,14 @@ public class UI_AudioPopup : UI_Base
         SFXInActiveObject,
         VoiceActiveObject,
         VoiceInActiveObject,
+        Masterbg,
+        MasterVloumebg,
+        BGMbg,
+        BGMVloumebg,
+        SFXbg,
+        SFXVolumebg,
+        Voicebg,
+        VoiceVolumebg,
     }
     enum Buttons
     {
@@ -63,11 +77,9 @@ public class UI_AudioPopup : UI_Base
         BindText(typeof(Texts));
         BindToggle(typeof(Toggles));
 
-     
 
-
+        HoverInit();
         #endregion
-
         GetToggle((int)Toggles.MasterToggle).gameObject.BindEvent(() =>
         {
             OnClickToggle(
@@ -114,8 +126,9 @@ public class UI_AudioPopup : UI_Base
         volumeTexts.Add(GameObjects.SFXSlider, GetText((int)Texts.SFXValueText));
         volumeSliders.Add(GameObjects.VoiceSlider, GetObject((int)GameObjects.VoiceSlider).GetComponent<Slider>());
         volumeTexts.Add(GameObjects.VoiceSlider, GetText((int)Texts.VoiceValueText));
+
         TogglesInit();
-        // Refresh();
+        BackgroundInit();
 
         foreach (var kvp in volumeSliders)
         {
@@ -127,6 +140,8 @@ public class UI_AudioPopup : UI_Base
         }
         return true;
     }
+
+
 
     private void TogglesInit()
     {
@@ -156,5 +171,36 @@ public class UI_AudioPopup : UI_Base
     void UpdateVolumeText(GameObjects type, float value)
     {
         volumeTexts[type].text = $"{Mathf.RoundToInt(value * 100)}";
+    }
+    private void BackgroundInit()
+    {
+        GetObject((int)GameObjects.MasterVloumebg).SetActive(false);
+        GetObject((int)GameObjects.Masterbg).SetActive(false);
+        GetObject((int)GameObjects.BGMVloumebg).SetActive(false);
+        GetObject((int)GameObjects.BGMbg).SetActive(false);
+        GetObject((int)GameObjects.SFXVolumebg).SetActive(false);
+        GetObject((int)GameObjects.SFXbg).SetActive(false);
+        GetObject((int)GameObjects.VoiceVolumebg).SetActive(false);
+        GetObject((int)GameObjects.Voicebg).SetActive(false);
+    }
+
+    private void HoverInit()
+    {
+        GetObject((int)GameObjects.Master).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.Master), true), null, EUIEvent.PointerEnter);
+        GetObject((int)GameObjects.Master).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.Master), false), null, EUIEvent.PointerExit);
+        GetObject((int)GameObjects.MasterVloume).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.MasterVloume), true), null, EUIEvent.PointerEnter);
+        GetObject((int)GameObjects.MasterVloume).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.MasterVloume), false), null, EUIEvent.PointerExit);
+        GetObject((int)GameObjects.Bgm).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.Bgm), true), null, EUIEvent.PointerEnter);
+        GetObject((int)GameObjects.Bgm).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.Bgm), false), null, EUIEvent.PointerExit);
+        GetObject((int)GameObjects.BGMVloume).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.BGMVloume), true), null, EUIEvent.PointerEnter);
+        GetObject((int)GameObjects.BGMVloume).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.BGMVloume), false), null, EUIEvent.PointerExit);
+        GetObject((int)GameObjects.SFX).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.SFX), true), null, EUIEvent.PointerEnter);
+        GetObject((int)GameObjects.SFX).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.SFX), false), null, EUIEvent.PointerExit);
+        GetObject((int)GameObjects.SFXVolume).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.SFXVolume), true), null, EUIEvent.PointerEnter);
+        GetObject((int)GameObjects.SFXVolume).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.SFXVolume), false), null, EUIEvent.PointerExit);
+        GetObject((int)GameObjects.Voice).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.Voice), true), null, EUIEvent.PointerEnter);
+        GetObject((int)GameObjects.Voice).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.Voice), false), null, EUIEvent.PointerExit);
+        GetObject((int)GameObjects.VoiceVolume).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.VoiceVolume), true), null, EUIEvent.PointerEnter);
+        GetObject((int)GameObjects.VoiceVolume).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.VoiceVolume), false), null, EUIEvent.PointerExit);
     }
 }
