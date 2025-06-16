@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Components
+    public PlayerCondition Condition { get; private set; }
     public Animator Animator { get; private set; }
     public CharacterController Controller { get; private set; }
     public ForceReceiver ForceReceiver { get; private set; }
@@ -54,7 +55,8 @@ public class PlayerController : MonoBehaviour
     {
         playerInput = new PlayerInputs();
         playerActions = playerInput.Player;
-        
+
+        Condition = GetComponent<PlayerCondition>();
         stateMachine = new PlayerStateMachine(this);
         Animator = GetComponentInChildren<Animator>();
         Controller = GetComponent<CharacterController>();
@@ -147,6 +149,20 @@ public class PlayerController : MonoBehaviour
         if (curMovementInput != Vector2.zero)
         {
             fpsVirtualCamera.UpdateHeadBob(moveSpeed);
+        }
+        
+        if (isSprintHold 
+            && stateMachine.CurrentState is PlayerSprintState)
+        {
+            Debug.Log("Sprint Zoom In");
+            fpsVirtualCamera.ZoomIn(20f, 0.5f);
+        }
+
+        if (!isSprintHold
+            && stateMachine.CurrentState is PlayerSprintState)
+        {
+            Debug.Log("Sprint Zoom Out");
+            fpsVirtualCamera.ZoomOut(0.5f);
         }
     }
 

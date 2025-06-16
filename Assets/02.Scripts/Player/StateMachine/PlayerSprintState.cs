@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerSprintState : PlayerBaseState
 {
-    private float sprintDuration = 1f;
+    private float stamina;
+    public float sprintDuration;
     private float time = 0f;
     private Vector3 sprintDirection;
     
@@ -15,8 +16,10 @@ public class PlayerSprintState : PlayerBaseState
     public override void Enter()
     {
         base.Enter();
-        _stateMachine.Controller.isSprinting = true;
         Debug.Log("Enter SprintState");
+        
+        _stateMachine.Controller.isSprinting = true;
+        stamina = _stateMachine.Controller.Condition.stamina.curValue;
         time = 0f;
 
         if (_controller.isCrouching)
@@ -29,7 +32,7 @@ public class PlayerSprintState : PlayerBaseState
     {
         time += Time.deltaTime;
         sprintDirection = _stateMachine.Controller.playerTrans.forward;
-        if (time >= sprintDuration)
+        if (stamina <= 0)
         {
             _stateMachine.Controller.isSprinting = false;
             // Sprint 끝나면 Move 상태로 전환
