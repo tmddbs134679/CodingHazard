@@ -117,7 +117,7 @@ public class UI_GameScene : UI_Base
     private Sequence currentSequence; 
     private void UpdateQuickSlot(int selectedWeaponIndex)
     {
-        selectedWeaponIndex -= 1;
+        //selectedWeaponIndex;
         if (currentSequence != null && currentSequence.IsActive())
         {
             currentSequence.Kill(); 

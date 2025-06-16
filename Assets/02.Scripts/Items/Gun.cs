@@ -41,6 +41,7 @@ public class Gun : Weapon
 
         if (Input.GetMouseButtonDown(1))
         {
+            //이벤트 연결하기 
             isZoom = !isZoom;
             ZoomWeapon();
         }
