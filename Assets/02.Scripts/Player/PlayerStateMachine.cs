@@ -9,6 +9,7 @@ public class PlayerStateMachine
     public float MovementSpeed { get; set; } = 5f;
     public float WalkSpeed { get; set; } = 2.5f;
     public float SprintSpeed { get; set; } = 10f;
+    public float curMoveSpeed { get; set; }
 
     public PlayerStateMachine(PlayerController controller)
     {

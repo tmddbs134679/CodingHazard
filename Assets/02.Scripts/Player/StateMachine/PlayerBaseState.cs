@@ -30,6 +30,7 @@ public abstract class PlayerBaseState : State
     
     protected void Move(Vector3 direction, float speed)
     {
+        _controller.stateMachine.curMoveSpeed = speed;
         _controller.Controller.Move(((direction * speed) + _controller.ForceReceiver.Movement) * Time.deltaTime);
     }
     

@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
     public Transform playerTrans;
     private Transform camTrans;
     private float xRotation = 0f;
-
     
     public bool isWalking = false;
     public bool isWalkingHold => playerActions.Walk.IsPressed();
@@ -33,6 +32,10 @@ public class PlayerController : MonoBehaviour
     public bool isJumping = false;
     public bool isJumpPressed => playerActions.Jump.WasPressedThisFrame();
     
+    
+    private Vector2 curMovementInput;
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private FPSVirtualCamera fpsVirtualCamera;
     
     private void Awake()
     {
@@ -82,6 +85,30 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log("UnCrouch");
             }
+        }
+        
+        
+        curMovementInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        moveSpeed = stateMachine.curMoveSpeed;
+        
+        if (Input.GetMouseButton(0))
+        {
+            fpsVirtualCamera.PlayRecoilToFire(Vector3.one);
+        }
+        
+        if (Input.GetMouseButtonDown(1))
+        {
+            fpsVirtualCamera.ZoomIn(-20f, 0.5f);
+        }
+        
+        if (Input.GetMouseButtonUp(1))
+        {
+            fpsVirtualCamera.ZoomOut(0.5f);
+        }
+
+        if (curMovementInput != Vector2.zero)
+        {
+            fpsVirtualCamera.UpdateHeadBob(moveSpeed);
         }
     }
     
