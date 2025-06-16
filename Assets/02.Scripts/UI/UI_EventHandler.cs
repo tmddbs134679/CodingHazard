@@ -20,8 +20,6 @@ public class UI_EventHandler : MonoBehaviour, IPointerEnterHandler, IPointerExit
             OnPressedHandler?.Invoke();
     }
 
-
-
     public void OnPointerClick(PointerEventData eventData)
     {
         if (OnClickHandler != null)
