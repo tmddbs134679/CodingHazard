@@ -6,12 +6,9 @@ public class PlayerStateMachine
     public PlayerBaseState CurrentState { get; private set; }
     
     public Transform MainCamTransform { get; set; }
-    public Vector2 MovementInput { get; set; }
     public float MovementSpeed { get; set; } = 5f;
     public float WalkSpeed { get; set; } = 2.5f;
-    public float RunSpeed { get; set; } = 6f;
-    public float DashSpeed { get; set; } = 10f;
-    public float MovementSpeedModifier { get; set; } = 1f;
+    public float SprintSpeed { get; set; } = 10f;
 
     public PlayerStateMachine(PlayerController controller)
     {

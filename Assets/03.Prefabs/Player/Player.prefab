@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8504809558934303775}
   - component: {fileID: 2935734520205779656}
   - component: {fileID: 2695891007372459281}
+  - component: {fileID: 4950234256913021620}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -54,13 +55,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.8
+  m_Height: 1.9
   m_Radius: 0.3
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.9, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &2695891007372459281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,9 +74,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 316d87c1b82234b588925a14bc380755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minXLook: -60
-  maxXLook: 30
+  minXLook: -30
+  maxXLook: 60
   lookSensitivity: 80
+  playerTrans: {fileID: 0}
+  isWalking: 0
+  isMoving: 0
+  isCrouching: 0
+  isSprinting: 0
+  isReloading: 0
+  isAiming: 0
+  isAttacking: 0
+  isJumping: 0
+--- !u!114 &4950234256913021620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4430118988471167130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93b7fa5577a4f453daf27bd07b440256, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 2935734520205779656}
 --- !u!1 &5963799915317392943
 GameObject:
   m_ObjectHideFlags: 0

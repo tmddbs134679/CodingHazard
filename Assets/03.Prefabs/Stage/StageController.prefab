@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5093540425760484672}
   - component: {fileID: 4200743599343868365}
+  - component: {fileID: 3848440280779670826}
   m_Layer: 0
   m_Name: StageController
   m_TagString: Untagged
@@ -61,6 +62,8 @@ PlayableDirector:
     value: {fileID: 0}
   - key: {fileID: -3523379381519852035, guid: 0abb4daeb53503e4bae17c66d80a6187, type: 2}
     value: {fileID: 0}
+  - key: {fileID: 0}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References:
     - f42452ca7646a33478746a5eea73e877: {fileID: 0}
@@ -69,3 +72,15 @@ PlayableDirector:
     - 489c1d9cb9e10a140a3f3203c204b035: {fileID: 0}
     - 99979cbbc6f47d343b37566bcbe8cb8e: {fileID: 0}
     - ac17b54a370d6c24fa736e7656dd0756: {fileID: 0}
+--- !u!114 &3848440280779670826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639385325565259286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39e51e6f1cbb76c41bf410b9dc6e3a3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

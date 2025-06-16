@@ -146,7 +146,7 @@ Transform:
   m_GameObject: {fileID: 3638429858540867475}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0000019073486, y: 1.000011, z: 0.0000076293945}
+  m_LocalPosition: {x: 0.0000066115317, y: 1.0000122, z: 0.000008526606}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -345,7 +345,7 @@ GameObject:
   - component: {fileID: 6577466665151467135}
   - component: {fileID: 5106588735208714676}
   - component: {fileID: 3797000011525703524}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TestPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -461,7 +461,7 @@ Transform:
   m_GameObject: {fileID: 8273567647458082944}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0000019073486, y: 1.000011, z: 0.0000076293945}
+  m_LocalPosition: {x: 0.0000066115317, y: 1.0000122, z: 0.000008526606}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -542,6 +542,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43d5e89e7951fee4687cda04f773cb13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dofLayerMask:
+    serializedVersion: 2
+    m_Bits: 951
   headbobFrequency: 10
   headbobAmplitude: 0.05
   minXLook: -85

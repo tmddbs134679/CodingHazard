@@ -53,7 +53,6 @@ public class FPSVirtualCamera : MonoBehaviour
         {
             _dof = dof;
         }
-        
 
         _gameSettingManager.OnChangedFOV += ChangeFOV;
         
@@ -89,7 +88,7 @@ public class FPSVirtualCamera : MonoBehaviour
 
         if (_dof != null)
         {
-            Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, dofLayerMask);
+            Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 1000f, dofLayerMask);
 
             if (hit.collider != null)
             {
@@ -110,7 +109,8 @@ public class FPSVirtualCamera : MonoBehaviour
 
         _curRecoil = Vector3.zero;
     }
- 
+
+    private Material mat;
     
     public void ZoomIn(float zoomValue, float duration)
     {
