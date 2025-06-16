@@ -17,33 +17,39 @@ public class PlayerInteraction : MonoBehaviour
         if (Time.time - lastCheckTime > checkRate)
         {
             lastCheckTime = Time.time;
-
+            
             Ray ray = GetComponentInChildren<Camera>().ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
             RaycastHit hit;
-
+            
+            Debug.DrawRay(ray.origin, ray.direction * interactableDistance, Color.red, 0.1f);
+            
             if (Physics.Raycast(ray, out hit, interactableDistance, interactableLayer))
             {
                 DroppedItem item = hit.collider.GetComponent<DroppedItem>();
-
+                
                 if (item != null)
                 {
-                    currentTargetItem = item;
+                    // Fake Null 상태로... 이중 확인
+                    if (currentTargetItem != null && currentTargetItem == null)
+                    {
+                        currentTargetItem = null;
+                    }
                     
                     if (currentTargetItem != item)
                     {
-                        //currentTargetItem?.ToggleOutline(false);
+                        currentTargetItem?.ToggleOutline(false);
                         currentTargetItem = item;
-                        //currentTargetItem.ToggleOutline(true);
+                        currentTargetItem.ToggleOutline(true);
                     }
+                    return;
                 }
-                return;
             }
-
-            /*if (currentTargetItem != null)
+            
+            if (currentTargetItem != null)
             {
-                //currentTargetItem.ToggleOutline(false);
+                currentTargetItem.ToggleOutline(false);
                 currentTargetItem = null;
-            }*/
+            }
         }
     }
     
