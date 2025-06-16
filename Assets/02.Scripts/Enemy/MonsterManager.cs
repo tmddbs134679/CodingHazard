@@ -6,6 +6,7 @@ using UnityEngine;
 public class MonsterManager : Singleton<MonsterManager>
 {
     List<EnemyBase> monsters=new List<EnemyBase> ();
+    private bool isDetected = false; 
 
     int monNum;
     int suspiciousNum;
@@ -47,5 +48,17 @@ public class MonsterManager : Singleton<MonsterManager>
         elertNum++;
         else
             elertNum--;
+
+        PlayerEvent.OnDetectMonster?.Invoke(elertNum > 0);
+    }
+
+    private void CheckDetectionState()
+    {
+        bool nowDetected = monNum > 0;
+
+        if (nowDetected != isDetected)
+        {
+            isDetected = nowDetected;
+        }
     }
 }

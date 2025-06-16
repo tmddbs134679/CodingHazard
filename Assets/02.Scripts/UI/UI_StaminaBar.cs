@@ -30,6 +30,7 @@ public class UI_StaminaBar : UI_Base
 
     public void SetStaminaRatio(float curvalue)
     {
+        //스테미나 확실하게 ㅁ어케 작동하는지 모르겠음
         float ratio = Mathf.Clamp01(curvalue / StageManager.Instance.PlayerController.GetComponent<PlayerCondition>().stamina.maxValue);
         float scaledRatio = ratio * clampratio;
         GetImage((int)Images.StaminaBar).fillAmount = scaledRatio;

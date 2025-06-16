@@ -24,6 +24,19 @@ public class UI_CrossHair : UI_Base
 
     private Vector3 _originalScale;
 
+
+    private void OnEnable()
+    {
+        PlayerEvent.OnKillConfirmed += AnimateKillCrosshair;
+        PlayerEvent.OnMonsterHit += MonsterHitCrossHair;
+    }
+
+
+    private void OnDisable()
+    {
+        PlayerEvent.OnKillConfirmed -= AnimateKillCrosshair;
+        PlayerEvent.OnMonsterHit -= MonsterHitCrossHair;
+    }
     public override bool Init()
     {
         if (base.Init() == false)
@@ -71,21 +84,18 @@ public class UI_CrossHair : UI_Base
             AinmateAimCrosshair();
             
         }
-        else if (Input.GetKeyDown(KeyCode.M))
-        {
-            GetObject((int)GameObjects.DamageCrossHair).SetActive(true);
-            AnimateRecoilCrosshair(GetObject((int)GameObjects.DamageCrossHair));
-            AutoHideAfterDelay(GetObject((int)GameObjects.DamageCrossHair));
-        }
-        else if (Input.GetKeyDown(KeyCode.N))
-        {
-            GetObject((int)GameObjects.KillEffectCrossHair).SetActive(true);
-            AnimateKillCrosshair();
-        }
+ 
     }
 
     private const float tweenDuration = 0.1f;
 
+
+    private void MonsterHitCrossHair()
+    {
+        GetObject((int)GameObjects.DamageCrossHair).SetActive(true);
+        AnimateRecoilCrosshair(GetObject((int)GameObjects.DamageCrossHair));
+        AutoHideAfterDelay(GetObject((int)GameObjects.DamageCrossHair));
+    }
     //�Ѿ��� �߻�� �� ����
     private void AnimateRecoilCrosshair(GameObject crossHair)
     {
@@ -147,6 +157,7 @@ public class UI_CrossHair : UI_Base
     [SerializeField] private float fadeDuration = 0.5f;
     public void AnimateKillCrosshair()
     {
+        GetObject((int)GameObjects.KillEffectCrossHair).SetActive(true);
         foreach (var image in killCrossHairs)
         {
             if (image == null) continue;

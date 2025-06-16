@@ -55,6 +55,7 @@ public class EnemyBase : MonoBehaviour
     {
         if (invincibility)
             return;
+        PlayerEvent.OnMonsterHit?.Invoke();
         detection.SeeTarget();
         Debug.Log(dmg + " ¿‘¿Ω");
         isDamaged=true;
@@ -69,7 +70,7 @@ public class EnemyBase : MonoBehaviour
         isDead=true;
         Debug.Log("ªÁ∏¡");
        MonsterManager.Instance.Dead(this);
-        
+        PlayerEvent.OnKillConfirmed?.Invoke();
     }
     bool invincibility = false;
     IEnumerator MotionE(int para)

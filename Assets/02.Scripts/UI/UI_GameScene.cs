@@ -67,7 +67,14 @@ public class UI_GameScene : UI_Base
     private void OnEnable()
     {
         PlayerEvent.Swap += UpdateQuickSlot;
-        PlayerEvent.Swap += UpdateQuickSlot;
+        PlayerEvent.OnDetectMonster += DetectionEyeVisible;
+
+    }
+
+    private void OnDisable()
+    {
+        PlayerEvent.Swap -= UpdateQuickSlot;
+        PlayerEvent.OnDetectMonster -= DetectionEyeVisible;
     }
 
     private void Update()
@@ -83,14 +90,14 @@ public class UI_GameScene : UI_Base
         //    UpdateQuickSlot(1);
         //}
 
-        if(Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            DetectionEyeVisible(true);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            DetectionEyeVisible(false);
-        }
+        //if(Input.GetKeyDown(KeyCode.Alpha3))
+        //{
+        //    DetectionEyeVisible(true);
+        //}
+        //if (Input.GetKeyDown(KeyCode.Alpha4))
+        //{
+        //    DetectionEyeVisible(false);
+        //}
 
         //if (Input.GetKeyDown(KeyCode.Alpha5))
         //{
