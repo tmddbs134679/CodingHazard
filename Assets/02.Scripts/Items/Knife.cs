@@ -29,6 +29,15 @@ public class Knife : Weapon
 
     }
 
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Fire();
+        }
+    }
+
+
     private IEnumerator AttackRoutine()
     {
         isAttacking = true;
@@ -37,6 +46,7 @@ public class Knife : Weapon
         yield return new WaitForSeconds(attackDelay);
         HitWeapon();
 
+        yield return new WaitForSeconds(fireRate); // 광클하면 애니메이션 이상해짐
 
         isAttacking = false;
 
@@ -64,7 +74,7 @@ public class Knife : Weapon
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position + transform.forward * 1.2f, attackRange);
-       
+
     }
 
 

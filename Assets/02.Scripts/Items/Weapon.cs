@@ -63,13 +63,11 @@ public abstract class Weapon : MonoBehaviour
         }
         else
         {
-
-            if (weapontype == WeaponType.Gun)
-            { 
-            StartCoroutine("OnMuzzleFlashEffect");
+                    
+           
             isShootable = true;
             lastFireTime = Time.time;
-            }
+            
         }
 
 
@@ -113,6 +111,10 @@ public abstract class Weapon : MonoBehaviour
 
     private IEnumerator OnMuzzleFlashEffect()
     {
+        if (muzzleFlash == null)
+        {
+            yield break;
+        }
         muzzleFlash.SetActive(true);
 
         yield return new WaitForSeconds(fireRate * 1.2f);
