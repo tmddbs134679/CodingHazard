@@ -16,5 +16,5 @@ MonoBehaviour:
   bgmVolume: 0.5
   sfxVolume: 0.5
   fov: 90
-  mouseSensitivity: 1
+  mouseSensitivity: 0.2
   antialiasing: 2
