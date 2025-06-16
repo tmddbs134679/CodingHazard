@@ -9,9 +9,9 @@ public class Gun : Weapon
 
     [SerializeField] private FireMode fireMode;
     [SerializeField] private Transform firePoint;
-   
 
 
+    [SerializeField] private int Ammo { get; set; }
 
     [Header("Camera")]
     [SerializeField] private float normalFOV = 50f;

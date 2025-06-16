@@ -434,7 +434,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2323879503507624389}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.013845246, y: 0.06487366, z: -0.008304755, w: 0.9977629}
+  m_LocalRotation: {x: 0.013845554, y: 0.0648736, z: -0.008304932, w: 0.9977629}
   m_LocalPosition: {x: 0.042065628, y: -0.19725257, z: 0.34406182}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -442,7 +442,7 @@ Transform:
   - {fileID: 285668021378615679}
   - {fileID: 9011325033141376309}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 1.645, y: 7.428, z: -0.847}
 --- !u!95 &1626961668967495210
 Animator:
   serializedVersion: 5
@@ -1283,7 +1283,7 @@ MonoBehaviour:
   muzzleFlash: {fileID: 0}
   audioSource: {fileID: 0}
   audioClip: {fileID: 0}
-  playerArm: {fileID: 0}
+  playerArm: {fileID: 2323879503507624389}
   weapontype: 1
   attackRange: 2
   attackAngle: 90

@@ -28,10 +28,12 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected GameObject playerArm;
     [SerializeField] protected WeaponType weapontype;
 
+
     //Aciont
 
     protected static readonly int IsAiming = Animator.StringToHash("IsAiming");
-    //protected static readonly int IsMoving = Animator.StringToHash("IsMoving");
+    //protected static readonly int IsMoving = Animator.StringToHash("IsMoving"); 아직 애니메이션x
+    protected static readonly int ReLoadingTrigger = Animator.StringToHash("ReLoad");
     protected static readonly int AimFireTrigger = Animator.StringToHash("AimFire");
     protected static readonly int FireTrigger = Animator.StringToHash("Fire");
 
@@ -63,11 +65,11 @@ public abstract class Weapon : MonoBehaviour
         }
         else
         {
-                    
-           
+
+
             isShootable = true;
             lastFireTime = Time.time;
-            
+
         }
 
 
@@ -100,7 +102,7 @@ public abstract class Weapon : MonoBehaviour
 
     }
 
-   
+
 
     public void DropItem()
     {
@@ -127,6 +129,7 @@ public abstract class Weapon : MonoBehaviour
         return weapontype;
     }
 
+
     public void SwapWeaponOff()
     {
         playerArm.SetActive(false);
@@ -134,6 +137,7 @@ public abstract class Weapon : MonoBehaviour
     }
     public void SwapWeaponON()
     {
+
         playerArm.SetActive(true);
         this.gameObject.SetActive(true);
     }
@@ -163,4 +167,6 @@ public abstract class Weapon : MonoBehaviour
                 break;
         }
     }
+
+  
 }

@@ -574,7 +574,7 @@ MonoBehaviour:
   muzzleFlash: {fileID: 7247831118775426175}
   audioSource: {fileID: 0}
   audioClip: {fileID: 8300000, guid: 38b450e2adcb6f542acc8c1d423bd8dc, type: 3}
-  playerArm: {fileID: 0}
+  playerArm: {fileID: 4757154998141492074}
   weapontype: 0
   fireMode: 1
   firePoint: {fileID: 5476351497250023747}
@@ -592,7 +592,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
@@ -1223,15 +1223,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4757154998141492074}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.056570016, y: 0.065298304, z: -0.003707804, w: 0.99625415}
-  m_LocalPosition: {x: 0.043270487, y: -0.1872419, z: 0.3521323}
+  m_LocalRotation: {x: -0.056212954, y: 0.0008890062, z: -0.0073496904, w: 0.9983914}
+  m_LocalPosition: {x: 0, y: -0.19, z: 0.3521323}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3269448039963277759}
   - {fileID: 1675673208217172860}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -6.444, y: 7.548, z: -0.852}
+  m_LocalEulerAnglesHint: {x: -6.444, y: 0.15, z: -0.852}
 --- !u!95 &8835016181636986266
 Animator:
   serializedVersion: 5
@@ -1434,67 +1434,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.2223608, y: 0.101732194, z: 0.6726152}
     m_Extent: {x: 0.09717612, y: 0.21064934, z: 0.19108246}
   m_DirtyAABB: 0
---- !u!1 &5372339333022141701
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4473947809025601098}
-  - component: {fileID: 3836243158358965652}
-  m_Layer: 0
-  m_Name: Kinfe
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4473947809025601098
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5372339333022141701}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0.74947995, y: 0.049514502, z: -0.10376707, w: 0.6519667}
-  m_LocalPosition: {x: 0.026618894, y: 0.37992927, z: -0.11753878}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3698693014705471856}
-  m_Father: {fileID: 4948618597144780615}
-  m_LocalEulerAnglesHint: {x: 81.54, y: 48.8, z: 48.6}
---- !u!114 &3836243158358965652
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5372339333022141701}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d91e15f406c035d43af1bc2a37023fe8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WeaponName: Knife
-  damage: 10
-  range: 100
-  fireRate: 0.1
-  WeaponAnimator: {fileID: 0}
-  DropObject: {fileID: 0}
-  muzzleFlash: {fileID: 0}
-  audioSource: {fileID: 0}
-  audioClip: {fileID: 0}
-  playerArm: {fileID: 0}
-  weapontype: 0
-  attackRange: 2
-  attackAngle: 90
-  hitLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!1 &5460841557816336643
 GameObject:
   m_ObjectHideFlags: 0
@@ -2208,7 +2147,6 @@ Transform:
   - {fileID: 2201022466515021876}
   - {fileID: 7537040920868889625}
   - {fileID: 5901261372390630942}
-  - {fileID: 4473947809025601098}
   m_Father: {fileID: 2453484433056610176}
   m_LocalEulerAnglesHint: {x: 24.554848, y: -63.547237, z: 42.71142}
 --- !u!1 &9185653456031150788
@@ -2243,65 +2181,3 @@ Transform:
   - {fileID: 2388885610481126083}
   m_Father: {fileID: 7537040920868889625}
   m_LocalEulerAnglesHint: {x: 3.1156552, y: -179.80547, z: -43.978443}
---- !u!1001 &3698693014705347568
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 4473947809025601098}
-    m_Modifications:
-    - target: {fileID: 100000, guid: 18f6e8985d06fba45840cc1802f5beee, type: 3}
-      propertyPath: m_Name
-      value: tactical_knife
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 18f6e8985d06fba45840cc1802f5beee, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 18f6e8985d06fba45840cc1802f5beee, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 18f6e8985d06fba45840cc1802f5beee, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 18f6e8985d06fba45840cc1802f5beee, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9993909
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 18f6e8985d06fba45840cc1802f5beee, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.034899592
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 18f6e8985d06fba45840cc1802f5beee, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.000000007450581
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 18f6e8985d06fba45840cc1802f5beee, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.0000000018626451
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 18f6e8985d06fba45840cc1802f5beee, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -4
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 18f6e8985d06fba45840cc1802f5beee, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 18f6e8985d06fba45840cc1802f5beee, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 18f6e8985d06fba45840cc1802f5beee, type: 3}
---- !u!4 &3698693014705471856 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 18f6e8985d06fba45840cc1802f5beee, type: 3}
-  m_PrefabInstance: {fileID: 3698693014705347568}
-  m_PrefabAsset: {fileID: 0}

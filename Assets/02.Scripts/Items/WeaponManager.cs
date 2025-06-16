@@ -5,13 +5,18 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
-    [SerializeField] private Weapon[] weapons;
-    private int curWeaponInedex = 0;
+    [SerializeField] private Transform weaponAnchor;
+    [Header("무기 프리팹들")]
+    [SerializeField] private GameObject[] weaponPrefabs;
+    private int curWeaponInedex = -1;
+
+    private GameObject currentWeaponGO;
+    private Weapon currentWeapon;
 
 
     private void Awake()
     {
-     //   weapons = new Weapon[3];
+    
     }
 
     private void Start()
@@ -31,45 +36,46 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
+    private void SwapWeapon()
+    { 
+        
+    }
 
     private void EquipWeapon(int index)
     {
-        if (index == curWeaponInedex || index >= weapons.Length)
+        if (index == curWeaponInedex || index >= weaponPrefabs.Length)
         {
             return;
         }
 
-        if (weapons[curWeaponInedex] != null)
+        if (currentWeaponGO != null)
         {
-            weapons[curWeaponInedex].SwapWeaponOff();
+            Destroy(currentWeaponGO);
+            currentWeaponGO = null;
+            currentWeapon = null;
         }
-        weapons[index].SwapWeaponON();
+
+       
+
+        GameObject newWeaponGO = Instantiate(weaponPrefabs[index], weaponAnchor,false);
+        newWeaponGO.transform.localPosition = weaponPrefabs[index].transform.localPosition;
+        newWeaponGO.transform.localRotation = weaponPrefabs[index].transform.localRotation;
+
+
+        currentWeaponGO = newWeaponGO;
+        currentWeapon = newWeaponGO.GetComponent<Weapon>();
         curWeaponInedex = index;
 
-        Debug.Log($"무기변경{weapons[index].name}");
+        Debug.Log($"무기변경{weaponPrefabs[index].name}");
         //필요 한것들
         //이전무기 끄기 다음무기 켜기 
 
 
      }
-    public void AddWeapon(Weapon weapon)
-    {
-        int index = (int)weapon.GetWeaponType();
-
-        if (weapons[index] != null)
-        {
-            //스왑
-            weapons[index].DropItem();
-        }
-
-        weapons[index] = weapon;
-        weapon.gameObject.SetActive(false);
-        
-
-    }
     
-    public Weapon GetCurWeapon()
+    
+    public GameObject GetCurWeapon()
     {
-        return weapons[curWeaponInedex];
+        return weaponPrefabs[curWeaponInedex];
     }
 }
