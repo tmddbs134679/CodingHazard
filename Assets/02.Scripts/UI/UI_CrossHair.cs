@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -86,7 +86,7 @@ public class UI_CrossHair : UI_Base
 
     private const float tweenDuration = 0.1f;
 
-    //총알이 발사될 때 실행
+    //�Ѿ��� �߻�� �� ����
     private void AnimateRecoilCrosshair(GameObject crossHair)
     {
         crossHair.transform.DOKill();
@@ -101,8 +101,8 @@ public class UI_CrossHair : UI_Base
     }
 
 
-    [SerializeField] private float aimTweenDuration = 0.2f; // 트윈 시간
-    [SerializeField] private float aimShrinkScale = 0.5f;   // 작아질 비율
+    [SerializeField] private float aimTweenDuration = 0.2f; // Ʈ�� �ð�
+    [SerializeField] private float aimShrinkScale = 0.5f;   // �۾��� ����
     private void AinmateAimCrosshair()
     {
         GetObject((int)GameObjects.AimHair).transform.DOKill();

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class TestMovement : MonoBehaviour
 {
@@ -9,8 +10,6 @@ public class TestMovement : MonoBehaviour
     private Vector2 curMovementInput;
 
     private Rigidbody rigidbody;
-
-    private CameraManager _cameraManager;
 
     [SerializeField] private float moveSpeed;
 
@@ -23,40 +22,31 @@ public class TestMovement : MonoBehaviour
 
     void Start()
     {
-        _cameraManager = CameraManager.Instance;
-
-        _cameraManager.FPSVirtualCamera.SetMouseSensitivity(1);
-        
         ToggleCursor(false);
     }
 
     private void Update()
     {
         curMovementInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-
-        
-        var mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-
-        _cameraManager.FPSVirtualCamera.SetLookMouseDelta(mouseDelta);
         
         if (Input.GetMouseButton(0))
         {
-            _cameraManager.FPSVirtualCamera.PlayRecoilToFire(Vector3.one);
+            fpsVirtualCamera.PlayRecoilToFire(Vector3.one * 0.5f);
         }
         
         if (Input.GetMouseButtonDown(1))
         {
-            _cameraManager.FPSVirtualCamera.ZoomIn(-20f);
+            fpsVirtualCamera.ZoomIn(-20f, 0.5f);
         }
         
         if (Input.GetMouseButtonUp(1))
         {
-            _cameraManager.FPSVirtualCamera.ZoomOut();
+            fpsVirtualCamera.ZoomOut(0.5f);
         }
 
         if (curMovementInput != Vector2.zero)
         {
-            _cameraManager.FPSVirtualCamera.UpdateHeadBob(1);
+            fpsVirtualCamera.UpdateHeadBob(1);
         }
     }
     
@@ -81,5 +71,4 @@ public class TestMovement : MonoBehaviour
         Cursor.lockState = toggle ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = toggle;
     }
-
 }
