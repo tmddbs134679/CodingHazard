@@ -39,8 +39,7 @@ public class DroppedItem : MonoBehaviour
         switch (ItemData.ItemType)
         {
             case ItemType.Collect :
-                StageManager.Instance.CollectItem();
-                Destroy(gameObject);
+                StageManager.Instance.UpdateObjectives(this);
                 break;
             default:
                 //Swap

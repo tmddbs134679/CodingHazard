@@ -88,7 +88,7 @@ public class UI_GameScene : UI_Base
 
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            testHP.GetComponent<UI_HPBar>().SetHpRatio(TestGameManager.Instance.Player.GetComponent<PlayerCondition>().hp.curValue-= 20f);
+            testHP.GetComponent<UI_HPBar>().SetHpRatio(StageManager.Instance.PlayerController.GetComponent<PlayerCondition>().hp.curValue-= 20f);
         }
         if (Input.GetKeyDown(KeyCode.Alpha6))
         {

@@ -66,6 +66,13 @@ public class PlayerController : MonoBehaviour
         ForceReceiver = GetComponent<ForceReceiver>();
         
         stateMachine.MainCamTransform = Camera.main?.transform;
+
+        playerInput.Player.Rifle.performed += index => PlayerEvent.Swap?.Invoke(0);
+        playerInput.Player.Pistol.performed += index => PlayerEvent.Swap?.Invoke(1);
+        playerInput.Player.Knife.performed += index => PlayerEvent.Swap?.Invoke(2);
+        //012눌린 인덱스 번호를 주는 느낌으로 
+        
+
     }
 
     private void OnEnable() => playerInput.Enable();
@@ -155,16 +162,22 @@ public class PlayerController : MonoBehaviour
     
     public void Attack()
     {
-        //여기 fire
-
+        
         Debug.Log("PlayerController Attack Method");
         fpsVirtualCamera.PlayRecoilToFire(Vector3.one);
-        
+        PlayerEvent.OnAttack?.Invoke();
+        //공격 입력시 호출해주고 무기에서 Fire구독해서 사용할예정
+
+
+
         /*  // 현재 무기가 근접 무기일 경우 MeleeAttackState
          * if (현재 무기 == 근접 무기)
          *      stateMachine.ChangeState(new PlayerMeleeAttackState(stateMachine));
         
             // 주/보조 무기(총)일 경우 총을 쏘는 Method 실행
         */
+
+
+
     }
 }

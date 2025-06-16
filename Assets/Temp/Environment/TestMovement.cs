@@ -14,6 +14,7 @@ public class TestMovement : MonoBehaviour
     [SerializeField] private float moveSpeed;
 
     [SerializeField] private FPSVirtualCamera fpsVirtualCamera;
+    
 
     private void Awake()
     {
@@ -43,11 +44,27 @@ public class TestMovement : MonoBehaviour
         {
             fpsVirtualCamera.ZoomOut(0.5f);
         }
+        
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Physics.Raycast(fpsVirtualCamera.transform.position, fpsVirtualCamera.transform.forward, out RaycastHit hit, 1000f);
+
+            if (hit.collider != null)
+            {
+                if (hit.collider.TryGetComponent(out DroppedItem item))
+                {
+                    item.OnInteract();
+                }
+            }
+        }
 
         if (curMovementInput != Vector2.zero)
         {
             fpsVirtualCamera.UpdateHeadBob(1);
         }
+
+       
+        
     }
     
     private void FixedUpdate()

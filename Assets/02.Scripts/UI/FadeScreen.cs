@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class FadeScreen : MonoBehaviour
@@ -11,7 +12,7 @@ public class FadeScreen : MonoBehaviour
 
     [SerializeField] private float fadeDuration;
     
-    [SerializeField] private float returnHoldTime;
+    [SerializeField] private float loopHoldDelay;
 
     [SerializeField] private Color fadeOutColor;
 
@@ -24,28 +25,27 @@ public class FadeScreen : MonoBehaviour
     {
         _image = GetComponent<Image>();
 
-        _returnHoldSec = new WaitForSeconds(returnHoldTime);
+        _returnHoldSec = new WaitForSeconds(loopHoldDelay);
     }
 
     private void OnEnable()
     {
         if (canOnEnabled)
         {
-            FadeOut();
+            FadeOut(() => StartCoroutine(LoopCoroutine()));
         }
     }
 
-    private void FadeIn()
+    public void FadeIn()
     {
-        
         Color fadeInColor = _image.color;
 
         fadeInColor.a = 0;
         
-        _image.DOColor(fadeInColor, fadeDuration).OnComplete(() => gameObject.SetActive(false));
+        _image.DOColor(fadeInColor, fadeDuration).SetUpdate(true).OnComplete(() => gameObject.SetActive(false));
     }
 
-    private void FadeOut()
+    public void FadeOut(UnityAction onCompleteCallback = null)
     {
         gameObject.SetActive(true);
 
@@ -55,16 +55,13 @@ public class FadeScreen : MonoBehaviour
         
         _image.color = curColor;
         
-        _image.DOColor(fadeOutColor, fadeDuration).OnComplete(() =>
+        _image.DOColor(fadeOutColor, fadeDuration).SetUpdate(true).OnComplete(() =>
             {
-                if (returnHoldTime > 0)
-                {
-                    StartCoroutine(ReturnHoldDelay());
-                }
+                onCompleteCallback?.Invoke();
             });
     }
 
-    IEnumerator ReturnHoldDelay()
+    IEnumerator LoopCoroutine()
     {
         yield return _returnHoldSec;
 
