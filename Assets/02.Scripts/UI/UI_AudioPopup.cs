@@ -53,6 +53,9 @@ public class UI_AudioPopup : UI_Base
     [SerializeField] private Dictionary<GameObjects, TMP_Text> volumeTexts = new Dictionary<GameObjects, TMP_Text>();
     public override bool Init()
     {
+        if (base.Init() == false)
+            return false;
+
         #region Object Bind
 
         BindObject(typeof(GameObjects));
@@ -147,6 +150,7 @@ public class UI_AudioPopup : UI_Base
 
         volumeObj.SetActive(isOn);
 
+        // Todo : 비활성화 상태이면 볼륨 0만들기
     }
 
     void UpdateVolumeText(GameObjects type, float value)

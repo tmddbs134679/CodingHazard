@@ -31,10 +31,9 @@ public class UI_EditSetting : UI_Base
     }
     #endregion
 
-    //GraphicPopupUI;
-    //AudioPopupUI;
-    //ControlPopupUI;
-
+    //임시 연결
+    [SerializeField] private UI_AudioPopup _AudioPopup;
+    [SerializeField] private UI_DisplayPopup _DisplayPopup;
     public override bool Init()
     {
         #region Object Bind
@@ -53,11 +52,11 @@ public class UI_EditSetting : UI_Base
 
 
         TogglesInit();
-        GetToggle((int)Toggles.AudioToggle).gameObject.GetComponent<Toggle>().isOn = true;
-        OnClickAudioToggle();
+        GetToggle((int)Toggles.DisplayToggle).gameObject.GetComponent<Toggle>().isOn = true;
+        OnClickDisplayToggle();
 
         #endregion
-
+        _AudioPopup.gameObject.SetActive(false);
 
        // Refresh();
 
@@ -72,19 +71,23 @@ public class UI_EditSetting : UI_Base
 
     void OnClickDisplayToggle()
     {
-        ShowUI(/*GraphicPopupUI.gameobject,*/ GetObject((int)GameObjects.CheckDisplaymarkObject));
+        ShowUI(_DisplayPopup.gameObject, GetObject((int)GameObjects.CheckDisplaymarkObject));
+
+        //일단 끄기
+        _AudioPopup.gameObject.SetActive(false);
     }
 
     void OnClickAudioToggle()
     {
-        ShowUI(/*GraphicPopupUI.gameobject,*/ GetObject((int)GameObjects.CheckAudiomarkObject));
+        ShowUI(_AudioPopup.gameObject, GetObject((int)GameObjects.CheckAudiomarkObject));
+        _DisplayPopup.gameObject.SetActive(false);
     }
     
-    private void ShowUI(/*GameObject Popup,*/ GameObject checkmark)
+    private void ShowUI(GameObject Popup, GameObject checkmark)
     {
         TogglesInit();
 
-        //Popup.SetActive(true);
+        Popup.SetActive(true);
         checkmark.SetActive(true);
 
     }
