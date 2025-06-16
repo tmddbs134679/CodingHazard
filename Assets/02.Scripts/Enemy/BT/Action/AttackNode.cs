@@ -7,6 +7,7 @@ public class AttackNode : ActionNode
     public override BT.State Run(EnemyBase enemy)
     {
         enemy.StartAttack();
+        enemy.Controller.StopMove();
         return BT.State.Sucess;
     }
 

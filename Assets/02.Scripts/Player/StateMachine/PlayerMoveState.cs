@@ -25,10 +25,12 @@ public class PlayerMoveState : PlayerBaseState
         if (_stateMachine.Controller.isCrouching)
         {
             Move(dir, _stateMachine.MovementSpeed / 2);
+            _stateMachine.Controller.fpsVirtualCamera.UpdateHeadBob(_stateMachine.MovementSpeed / 2);
         }
         else
         {
             Move(dir, _stateMachine.MovementSpeed);
+            _stateMachine.Controller.fpsVirtualCamera.UpdateHeadBob(_stateMachine.MovementSpeed);
         }
         
         // wasd input 들어온 건지 확인
@@ -49,7 +51,8 @@ public class PlayerMoveState : PlayerBaseState
         }
         
         // sprint 가능
-        if (_stateMachine.Controller.isSprintHold)
+        if (_stateMachine.Controller.isSprintHold
+            && _stateMachine.Controller.Condition.UseStamina(_stateMachine.SprintStamina))
         {
             _stateMachine.Controller.isMoving = false;
             _stateMachine.ChangeState(new PlayerSprintState(_stateMachine));
