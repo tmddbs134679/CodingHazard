@@ -14,7 +14,8 @@ public abstract class StageObjective : MonoBehaviour
     [Space(10f)]
     [SerializeField] protected UnityEvent onCompleteEvent;
 
-    
+
+    public abstract void Enter();
     public abstract string GetProgressText();
     public abstract bool TryUpdateProgress<T>(T targret, out bool isComplete)  where T : MonoBehaviour;
   

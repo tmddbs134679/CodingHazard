@@ -6,30 +6,53 @@ using UnityEngine;
 public class StageCollectObejctive : StageObjective
 {
     public override StageObjectiveType ObjectiveType => StageObjectiveType.Collect;
-
     public List<DroppedItem> ObjectiveItems => objectiveItems;
     
-    [Space(10f)]
     
+    [Space(10f)]
     [SerializeField] private List<DroppedItem> objectiveItems;
+    
     
     private int _maxCount;
     private int _curCount;
+    
+    
 
     private void Awake()
     {
         _maxCount = objectiveItems.Count;
+
+        foreach (var item in objectiveItems)
+        {
+            item.ToggleLockInteract(false);
+        }
     }
+    
+
+
+    public override void Enter()
+    {
+        foreach (var item in objectiveItems)
+        {
+            item.ToggleLockInteract(true);
+        }
+    }
+    
+    
 
     public override string GetProgressText()
     {
         return $"( {_curCount} / {_maxCount} )";
     }
+    
+    
 
     public override bool TryUpdateProgress<T>(T targret, out bool isComplete) 
     {
         if (targret is DroppedItem item)
         {
+            Debug.Log(gameObject.name);
+            
             if (objectiveItems.Contains(item))
             {
                 objectiveItems.Remove(item);
@@ -52,4 +75,5 @@ public class StageCollectObejctive : StageObjective
         isComplete = false;
         return false;
     }
+    
 }

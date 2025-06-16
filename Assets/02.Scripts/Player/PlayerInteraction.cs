@@ -26,6 +26,7 @@ public class PlayerInteraction : MonoBehaviour
             if (Physics.Raycast(ray, out hit, interactableDistance, interactableLayer))
             {
                 DroppedItem item = hit.collider.GetComponent<DroppedItem>();
+
                 
                 if (item != null)
                 {
@@ -34,6 +35,9 @@ public class PlayerInteraction : MonoBehaviour
                     {
                         currentTargetItem = null;
                     }
+                    
+                    if (!item.IsLockInteract)
+                        return;
                     
                     if (currentTargetItem != item)
                     {

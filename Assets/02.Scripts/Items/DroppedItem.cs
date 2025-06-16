@@ -5,15 +5,16 @@ using UnityEngine;
 
 public class DroppedItem : MonoBehaviour
 {
+    public bool IsLockInteract { get; private set; }
     public ItemData ItemData => itemData;
     
-
+    
     [SerializeField] private ItemData itemData;
-    
 
+    
     private Outline _outline;
-    
 
+    
     private void Awake()
     {
         _outline = GetComponent<Outline>();
@@ -25,7 +26,11 @@ public class DroppedItem : MonoBehaviour
     {
         this.itemData = itemData;
     }
-    
+
+    public void ToggleLockInteract(bool isLock)
+    {
+        IsLockInteract = isLock;
+    }
     
 
     public void ToggleOutline(bool state)

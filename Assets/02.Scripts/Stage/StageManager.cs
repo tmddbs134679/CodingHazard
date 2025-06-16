@@ -39,6 +39,15 @@ public class StageManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if (objectives.Count > 0)
+        {
+            objectives[0].Enter();
+        }
+    }
+
+
     public void UpdateObjectives<T>(T target) where T : MonoBehaviour
     {
         if (objectives.Count > 0)
@@ -48,7 +57,6 @@ public class StageManager : MonoBehaviour
             if (objective.TryUpdateProgress(target, out bool isComplete))
             {
                 OnObjectiveUpdatedProgress?.Invoke(objective);
-
                 
                 if (isComplete)
                 {
@@ -61,6 +69,8 @@ public class StageManager : MonoBehaviour
                         var nextObjective = objectives[1];
                         
                         OnChangedObjective?.Invoke(nextObjective);
+                        
+                        nextObjective.Enter();
                     }
                     
                     objectives.RemoveAt(0);
