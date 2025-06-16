@@ -22,6 +22,10 @@ public class StageManager : MonoBehaviour
         {
             _instance = this;
         }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void CollectItem()
