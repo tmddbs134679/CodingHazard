@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class TempStageObjectiveUI : MonoBehaviour
+public class StageObjectiveUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI description;
     [SerializeField] private TextMeshProUGUI progress;

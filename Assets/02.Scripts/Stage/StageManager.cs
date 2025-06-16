@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.Rendering;
 
 public class StageManager : MonoBehaviour
 {
@@ -81,6 +82,10 @@ public class StageManager : MonoBehaviour
 
     public void ClearStage()
     {
+        Time.timeScale = 0;
+
+        PlayerController.BlockInput();
+        
         fadeScreen.FadeOut(
             () =>
             {
@@ -91,13 +96,13 @@ public class StageManager : MonoBehaviour
                 tempResultUI.gameObject.SetActive(true);
             });
         
-        tempResultButton.onClick.AddListener(() =>
-        {
-            SceneLoadManager.Instance.LoadScene("LobbyScene");
+        tempResultButton.onClick.AddListener(TempClickEndButton);
+    }
 
-            Time.timeScale = 1;
-        });
+    void TempClickEndButton()
+    {
+        SceneLoadManager.Instance.LoadScene("LobbyScene");
         
-        Time.timeScale = 0;
+        Time.timeScale = 1;
     }
 }
