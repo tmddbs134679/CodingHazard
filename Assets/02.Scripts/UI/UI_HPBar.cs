@@ -12,6 +12,15 @@ public class UI_HPBar : UI_Base
         HPDamageBar,
         HPBar,
     }
+    public void OnEnable()
+    {
+        PlayerEvent.OnHpChanged += SetHpRatio;
+    }
+
+    public void OnDisable()
+    {
+        PlayerEvent.OnHpChanged -= SetHpRatio;
+    }
 
     public override bool Init()
     {
@@ -23,7 +32,7 @@ public class UI_HPBar : UI_Base
     public void SetHpRatio(float hp)
     {
         //float maxHp = 100f;
-        float ratio = Mathf.Clamp01(hp / TestGameManager.Instance.Player.GetComponent<PlayerCondition>().hp.maxValue);      
+        float ratio = Mathf.Clamp01(hp / StageManager.Instance.PlayerController.GetComponent<PlayerCondition>().hp.maxValue);      
         float scaledRatio = ratio * clampratio;
         GetImage((int)Images.HPBar).fillAmount = scaledRatio;
 

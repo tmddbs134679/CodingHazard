@@ -1,4 +1,4 @@
-using DG.Tweening;
+Ôªøusing DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -64,18 +64,24 @@ public class UI_GameScene : UI_Base
        
     }
 
+    private void OnEnable()
+    {
+        PlayerEvent.Swap += UpdateQuickSlot;
+        PlayerEvent.Swap += UpdateQuickSlot;
+    }
+
     private void Update()
     {
         //Test
 
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            UpdateQuickSlot(0);
-        }
-        else if(Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            UpdateQuickSlot(1);
-        }
+        //if(Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    UpdateQuickSlot(0);
+        //}
+        //else if(Input.GetKeyDown(KeyCode.Alpha2))
+        //{
+        //    UpdateQuickSlot(1);
+        //}
 
         if(Input.GetKeyDown(KeyCode.Alpha3))
         {
@@ -86,14 +92,14 @@ public class UI_GameScene : UI_Base
             DetectionEyeVisible(false);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            testHP.GetComponent<UI_HPBar>().SetHpRatio(TestGameManager.Instance.Player.GetComponent<PlayerCondition>().hp.curValue-= 20f);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            testStamina.GetComponent<UI_StaminaBar>().SetStaminaRatio(ref testStaminaF);
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha5))
+        //{
+        //    testHP.GetComponent<UI_HPBar>().SetHpRatio(StageManager.Instance.PlayerController.GetComponent<PlayerCondition>().hp.curValue-= 20f);
+        //}
+        //if (Input.GetKeyDown(KeyCode.Alpha6))
+        //{
+        //    testStamina.GetComponent<UI_StaminaBar>().SetStaminaRatio(ref testStaminaF);
+        //}
 
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
@@ -111,7 +117,7 @@ public class UI_GameScene : UI_Base
     private Sequence currentSequence; 
     private void UpdateQuickSlot(int selectedWeaponIndex)
     {
-
+        selectedWeaponIndex -= 1;
         if (currentSequence != null && currentSequence.IsActive())
         {
             currentSequence.Kill(); 
@@ -164,8 +170,8 @@ public class UI_GameScene : UI_Base
             if (pulseTween == null || !pulseTween.IsActive())
             {
                 pulseTween = GetImage((int)Images.OpenEye).transform.DOScale(1.2f, 0.2f)
-                    .SetLoops(-1, LoopType.Yoyo) //∑Á«¡
-                    .SetEase(Ease.InOutSine);   //º”µµ
+                    .SetLoops(-1, LoopType.Yoyo) //Î£®ÌîÑ
+                    .SetEase(Ease.InOutSine);   //ÏÜçÎèÑ
             }
         }
         else

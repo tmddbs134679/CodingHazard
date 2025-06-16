@@ -5,6 +5,9 @@ using UnityEngine.Rendering.Universal;
 
 public class FPSVirtualCamera : MonoBehaviour
 {
+    public Vector2 MouseDelta { get; set; }
+
+
     [SerializeField] private LayerMask dofLayerMask;
 
     
@@ -30,7 +33,9 @@ public class FPSVirtualCamera : MonoBehaviour
     
     private Vector3 _defaultLocalPos;
     private Vector3 _curRecoil;
-    private Vector2 _mouseDelta;
+    private Vector3 _crouchAdjustmentPos;
+    private Vector3 _headBobAdjustmentPos;
+
 
     private float _defaultFOV;
     private float _camCurXRot;
@@ -81,10 +86,7 @@ public class FPSVirtualCamera : MonoBehaviour
 
     private void Update()
     {
-        _mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-
-        _mouseDelta *= _lookSensitivity;
-
+        //MouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")); 
 
         if (_dof != null)
         {
@@ -135,20 +137,23 @@ public class FPSVirtualCamera : MonoBehaviour
   
     public void UpdateHeadBob(float ratio)
     {
-        float frequency = headbobFrequency * Mathf.Lerp(0.5f, 1.5f, ratio); 
-        
-        float headbobY = Mathf.Sin(Time.time * frequency) * headbobAmplitude;
-        float headbobX = Mathf.Cos(Time.time * frequency * 0.5f) * headbobAmplitude * 0.5f;
-            
-        cameraRoot.localPosition = _defaultLocalPos + new Vector3(headbobX, headbobY, 0);
+        float frequency = headbobFrequency * Mathf.Lerp(0.5f, 1.5f, ratio);
+
+        _headBobAdjustmentPos = new Vector3(
+            Mathf.Cos(Time.time * frequency * 0.5f) * headbobAmplitude * 0.5f,
+            Mathf.Sin(Time.time * frequency) * headbobAmplitude,
+            0
+        );
     }
     
     public void PlayHitFeedback() => hitImpulseSource.GenerateImpulse();
     
     public void PlayRecoilToFire(Vector3 recoil) => _curRecoil = new Vector3(recoil.x, Random.Range(-recoil.y, recoil.y), -recoil.z);
-    
-    
-    
+
+    public void SetCrouchAdjustment(Vector3 targetAdjustmentPos)
+    {
+        _crouchAdjustmentPos = targetAdjustmentPos;
+    }
 
     private void ChangeAntiMode(AntialiasingMode mode) => urpCameraData.antialiasing = mode;
     
@@ -164,7 +169,9 @@ public class FPSVirtualCamera : MonoBehaviour
     
     private void LateUpdateCamera()
     {
-        var camDelta = new Vector3(_mouseDelta.y, _mouseDelta.x, 0);
+        MouseDelta *= _lookSensitivity;
+        
+        var camDelta = new Vector3(MouseDelta.y, MouseDelta.x, 0);
         
         Vector3 totalMouseDelta = camDelta + _curRecoil; 
         
@@ -172,6 +179,8 @@ public class FPSVirtualCamera : MonoBehaviour
         _camCurXRot = Mathf.Clamp(_camCurXRot, minXLook, maxXLook); 
         
         cameraRoot.localRotation = Quaternion.Euler(_camCurXRot, 0f, 0f);
+        cameraRoot.localPosition = _defaultLocalPos + _crouchAdjustmentPos + _headBobAdjustmentPos;
+
 
         playerTransform.Rotate(Vector3.up * totalMouseDelta.y);
     }

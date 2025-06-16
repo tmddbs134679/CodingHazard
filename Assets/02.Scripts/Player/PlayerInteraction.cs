@@ -5,18 +5,12 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
+    public float interactableDistance = 3f;
+    public LayerMask interactableLayer;
     public float checkRate = 0.05f;
     private float lastCheckTime;
-    public float maxCheckDistance;
-    public LayerMask layerMask;
 
-    public GameObject curInteractGameObject;
-    private Camera camera;
-
-    void Start()
-    {
-        camera = Camera.main;
-    }
+    private DroppedItem currentTargetItem;
 
     private void Update()
     {
@@ -24,16 +18,36 @@ public class PlayerInteraction : MonoBehaviour
         {
             lastCheckTime = Time.time;
 
-            Ray ray = camera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+            Ray ray = GetComponentInChildren<Camera>().ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, maxCheckDistance, layerMask))
+            if (Physics.Raycast(ray, out hit, interactableDistance, interactableLayer))
             {
-                if (hit.collider.gameObject.layer != layerMask)
+                DroppedItem item = hit.collider.GetComponent<DroppedItem>();
+
+                if (item != null)
                 {
-                    
+                    if (currentTargetItem != item)
+                    {
+                        currentTargetItem?.ToggleOutline(false);
+                        currentTargetItem = item;
+                        currentTargetItem.ToggleOutline(true);
+                    }
                 }
+                return;
+            }
+
+            if (currentTargetItem != null)
+            {
+                currentTargetItem.ToggleOutline(false);
+                currentTargetItem = null;
             }
         }
+    }
+    
+    public void OnInteractInput()
+    {
+        if (currentTargetItem != null)
+            currentTargetItem.OnInteract();
     }
 }
