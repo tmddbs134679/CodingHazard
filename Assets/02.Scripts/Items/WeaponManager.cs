@@ -12,6 +12,8 @@ public class WeaponManager : MonoBehaviour
 
     private GameObject currentWeaponGO;
     private Weapon currentWeapon;
+    
+
 
 
     private void Awake()
@@ -21,18 +23,18 @@ public class WeaponManager : MonoBehaviour
 
     private void Start()
     {
-       
+        PlayerEvent.Swap  += EquipWeapon;
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            EquipWeapon(0);
+          //  EquipWeapon(0);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            EquipWeapon(1);
+            //EquipWeapon(1);
         }
     }
 
@@ -40,6 +42,7 @@ public class WeaponManager : MonoBehaviour
     { 
         
     }
+
 
     private void EquipWeapon(int index)
     {

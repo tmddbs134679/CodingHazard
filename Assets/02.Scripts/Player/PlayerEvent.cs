@@ -7,7 +7,7 @@ public static class PlayerEvent
 {
     public static Action OnAttack;
     public static Action<int> Swap;
-
+    public static Action Aiming;
 
 
 
