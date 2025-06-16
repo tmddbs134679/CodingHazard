@@ -51,7 +51,7 @@ public abstract class Weapon : MonoBehaviour
     }
 
 
-    protected void DisEnable()
+    protected void OnDisable()
     {
         PlayerEvent.OnAttack -= Fire;
     }
@@ -98,7 +98,7 @@ public abstract class Weapon : MonoBehaviour
         //test
         if (Input.GetMouseButton(0))
         {
-            Fire();
+        //    Fire();
         }
 
         if (Input.GetKeyDown(KeyCode.G))
