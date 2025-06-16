@@ -18,11 +18,10 @@ public class ListenTargetNode : ConditionNode
     public override BT.State Run(EnemyBase enemy)
     {
        
-        if (enemy.detection.ListenTarget())
-        {
-            enemy.detection.addAlert(5);
+     
+       // enemy.detection.addAlert(enemy.detection.ListenTarget());
            
-        }
+      
         if(enemy.detection.State==EnemyDetection.AlertState.Suspicious)
             return BT.State.Sucess;
         else

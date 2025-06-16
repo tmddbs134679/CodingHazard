@@ -12,7 +12,7 @@ public class NavMeshManager : Singleton<NavMeshManager>
     }
     private void Start()
     {
-        nms.BuildNavMesh();
+       // nms.BuildNavMesh();
     }
     // Update is called once per frame
     void Update()
