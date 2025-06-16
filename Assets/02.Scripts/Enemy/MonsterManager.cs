@@ -17,6 +17,11 @@ public class MonsterManager : Singleton<MonsterManager>
         base.Awake();
      
     }
+    public void AddMon(EnemyBase a)
+    {
+        monsters.Add(a);
+        monNum++;
+    }
     public EnemyDetection.AlertState nowState()
     {
         if(elertNum>0)
@@ -26,7 +31,8 @@ public class MonsterManager : Singleton<MonsterManager>
         else
             return EnemyDetection.AlertState.Calm;
     }
-    public void Dead() {
+    public void Dead(EnemyBase mon) {
+        monsters.Remove(mon);
         monNum--;
     }
     public void Suspicious(bool a)

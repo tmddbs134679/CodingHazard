@@ -57,7 +57,7 @@ public class canAttackNode : ConditionNode
 
     public override BT.State Run(EnemyBase enemy)
     {
-        Debug.Log("공격 가능 탐색 중");
+
         if (enemy.detection.CanAttack())
             return BT.State.Sucess;
         else

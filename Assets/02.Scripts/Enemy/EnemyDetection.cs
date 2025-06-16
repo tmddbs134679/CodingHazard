@@ -71,6 +71,7 @@ public class EnemyDetection :MonoBehaviour
             MonsterManager.Instance.Suspicious(false);
        
                 MonsterManager.Instance.Elert(true);
+            state = st; return;
         }
     }
     public void Update()
@@ -87,9 +88,9 @@ public class EnemyDetection :MonoBehaviour
     }
     public bool FindTarget()
     {
-        Debug.Log("Å½»ö");
+   
         Collider[] hits = Physics.OverlapSphere(transform.position, sightRange, targetMask);
-        Debug.Log(hits.Length);
+     
         if (hits.Length == 0)
             return false;
         foreach (var hit in hits)
@@ -103,25 +104,22 @@ public class EnemyDetection :MonoBehaviour
 
                 if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstacleMask))
                 {
-                    Debug.Log("½Ã¾ß ³» Å¸°Ù °¨Áö ¼º°ø ");
+      
                     target = hit.gameObject.GetComponent<PlayerCondition>();
                     return true;
                 }
-                else
-                {
-                    Debug.Log("º®¿¡ °¡·ÁÁü");
-                }
+               
             }
         }
-        Debug.Log("¾ø´Ù");
+
         return false;
 
     }
     public bool ListenTarget()
     {
-        Debug.Log("Å½»ö");
+
         Collider[] hits = Physics.OverlapSphere(transform.position, soundRange, targetMask);
-        Debug.Log(hits.Length);
+
         foreach (var hit in hits)
         {
 
@@ -134,7 +132,7 @@ public class EnemyDetection :MonoBehaviour
     }
     public bool CanAttack()
     {
-        if (!FindTarget())
+        if (target==null)
             return false;
         if (Vector3.Distance(target.transform.position, transform.position) <= attackRange)
         {
