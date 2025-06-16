@@ -1,38 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-    private CharacterController controller;
+
     private float moveSpeed;
-    public CharacterController Controller {  get { return controller; } }
+ 
+    private NavMeshAgent agent;
+    public NavMeshAgent Agent => agent;
+
     private void Awake()
     {
-        controller = GetComponent<CharacterController>();
-
+        agent = GetComponent<NavMeshAgent>();
     }
-    
+
     public void Init(float _moveSpeed)
     {
         moveSpeed = _moveSpeed;
+        agent.speed = moveSpeed;
     }
+
     public void Look(Vector3 dir)
     {
         dir.y = 0;
-        Quaternion targetRotation = Quaternion.LookRotation(dir);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 100f * Time.deltaTime);
-        //transform.rotation = Quaternion.LookRotation(dir);
+        if (dir != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 100f * Time.deltaTime);
+        }
     }
-    public void Move(Vector3 dir)
+    public void StopMove()
     {
-        //이거 좀 변경할 필요 있음
-      
-        Vector3 velocity = dir * moveSpeed * Time.deltaTime;
-        if (!controller.isGrounded)
-            velocity.y = -1;
-        controller.Move(velocity);
-        Debug.Log(velocity);
-        Look(dir);
+        agent.ResetPath();
+    }
+    public bool HasArrived(float stoppingDistance = 0.2f)
+    {
+        return !Agent.pathPending &&
+               Agent.remainingDistance <= stoppingDistance &&
+               (!Agent.hasPath || Agent.velocity.sqrMagnitude == 0f);
+    }
+    public void MoveTo(Vector3 targetPosition,bool isRun)
+    {
+        if(isRun) agent.speed = moveSpeed*2;
+        else
+        {
+            agent.speed = moveSpeed;
+        }
+        if (agent != null && agent.isOnNavMesh)
+        {
+            agent.SetDestination(targetPosition);
+        }
     }
 }
