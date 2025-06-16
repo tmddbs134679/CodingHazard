@@ -93,6 +93,10 @@ public class Gun : Weapon
         Ray ray = mainCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
         Debug.DrawRay(ray.origin,ray.direction*range, Color.red); //나중에 제거 예정
         PlaySound(audioClip);
+
+        PlayAttackAnimation(isZoom);
+            
+       /*
         if (isZoom == false)
         {
             WeaponAnimator.SetTrigger(FireTrigger);
@@ -101,25 +105,28 @@ public class Gun : Weapon
         {
             WeaponAnimator.SetTrigger(AimFireTrigger);
         }
+        */
 
         if (Physics.Raycast(ray, out RaycastHit hit, range))
         {
             if (hit.collider.gameObject.layer != 9)
             {
+
                 return;
+
+               
+            }
+            if (hit.collider.TryGetComponent<EnemyBase>(out var enemy))
+            {
+                if (!enemy.IsDead)
+                {
+                    //나중에 변경될 수 있음 
+                    enemy.Damaged(damage);
+                  Debug.Log("공격 성공");
+                }
             }
 
-            Debug.Log("공격 성공");
-            //Attack;
-            
-            /*
-             좀비 확장  벽이면 패스 이렇게 할둣
-            if (hit.collider.TryGetComponent(Monster))
-            { 
-                
-            }
-            */
-
+          
         }
         
             

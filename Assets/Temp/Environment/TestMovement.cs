@@ -2,23 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class TestMovement : MonoBehaviour
 {
     [Header("Movement")]
-    public float moveSpeed;
     private Vector2 curMovementInput;
 
-    [Header("Look")]
-    public Transform cameraContainer;
-    public float minXLook;
-    public float maxXLook;
-    private float camCurXRot;
-    public float lookSensitivity;
-
-    private Vector2 mouseDelta;
-
     private Rigidbody rigidbody;
+
+    [SerializeField] private float moveSpeed;
+
+    [SerializeField] private FPSVirtualCamera fpsVirtualCamera;
 
     private void Awake()
     {
@@ -33,17 +28,31 @@ public class TestMovement : MonoBehaviour
     private void Update()
     {
         curMovementInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-    }
+        
+        if (Input.GetMouseButton(0))
+        {
+            fpsVirtualCamera.PlayRecoilToFire(Vector3.one * 0.5f);
+        }
+        
+        if (Input.GetMouseButtonDown(1))
+        {
+            fpsVirtualCamera.ZoomIn(-20f, 0.5f);
+        }
+        
+        if (Input.GetMouseButtonUp(1))
+        {
+            fpsVirtualCamera.ZoomOut(0.5f);
+        }
 
+        if (curMovementInput != Vector2.zero)
+        {
+            fpsVirtualCamera.UpdateHeadBob(1);
+        }
+    }
+    
     private void FixedUpdate()
     {
         Move();
-    }
-
-    private void LateUpdate()
-    {
-        CameraLook();
     }
 
     private void Move()
@@ -57,20 +66,9 @@ public class TestMovement : MonoBehaviour
         rigidbody.velocity = dir;
     }
 
-    void CameraLook()
-    {
-        camCurXRot += mouseDelta.y * lookSensitivity;
-        camCurXRot = Mathf.Clamp(camCurXRot, minXLook, maxXLook);
-        
-        cameraContainer.localEulerAngles = new Vector3(-camCurXRot, 0, 0);
-
-        transform.eulerAngles += new Vector3(0, mouseDelta.x * lookSensitivity, 0);
-    }
-
     public void ToggleCursor(bool toggle)
     {
         Cursor.lockState = toggle ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = toggle;
     }
-
 }

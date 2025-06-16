@@ -2477,10 +2477,17 @@ MonoBehaviour:
   WeaponAnimator: {fileID: 1855644122598157499}
   DropObject: {fileID: 6975497155788886916, guid: af04242725a232e4e80b3a671f2c90c4, type: 3}
   muzzleFlash: {fileID: 0}
+  audioSource: {fileID: 0}
+  audioClip: {fileID: 0}
+  playerArm: {fileID: 0}
+  fireMode: 0
   firePoint: {fileID: 5196564782949691759}
   weaponPos: {fileID: 6239359517610320279}
-  normalPos: {x: 0, y: 0, z: 0}
+  normalPos: {fileID: 0}
   zoomPos: {x: 0, y: 0, z: 0}
+  normalFOV: 50
+  zoomFOV: 40
+  zoomSpeed: 10
 --- !u!95 &1855644122598157499
 Animator:
   serializedVersion: 5

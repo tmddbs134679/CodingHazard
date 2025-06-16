@@ -14,8 +14,10 @@ public class AudioManager : Singleton<AudioManager>
     private AudioMixerGroup _sfxGroup;
     private AudioMixerGroup _bgmGroup;
     
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        
         _audioMixer = Resources.Load<AudioMixer>("Audio/AudioMixer");
         
         var audioData = Resources.Load<AudioData>("Audio/AudioData");

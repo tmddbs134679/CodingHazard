@@ -38,7 +38,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Look"",
-                    ""type"": ""Value"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""4e74a6c4-0c18-4234-ac1c-c67b7576a96d"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
@@ -55,9 +55,18 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Dash"",
+                    ""name"": ""Sprint"",
                     ""type"": ""Button"",
                     ""id"": ""40f8fc22-0bdd-4481-842b-cc3040fab535"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sit"",
+                    ""type"": ""Button"",
+                    ""id"": ""d3a35222-9534-4ff5-b94e-f5fd3554e3c3"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -91,9 +100,18 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Sit"",
+                    ""name"": ""Jump"",
                     ""type"": ""Button"",
-                    ""id"": ""d3a35222-9534-4ff5-b94e-f5fd3554e3c3"",
+                    ""id"": ""3c59017b-3e0c-41c9-9c1b-c987a7ffb0e6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""3cbd5520-5c83-4f27-8b8c-0ba52d2bc71f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -196,7 +214,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Dash"",
+                    ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -214,7 +232,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""42220af3-c055-4fbf-a5c8-13ed85eedb06"",
-                    ""path"": ""<Keyboard>/capsLock"",
+                    ""path"": ""<Keyboard>/ctrl"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -232,6 +250,28 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Sit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7ce9fdcc-970f-4df8-91fa-f869ca6376e8"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""801724df-9cea-41aa-bf15-1b9ae4e1c7b6"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -243,11 +283,13 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Walk = m_Player.FindAction("Walk", throwIfNotFound: true);
-        m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+        m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
+        m_Player_Sit = m_Player.FindAction("Sit", throwIfNotFound: true);
         m_Player_Aiming = m_Player.FindAction("Aiming", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Reloading = m_Player.FindAction("Reloading", throwIfNotFound: true);
-        m_Player_Sit = m_Player.FindAction("Sit", throwIfNotFound: true);
+        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -312,11 +354,13 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Walk;
-    private readonly InputAction m_Player_Dash;
+    private readonly InputAction m_Player_Sprint;
+    private readonly InputAction m_Player_Sit;
     private readonly InputAction m_Player_Aiming;
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Reloading;
-    private readonly InputAction m_Player_Sit;
+    private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_Interact;
     public struct PlayerActions
     {
         private @PlayerInputs m_Wrapper;
@@ -324,11 +368,13 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Walk => m_Wrapper.m_Player_Walk;
-        public InputAction @Dash => m_Wrapper.m_Player_Dash;
+        public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
+        public InputAction @Sit => m_Wrapper.m_Player_Sit;
         public InputAction @Aiming => m_Wrapper.m_Player_Aiming;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @Reloading => m_Wrapper.m_Player_Reloading;
-        public InputAction @Sit => m_Wrapper.m_Player_Sit;
+        public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -347,9 +393,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Walk.started += instance.OnWalk;
             @Walk.performed += instance.OnWalk;
             @Walk.canceled += instance.OnWalk;
-            @Dash.started += instance.OnDash;
-            @Dash.performed += instance.OnDash;
-            @Dash.canceled += instance.OnDash;
+            @Sprint.started += instance.OnSprint;
+            @Sprint.performed += instance.OnSprint;
+            @Sprint.canceled += instance.OnSprint;
+            @Sit.started += instance.OnSit;
+            @Sit.performed += instance.OnSit;
+            @Sit.canceled += instance.OnSit;
             @Aiming.started += instance.OnAiming;
             @Aiming.performed += instance.OnAiming;
             @Aiming.canceled += instance.OnAiming;
@@ -359,9 +408,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Reloading.started += instance.OnReloading;
             @Reloading.performed += instance.OnReloading;
             @Reloading.canceled += instance.OnReloading;
-            @Sit.started += instance.OnSit;
-            @Sit.performed += instance.OnSit;
-            @Sit.canceled += instance.OnSit;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -375,9 +427,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Walk.started -= instance.OnWalk;
             @Walk.performed -= instance.OnWalk;
             @Walk.canceled -= instance.OnWalk;
-            @Dash.started -= instance.OnDash;
-            @Dash.performed -= instance.OnDash;
-            @Dash.canceled -= instance.OnDash;
+            @Sprint.started -= instance.OnSprint;
+            @Sprint.performed -= instance.OnSprint;
+            @Sprint.canceled -= instance.OnSprint;
+            @Sit.started -= instance.OnSit;
+            @Sit.performed -= instance.OnSit;
+            @Sit.canceled -= instance.OnSit;
             @Aiming.started -= instance.OnAiming;
             @Aiming.performed -= instance.OnAiming;
             @Aiming.canceled -= instance.OnAiming;
@@ -387,9 +442,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Reloading.started -= instance.OnReloading;
             @Reloading.performed -= instance.OnReloading;
             @Reloading.canceled -= instance.OnReloading;
-            @Sit.started -= instance.OnSit;
-            @Sit.performed -= instance.OnSit;
-            @Sit.canceled -= instance.OnSit;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -412,10 +470,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnWalk(InputAction.CallbackContext context);
-        void OnDash(InputAction.CallbackContext context);
+        void OnSprint(InputAction.CallbackContext context);
+        void OnSit(InputAction.CallbackContext context);
         void OnAiming(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnReloading(InputAction.CallbackContext context);
-        void OnSit(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

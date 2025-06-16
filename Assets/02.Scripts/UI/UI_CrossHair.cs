@@ -86,7 +86,7 @@ public class UI_CrossHair : UI_Base
 
     private const float tweenDuration = 0.1f;
 
-    //ÃÑ¾ËÀÌ ¹ß»çµÉ ¶§ ½ÇÇà
+    //ï¿½Ñ¾ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private void AnimateRecoilCrosshair(GameObject crossHair)
     {
         crossHair.transform.DOKill();
@@ -101,8 +101,8 @@ public class UI_CrossHair : UI_Base
     }
 
 
-    [SerializeField] private float aimTweenDuration = 0.2f; // Æ®À© ½Ã°£
-    [SerializeField] private float aimShrinkScale = 0.5f;   // ÀÛ¾ÆÁú ºñÀ²
+    [SerializeField] private float aimTweenDuration = 0.2f; // Æ®ï¿½ï¿½ ï¿½Ã°ï¿½
+    [SerializeField] private float aimShrinkScale = 0.5f;   // ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private void AinmateAimCrosshair()
     {
         GetObject((int)GameObjects.AimHair).transform.DOKill();
