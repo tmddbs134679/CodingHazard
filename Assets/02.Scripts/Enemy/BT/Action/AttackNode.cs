@@ -18,8 +18,10 @@ public class StopAttackNode : ActionNode
 {
     public override BT.State Run(EnemyBase enemy)
     {
-        enemy.StopAttack();
-        return BT.State.Failure;
+        if (enemy.IsAttack)
+            return BT.State.Sucess;
+        else
+            return BT.State.Failure;
     }
 
 

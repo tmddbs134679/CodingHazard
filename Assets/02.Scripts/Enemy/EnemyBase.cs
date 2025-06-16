@@ -133,15 +133,16 @@ public class EnemyBase : MonoBehaviour
     }
     IEnumerator AttackE()
     {
-        while (true)
-        {
+        
             isAttack = true;
             animator.SetBool(aniPara.AttackParaHash, true);
             Attack();
-            animator.SetBool(aniPara.AttackParaHash, false);
+           
            
             yield return new WaitForSeconds(status.AttackCoolTime);
-        }
+            animator.SetBool(aniPara.AttackParaHash, false);
+            isAttack = false;
+        attack= null;
     }
     Coroutine attack=null;
     public void StartAttack()
@@ -154,15 +155,7 @@ public class EnemyBase : MonoBehaviour
           }
         
     }
-    public void StopAttack()
-    {
-      isAttack=false;
-        animator.SetBool(aniPara.AttackParaHash, false);
-      
-        if (attack != null) { 
-            StopCoroutine(attack);
-        }
-    }
+ 
     void OnDrawGizmos()
     {
         if (status == null) return;
