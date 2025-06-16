@@ -12,7 +12,6 @@ public class DroppedItem : MonoBehaviour
     
 
     private Outline _outline;
-    private StageController _stageController;
     
 
     private void Awake()
@@ -20,14 +19,6 @@ public class DroppedItem : MonoBehaviour
         _outline = GetComponent<Outline>();
         _outline.enabled = false;
     }
-    
-    
-
-    private void Start()
-    {
-        _stageController = FindAnyObjectByType<StageController>();
-    }
-    
     
 
     public void InitItemData(ItemData itemData)
@@ -43,13 +34,12 @@ public class DroppedItem : MonoBehaviour
     }
     
     
-    
     public void OnInteract()
     {
         switch (ItemData.ItemType)
         {
             case ItemType.Collect :
-                _stageController.CollectItem();
+                StageManager.Instance.CollectItem();
                 Destroy(gameObject);
                 break;
             default:

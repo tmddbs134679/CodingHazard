@@ -16,7 +16,7 @@ public enum ItemType
 }
 
 
-public enum QuestType
+public enum StageObjectiveType
 {
     Kill,
     Collect,
