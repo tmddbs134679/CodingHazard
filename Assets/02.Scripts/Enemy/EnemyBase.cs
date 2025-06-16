@@ -16,6 +16,8 @@ public class EnemyBase : MonoBehaviour
     [SerializeField]
     public EnemyDetection detection;
     bool isDamaged;
+    private bool isAttack;
+    public bool IsAttack {  get { return isAttack; } }
     public bool IsDamaged { set { isDamaged = value; }  get { return isDamaged; } }
     bool isDead;
     public bool IsDead { get { return isDead; } }
@@ -127,23 +129,24 @@ public class EnemyBase : MonoBehaviour
     void Attack()
     {
         Debug.Log("공격");
-        animator.SetBool(aniPara.AttackParaHash, true);
-        detection.Target.TakeDamage(status.DMG);
+
     }
     IEnumerator AttackE()
     {
         while (true)
         {
+            isAttack = true;
             animator.SetBool(aniPara.AttackParaHash, true);
             Attack();
             animator.SetBool(aniPara.AttackParaHash, false);
+           
             yield return new WaitForSeconds(status.AttackCoolTime);
         }
     }
     Coroutine attack=null;
     public void StartAttack()
     {
-        Debug.Log("공격 시행");
+        detection.SeeTarget();
         animator.SetBool(aniPara.AttackParaHash, true);
         animator.SetBool(aniPara.RunParaHash, false);
         if (attack == null) {
@@ -153,7 +156,7 @@ public class EnemyBase : MonoBehaviour
     }
     public void StopAttack()
     {
-      
+      isAttack=false;
         animator.SetBool(aniPara.AttackParaHash, false);
       
         if (attack != null) { 
