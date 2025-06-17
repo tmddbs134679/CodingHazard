@@ -16,7 +16,6 @@ public class StageObjectiveUI : MonoBehaviour
     [SerializeField] private RectTransform showPoint;
     [SerializeField] private RectTransform mapMarker;
         
-    [SerializeField] private Camera mainCamera;
 
     private TextMeshProUGUI _curTMP;
     
@@ -24,8 +23,12 @@ public class StageObjectiveUI : MonoBehaviour
 
     private string _distanceText;
     
+    private Camera _mainCamera;
+
+    
     private void Start()    
     {
+        _mainCamera = Camera.main;
         
         _stageManager = StageManager.Instance;
 
@@ -52,7 +55,7 @@ public class StageObjectiveUI : MonoBehaviour
 
             if (targetObject != null)
             {
-                Vector3 screenPos = mainCamera.WorldToScreenPoint(targetObject.MarkerPoint.position);
+                Vector3 screenPos = _mainCamera.WorldToScreenPoint(targetObject.MarkerPoint.position);
                 
                 if (screenPos.z >= 0)
                 {
