@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class StageObjectiveUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI description;
-    [SerializeField] private TextMeshProUGUI progress;
+    [SerializeField] private TextMeshProUGUI titleText;
+    [SerializeField] private TextMeshProUGUI progressText;
 
 
     private StageManager _stageManager;
@@ -15,7 +15,7 @@ public class StageObjectiveUI : MonoBehaviour
     {
         _stageManager = StageManager.Instance;
 
-        _stageManager.OnChangedObjective += SetDescription;
+        _stageManager.OnChangedObjective += SetTitle;
         _stageManager.OnChangedObjective += SetProgress;
 
         _stageManager.OnObjectiveUpdatedProgress += SetProgress;
@@ -24,7 +24,7 @@ public class StageObjectiveUI : MonoBehaviour
         {
             var firstObjective = _stageManager.Objectives[0];
 
-            SetDescription(firstObjective);
+            SetTitle(firstObjective);
             SetProgress(firstObjective);
         }
      
@@ -32,20 +32,31 @@ public class StageObjectiveUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        _stageManager.OnChangedObjective -= SetDescription;
+        _stageManager.OnChangedObjective -= SetTitle;
         _stageManager.OnChangedObjective -= SetProgress;
 
         _stageManager.OnObjectiveUpdatedProgress -= SetProgress;
     }
 
 
-    private void SetDescription(StageObjective objective)
+    private void SetTitle(StageObjective objective)
     {
-        description.text = objective.Description;
+        titleText.text = GetTitleText(objective.ObjectiveType);
     }
     
     private void SetProgress(StageObjective objective)
     {
-        progress.text = objective.GetProgressText();
+        progressText.text = $"• {objective.Description} {objective.GetProgressText()}";
+    }
+
+    private string GetTitleText(StageObjectiveType type)
+    {
+        return type switch
+        {
+            StageObjectiveType.Collect => "수집",
+            StageObjectiveType.Kill => "처치",
+            StageObjectiveType.Reach => "도달",
+            _=>""
+        };
     }
 }
