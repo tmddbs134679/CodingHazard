@@ -179,7 +179,7 @@ public class UI_GameScene : UI_Base
 
 
 
-    private void SetItemText(StageObjectiveObject item)
+    private void SetItemText(IInteractable interactable)
     {
         GetText((int)Texts.ItemText).gameObject.SetActive(true);
         GetText((int)Texts.ItemText).text = "획득";

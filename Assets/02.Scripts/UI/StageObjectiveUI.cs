@@ -22,12 +22,13 @@ public class StageObjectiveUI : MonoBehaviour
     private Dictionary<StageObjective, TextMeshProUGUI> progressTMPDict = new();
 
     
-    private void Start()
+    private void Start()    
     {
         _stageManager = StageManager.Instance;
 
         _stageManager.OnChangedObjective += SetTitle;
         _stageManager.OnChangedObjective += ShowProgress;
+        _stageManager.OnChangedObjective += SetProgress;
 
         _stageManager.OnObjectiveUpdatedProgress += SetProgress;
 
@@ -42,12 +43,11 @@ public class StageObjectiveUI : MonoBehaviour
             text.gameObject.SetActive(false);
 
             progressTMPDict[targetObjective] = text;
-            
-            SetProgress(targetObjective);
 
             if (i == 0)
             {
                 SetTitle(targetObjective);
+                SetProgress(targetObjective);
                 ShowProgress(targetObjective);
             }
         }

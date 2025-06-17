@@ -12,11 +12,11 @@ public class PlayerInteraction : MonoBehaviour
     public float checkRate = 0.05f;
     private float lastCheckTime;
 
-    private StageObjectiveObject currentTargetItem;
+    private IInteractable currentTargetItem;
 
     public float detectionRadius = 10f;
     private Vector3 playerPos;
-    private HashSet<StageObjectiveObject> preDetectedItems = new();
+    private HashSet<IDetectable> preDetectedItems = new();
 
     public TextMeshProUGUI itemText;
 
@@ -38,10 +38,9 @@ public class PlayerInteraction : MonoBehaviour
             
             if (Physics.Raycast(ray, out hit, interactableDistance, interactableLayer))
             {
-                StageObjectiveObject item = hit.collider.GetComponent<StageObjectiveObject>();
+                IInteractable interactable = hit.collider.GetComponent<IInteractable>();
 
-                
-                if (item != null)
+                if (interactable != null)
                 {
                     // Fake Null 상태로... 이중 확인
                     if (currentTargetItem != null && currentTargetItem == null)
@@ -49,15 +48,15 @@ public class PlayerInteraction : MonoBehaviour
                         currentTargetItem = null;
                     }
                     
-                    if (item.IsLockInteract)
+                    if (interactable.IsLockInteract)
                         return;
 
                     //SetItemText(item);
-                    PlayerEvent.OnItemCheck.Invoke(item);
+                    PlayerEvent.OnItemCheck.Invoke(interactable);
 
-                    if (currentTargetItem != item)
+                    if (currentTargetItem != interactable)
                     {
-                        currentTargetItem = item;
+                        currentTargetItem = interactable;
                     }
                     return;
                 }
@@ -88,20 +87,20 @@ public class PlayerInteraction : MonoBehaviour
         playerPos = gameObject.transform.position;
         
         Collider[] detectedColliders = Physics.OverlapSphere(playerPos, detectionRadius, interactableLayer);
-        HashSet<StageObjectiveObject> curDetectedItems = new();
+        HashSet<IDetectable> curDetectedItems = new();
         
         foreach (Collider col in detectedColliders)
         {
-            if (col.TryGetComponent(out StageObjectiveObject item))
+            if (col.TryGetComponent(out IDetectable triggerable))
             {
-                if (item.IsLockInteract)
+                if (triggerable.IsLockDetect)
                     return;
                 
-                curDetectedItems.Add(item);
+                curDetectedItems.Add(triggerable);
 
-                if (!preDetectedItems.Contains(item))
+                if (!preDetectedItems.Contains(triggerable))
                 {
-                    item.ToggleOutline(true);
+                    triggerable.Enter();
                 }
             }
         }
@@ -110,7 +109,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (!curDetectedItems.Contains(preItem))
             {
-                preItem.ToggleOutline(false);
+                preItem.Exit();
             }
         }
 

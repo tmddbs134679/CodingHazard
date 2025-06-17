@@ -3,12 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class StageObjectiveObject : MonoBehaviour
+public abstract class StageObjectiveObject : MonoBehaviour, IDetectable
 {
     public abstract StageObjectiveType ObjectiveType { get; }
-    public bool IsLockInteract { get; private set; }
+    
+    public bool IsLockDetect { get; set; }
+
     
     private Outline _outline;
+    
+
 
     private void Awake()
     {
@@ -16,14 +20,21 @@ public abstract class StageObjectiveObject : MonoBehaviour
         _outline.enabled = false;
     }
     
-    public void ToggleLockInteract(bool isLock)
-    {
-        IsLockInteract = isLock;
-    }
-    
     public void ToggleOutline(bool state)
     {
         if (_outline == null) return;
         _outline.enabled = state;
+    }
+
+    public void Enter()
+    {
+        ToggleOutline(true);
+        
+        Debug.Log(10);
+    }
+
+    public void Exit()
+    {
+        ToggleOutline(false);
     }
 }
