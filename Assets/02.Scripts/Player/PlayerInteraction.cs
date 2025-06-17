@@ -49,7 +49,7 @@ public class PlayerInteraction : MonoBehaviour
                         currentTargetItem = null;
                     }
                     
-                    if (!item.IsLockInteract)
+                    if (item.IsLockInteract)
                         return;
 
                     //SetItemText(item);
@@ -94,6 +94,9 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (col.TryGetComponent(out DroppedItem item))
             {
+                if (item.IsLockInteract)
+                    return;
+                
                 curDetectedItems.Add(item);
 
                 if (!preDetectedItems.Contains(item))

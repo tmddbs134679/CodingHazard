@@ -4142,69 +4142,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1779084975}
     m_Modifications:
-    - target: {fileID: 1537416386825763677, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
-      propertyPath: m_text
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1537416386825763677, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
-      propertyPath: m_margin.z
-      value: -135.52039
-      objectReference: {fileID: 0}
-    - target: {fileID: 1537416386825763677, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: ef914ade11e54554a9cbd3758f785c9c, type: 2}
-    - target: {fileID: 1537416386825763677, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: -2819995045541076240, guid: ef914ade11e54554a9cbd3758f785c9c, type: 2}
-    - target: {fileID: 1537416386825763677, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
-      propertyPath: m_VerticalAlignment
-      value: 512
-      objectReference: {fileID: 0}
-    - target: {fileID: 1537416386825763677, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
-      propertyPath: m_HorizontalAlignment
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1537416386825763677, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874949594476095902, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874949594476095902, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874949594476095902, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874949594476095902, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2882192331505704447, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
       propertyPath: m_Name
       value: UI_GameScene
-      objectReference: {fileID: 0}
-    - target: {fileID: 3050254282646337611, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3050254282646337611, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3050254282646337611, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3050254282646337611, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4257209563752815414, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
       propertyPath: m_Pivot.x
@@ -4285,14 +4225,6 @@ PrefabInstance:
     - target: {fileID: 4257209563752815414, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8076431874174074870, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -71.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 8076431874174074870, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -82.1
       objectReference: {fileID: 0}
     - target: {fileID: 8521128919701988085, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
       propertyPath: testSetting
