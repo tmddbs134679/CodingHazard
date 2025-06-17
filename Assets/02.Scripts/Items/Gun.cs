@@ -40,7 +40,6 @@ public class Gun : Weapon
     [Header("Audio")]
     [SerializeField] private AudioID audioID;
     [SerializeField] private GameObject bulletDecalPrefab;
-    [SerializeField] private LayerMask hitLayerMask;
 
 
     private Camera mainCam;
@@ -74,8 +73,8 @@ public class Gun : Weapon
 
     private void SpawnBulletDecal(RaycastHit hit)
     {
-        Vector3 position = hit.point + hit.normal * 0.01f; 
-        Quaternion rotation = Quaternion.LookRotation(hit.normal * -1f); 
+        Vector3 position = hit.point + hit.normal * 0.01f;
+        Quaternion rotation = Quaternion.LookRotation(hit.normal); 
 
         Instantiate(bulletDecalPrefab, position, rotation);
     }
@@ -166,18 +165,18 @@ public class Gun : Weapon
 
         PlayAttackAnimation(isZoom);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, range, hitLayerMask))
+        LayerMask layerMask = 1 << 9;
+        
+        
+        if (Physics.Raycast(ray, out RaycastHit hit, range, layerMask))
         {
             if (hit.collider.TryGetComponent<HitBox>(out var enemy))
             {
                 //나중에 변경될 수 있음 
                 enemy.Damaged(damage, hit);
             }
-            else
-            {
-                SpawnBulletDecal(hit);
-            }
         }
+        
         StartCoroutine(ApplyRecoil());
         curAmmo--;
         PlayerEvent.OnUpdateBullet?.Invoke(spareAmmo, curAmmo);

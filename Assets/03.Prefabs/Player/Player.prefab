@@ -151,7 +151,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 10
-  field of view: 90.00001
+  field of view: 67.67275
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -241,7 +241,7 @@ Transform:
   m_GameObject: {fileID: 2660269110559457808}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.00000011920929, z: 0}
+  m_LocalPosition: {x: -0.00002670288, y: 0.00000011920929, z: 0.000022888184}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -362,7 +362,7 @@ Transform:
   m_GameObject: {fileID: 4334622749731428342}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.00000011920929, z: 0}
+  m_LocalPosition: {x: -0.00002670288, y: 0.00000011920929, z: 0.000022888184}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -645,7 +645,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   checkRate: 0.05
-  detectionRadius: 20
+  detectionRadius: 10
   itemText: {fileID: 0}
 --- !u!114 &8332048441860605962
 MonoBehaviour:
@@ -662,7 +662,7 @@ MonoBehaviour:
   weaponAnchor: {fileID: 456778721506785163}
   weaponPrefabs:
   - {fileID: 6520109395152534269, guid: 719efbf4aa0592f489ccf902ef021adf, type: 3}
-  - {fileID: 2323879503507624389, guid: f8d21ded0f4919641b12564b818065ad, type: 3}
+  - {fileID: 1603891455436130839, guid: 7b4f3ee034e357c4c9a0aea8cfaea514, type: 3}
 --- !u!1 &4613281253057384456
 GameObject:
   m_ObjectHideFlags: 0
