@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.U2D;
 using UnityEngine.UIElements;
 
 public class EnemyBase : MonoBehaviour
@@ -81,27 +82,40 @@ public class EnemyBase : MonoBehaviour
         PlayerEvent.OnKillConfirmed?.Invoke();
     }
     bool invincibility = false;
-    IEnumerator MotionE(int para)
-    {
-        Debug.Log("데미지 모션");
-        animator.SetBool(aniPara.DamagedParaHash, true);
-        animator.SetBool(para, true);
-        invincibility=true;
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        
-        yield return null;
+    public Transform spineBone;
+    public float bendAmount = 20f;
+    public float duration = 0.3f;
 
-        stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        animator.Play(stateInfo.fullPathHash, 0, 0f);
-        while (!stateInfo.IsName("Damaged")||stateInfo.normalizedTime < 1f)
+    IEnumerator SpineBend(Vector3 attackerPosition)
+    {
+        Vector3 hitDir = (transform.position - attackerPosition).normalized;
+        Vector3 localDir = transform.InverseTransformDirection(hitDir);
+
+        float bendX = Mathf.Clamp(-localDir.z * 30f, -30f, 30f); 
+        float bendY = Mathf.Clamp(-localDir.x * 30f, -30f, 30f); 
+
+        Quaternion originalRot = spineBone.localRotation;
+        Quaternion targetRot = originalRot * Quaternion.Euler(bendX, bendY, 0);
+
+        float duration = 0.15f;
+        float t = 0f;
+
+      
+        while (t < duration)
         {
+            spineBone.localRotation = Quaternion.Slerp(originalRot, targetRot, t / duration);
+            t += Time.deltaTime;
             yield return null;
-            stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         }
-        animator.SetBool(para, false);
-        isDamaged = false;
-        invincibility = false;
-        DmdC = null;
+
+   
+        t = 0f;
+        while (t < duration)
+        {
+            spineBone.localRotation = Quaternion.Slerp(targetRot, originalRot, t / duration);
+            t += Time.deltaTime;
+            yield return null;
+        }
     }
     Coroutine DmdC;
     public void DamagedMotion()
