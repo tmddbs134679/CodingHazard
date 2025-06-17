@@ -700,7 +700,6 @@ GameObject:
   - component: {fileID: 4899403034565174746}
   - component: {fileID: 4700721035636528474}
   - component: {fileID: 8067694158380210566}
-  - component: {fileID: 1236207729577593754}
   m_Layer: 5
   m_Name: UI_ClearPopup
   m_TagString: Untagged
@@ -806,19 +805,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeTime: 1
   showTime: 2
---- !u!114 &1236207729577593754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8055447681380949491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dabec09bbf3a8d64190b843e106a4b8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _popup: {fileID: 0}
 --- !u!1 &8521648165545589639
 GameObject:
   m_ObjectHideFlags: 0

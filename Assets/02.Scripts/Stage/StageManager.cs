@@ -48,6 +48,14 @@ public class StageManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            ClearStage();
+        }
+    }
+
 
     public void UpdateObjectives<T>(T target) where T : MonoBehaviour
     {
