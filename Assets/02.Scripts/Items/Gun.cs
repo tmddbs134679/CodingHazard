@@ -12,7 +12,7 @@ public class Gun : Weapon
 
 
     [Header("ReCoil")]
-    [SerializeField] private Transform curPos;
+   // [SerializeField] private Transform curPos;
     [SerializeField] private float recoilx = 0.01f;
     [SerializeField] private float recoily = 0.01f;
     [SerializeField] private float recoilz = 0.05f;
@@ -38,35 +38,41 @@ public class Gun : Weapon
 
     }
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        PlayerEvent.Aiming += ZoomWeapon;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        PlayerEvent.Aiming -= ZoomWeapon;
+}
+
     protected void Update()
     {
 
         base.Update();
 
-      //  HandleFireInput();
 
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            //이벤트 연결하기 
-            isZoom = !isZoom;
-            ZoomWeapon();
-        }
-
-
-        //업데이트에서 하면 너무 많이 입력됨
     
     }
 
-    private void ZoomWeapon()
+    private void ZoomWeapon(bool isZoom)
     {
-      //  weaponPos.localPosition = Vector3.Lerp(weaponPos.localPosition, targetPos, Time.deltaTime);
+
+
+        this.isZoom = isZoom;
         WeaponAnimator.SetBool(IsAiming, isZoom);
-        float targetFOV = isZoom ? zoomFOV : normalFOV;
-        if (mainCam != null)
-        {
-            mainCam.fieldOfView = targetFOV;
-        }
+       
+        
+        
+        //float targetFOV = isZoom ? zoomFOV : normalFOV;
+       //if (mainCam != null)
+       //{
+       //    mainCam.fieldOfView = targetFOV;
+       //}
 
     }
 
@@ -123,13 +129,10 @@ public class Gun : Weapon
 
     private IEnumerator ApplyRecoil()
     {
-        if (curPos == null)
-        {
-            yield break;
-        }
+       
 
         Vector3 recoil = new Vector3(Random.Range(-recoilx, recoilx), Random.Range(-recoily, recoily), -recoilz);
-        Vector3 originPos = curPos.localPosition;
+        Vector3 originPos = this.transform.localPosition;
         Vector3 targetPos = originPos + recoil;
 
         float time = 0f;
@@ -138,7 +141,7 @@ public class Gun : Weapon
         while (time < 1f)
         {
             time += Time.deltaTime * recoilSpeed;
-            curPos.localPosition = Vector3.Lerp(targetPos, originPos, time);
+            this.transform.localPosition = Vector3.Lerp(targetPos, originPos, time);
             yield return null;
         }
 

@@ -16,13 +16,14 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected float damage = 10f;
     [SerializeField] protected float range = 100f;
     [SerializeField] protected float fireRate = 0.1f;
+    
 
     [SerializeField] protected Animator WeaponAnimator;
 
     [SerializeField] protected GameObject DropObject;
 
     [SerializeField] protected GameObject muzzleFlash;
-
+    [SerializeField] protected ParticleSystem muzzleSmoke;
     [SerializeField] protected AudioSource audioSource;
     [SerializeField] protected AudioClip audioClip;
     [SerializeField] protected GameObject playerArm;
@@ -48,14 +49,16 @@ public abstract class Weapon : MonoBehaviour
     protected virtual void OnEnable()
     {
         PlayerEvent.OnAttack += Fire;
+        
     }
 
 
-    protected void OnDisable()
+    protected virtual void OnDisable()
     {
         PlayerEvent.OnAttack -= Fire;
         StopAllCoroutines();
     }
+    
     protected void PlaySound(AudioClip clip)
     {
         audioSource.Stop();
@@ -126,7 +129,7 @@ public abstract class Weapon : MonoBehaviour
         }
         muzzleFlash.SetActive(true);
 
-        yield return new WaitForSeconds(fireRate * 1.2f);
+        yield return new WaitForSeconds(fireRate *0.5f);
 
         muzzleFlash.SetActive(false);
     }

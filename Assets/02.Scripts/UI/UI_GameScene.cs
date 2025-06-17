@@ -16,7 +16,7 @@ public class UI_GameScene : UI_Base
     }
     enum Texts
     {
-     
+        ItemText
     }
     enum Images
     {
@@ -46,6 +46,7 @@ public class UI_GameScene : UI_Base
 
         #region Object Bind
         BindImage(typeof(Images));
+        BindText(typeof(Texts));
         #endregion
 
         GetImage((int)Images.MeleeSlot).gameObject.SetActive(false);
@@ -69,6 +70,7 @@ public class UI_GameScene : UI_Base
         PlayerEvent.Swap += UpdateQuickSlot;
         PlayerEvent.OnDetectMonster += DetectionEyeVisible;
         PlayerEvent.OnHpChanged += UpdateBloodScreen;
+        PlayerEvent.OnItemCheck += SetItemText;
 
     }
 
@@ -77,6 +79,7 @@ public class UI_GameScene : UI_Base
         PlayerEvent.Swap -= UpdateQuickSlot;
         PlayerEvent.OnDetectMonster -= DetectionEyeVisible;
         PlayerEvent.OnHpChanged -= UpdateBloodScreen;
+        PlayerEvent.OnItemCheck -= SetItemText;
     }
 
     private void Update()
@@ -175,5 +178,11 @@ public class UI_GameScene : UI_Base
     }
 
 
+
+    private void SetItemText(DroppedItem item)
+    {
+        GetText((int)Texts.ItemText).gameObject.SetActive(true);
+        GetText((int)Texts.ItemText).text = item.ItemData.DisplayName;
+    }
 
 }

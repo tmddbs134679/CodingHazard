@@ -55,8 +55,8 @@ public class EnemyBase : MonoBehaviour
     {
         PlayerEvent.OnMonsterHit?.Invoke();
 
-        if (invincibility)
-            return;
+        //if (invincibility)
+            //return;
         detection.SeeTarget();
         Debug.Log(dmg + " 입음");
         isDamaged=true;
@@ -65,18 +65,26 @@ public class EnemyBase : MonoBehaviour
         if (hp <= 0) {
             Dead();
         }
+        else
+        {
+            StopAllCoroutines();
+            StartCoroutine(MotionE(aniPara.DamagedParaHash));
+        }
     }
     public void Dead()
     {
         isDead=true;
         Debug.Log("사망");
-       MonsterManager.Instance.Dead(this);
+        if (DeadC == null)
+            DeadC = StartCoroutine(MotionE2(aniPara.DeadParaHash));
+        MonsterManager.Instance.Dead(this);
         PlayerEvent.OnKillConfirmed?.Invoke();
     }
     bool invincibility = false;
     IEnumerator MotionE(int para)
     {
         Debug.Log("데미지 모션");
+        animator.SetBool(aniPara.DamagedParaHash, true);
         animator.SetBool(para, true);
         invincibility=true;
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
@@ -84,7 +92,7 @@ public class EnemyBase : MonoBehaviour
         yield return null;
 
         stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-
+        animator.Play(stateInfo.fullPathHash, 0, 0f);
         while (!stateInfo.IsName("Damaged")||stateInfo.normalizedTime < 1f)
         {
             yield return null;
@@ -98,17 +106,17 @@ public class EnemyBase : MonoBehaviour
     Coroutine DmdC;
     public void DamagedMotion()
     {
-        if(DmdC == null) 
-        DmdC = StartCoroutine(MotionE(aniPara.DamagedParaHash));
+        //if(DmdC == null) 
+       // DmdC = StartCoroutine(MotionE(aniPara.DamagedParaHash));
     }
     Coroutine DeadC;
     IEnumerator MotionE2(int para)
     {
-
+        animator.applyRootMotion = true;
         animator.SetBool(para, true);
 
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-
+        Destroy(this.gameObject, 5f);
         yield return null;
 
         stateInfo = animator.GetCurrentAnimatorStateInfo(0);
@@ -118,12 +126,13 @@ public class EnemyBase : MonoBehaviour
             yield return null;
             stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         }
-        Destroy(this.gameObject);
+
         animator.SetBool(aniPara.DamagedParaHash, false);
         
     }
     public void DeadMotion()
     {
+        StopAllCoroutines();
         if (DeadC == null)
             DeadC = StartCoroutine(MotionE2(aniPara.DeadParaHash));
        

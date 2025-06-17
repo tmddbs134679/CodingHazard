@@ -12,8 +12,6 @@ public class GameManager : Singleton<GameManager>
     {
         base.Awake();
         
-        GraphicsSettingManager.Init();
-
         GraphicsSettingManager.SetBaseState();
     }
   
