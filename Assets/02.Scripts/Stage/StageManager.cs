@@ -85,19 +85,20 @@ public class StageManager : MonoBehaviour
         Time.timeScale = 0;
 
         PlayerController.BlockInput();
-        
+
+        OnClearStage?.Invoke();
 
         //fadeScreen.FadeOut(
         //    () =>
         //    {
         //        Cursor.lockState = CursorLockMode.None;
         //        Cursor.visible = true;
-                
+
         //        fadeScreen.gameObject.SetActive(false);
         //        tempResultUI.gameObject.SetActive(true);
         //    });
-        
-       // tempResultButton.onClick.AddListener(TempClickEndButton);
+
+        // tempResultButton.onClick.AddListener(TempClickEndButton);
     }
 
     void TempClickEndButton()
