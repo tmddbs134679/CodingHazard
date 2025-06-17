@@ -34,11 +34,11 @@ public class PlayerMoveState : PlayerBaseState
             {
                 if (useMoveSound)
                 {
-                    AudioManager.Instance.PlayAudio(AudioID.PlayerWalk1);
+                    AudioManager.Instance.PlayAudio(AudioID.PlayerWalk1, 0.05f);
                 }
                 else
                 {
-                    AudioManager.Instance.PlayAudio(AudioID.PlayerWalk2);
+                    AudioManager.Instance.PlayAudio(AudioID.PlayerWalk2, 0.05f);
                 }
                 useMoveSound = !useMoveSound;
                 moveTimer = moveInterval;

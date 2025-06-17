@@ -6,20 +6,10 @@ using UnityEngine;
 public abstract class StageObjectiveObject : MonoBehaviour
 {
     public abstract StageObjectiveType ObjectiveType { get; }
-    
-    
-    private Outline _outline;
-    
 
-    private void Awake()
-    {
-        _outline = GetComponent<Outline>();
-        _outline.enabled = false;
-    }
+    public Transform MarkerPoint => markerPoint;
     
-    public void ToggleOutline(bool state)
-    {
-        if (_outline == null) return;
-        _outline.enabled = state;
-    }
+    [SerializeField] private Transform markerPoint;
+    
+   
 }

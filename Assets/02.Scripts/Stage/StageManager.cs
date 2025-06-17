@@ -1,10 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
-using UnityEngine.Rendering;
 
 public class StageManager : MonoBehaviour
 {
@@ -12,21 +11,22 @@ public class StageManager : MonoBehaviour
 
     private static StageManager _instance;
 
-    public event UnityAction<StageObjective> OnObjectiveUpdatedProgress;
     public event UnityAction<StageObjective> OnChangedObjective;
     public event Action OnClearStage;
 
+
     [field: SerializeField] public PlayerController PlayerController { get; private set; }
 
-    public List<StageObjective> Objectives => objectives;
+    public StageObjective CurObjective { get; private set; }
+    
 
-    [SerializeField] private List<StageObjective> objectives;
+    [SerializeField] private Transform objectivesRoot;
     
     [SerializeField] private FadeScreen fadeScreen;
+
     
-    [SerializeField] private GameObject tempResultUI;
-    [SerializeField] private Button tempResultButton;
-    
+    private List<StageObjective> _objectives = new();
+
 
     private void Awake()
     {
@@ -38,43 +38,36 @@ public class StageManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
 
-    private void Start()
-    {
-        if (objectives.Count > 0)
+        _objectives = objectivesRoot.GetComponentsInChildren<StageObjective>().ToList();
+        
+        
+        for (int i = 0; i < _objectives.Count; i++)
         {
-            objectives[0].Enter();
+            _objectives[i].Init(this);
+            
+            if (i == 0)
+            {
+                CurObjective = _objectives[i];
+                
+                CurObjective.Enter();
+            }
         }
     }
+    
 
-    public void UpdateObjectives<T>(T target) where T : MonoBehaviour
+
+    public void UpdateObjectives<T>(T target) where T : StageObjectiveObject
     {
-        if (objectives.Count > 0)
+        if (_objectives.Count > 0)
         {
-            var objective = objectives[0];
+            var objective = _objectives[0];
             
-            if (objective.TryUpdateProgress(target, out bool isComplete))
+            objective.UpdateProgress(target, out bool isClear);
+
+            if (isClear)
             {
-                OnObjectiveUpdatedProgress?.Invoke(objective);
-                
-                if (isComplete)
-                {
-                    if (objectives.Count == 1)
-                    {
-                        ClearStage();
-                    }
-                    else
-                    {
-                        var nextObjective = objectives[1];
-                        
-                        OnChangedObjective?.Invoke(nextObjective);
-                        
-                        nextObjective.Enter();
-                    }
-                    
-                    objectives.RemoveAt(0);
-                }
+                ChangeProgress();
             }
         }
     }
@@ -84,5 +77,23 @@ public class StageManager : MonoBehaviour
         PlayerController.BlockInput();
 
         OnClearStage?.Invoke();
+    }
+    
+    private void ChangeProgress()
+    {
+        _objectives.RemoveAt(0);
+
+        if (_objectives.Count == 0)
+        {
+            ClearStage();
+        }
+        else
+        {
+            CurObjective = _objectives[0];
+                        
+            OnChangedObjective?.Invoke(CurObjective);
+                        
+            CurObjective.Enter();
+        }
     }
 }

@@ -8,7 +8,7 @@ public class PlayerStateMachine
     public Transform FPScamTransform { get; set; }
     public float MovementSpeed { get; set; } = 5f;
     public float WalkSpeed { get; set; } = 2.5f;
-    public float SprintSpeed { get; set; } = 10f;
+    public float SprintSpeed { get; set; } = 7.5f;
     public float SprintStamina { get; set; } = 15f;
     public float curMoveSpeed { get; set; }
 

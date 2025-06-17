@@ -6,73 +6,79 @@ using UnityEngine;
 public class StageCollectObejctive : StageObjective
 {
     public override StageObjectiveType ObjectiveType => StageObjectiveType.Collect;
-    public List<StageCollectObject> ObjectiveItems => objectiveItems;
     
     
-    [Space(10f)]
+    [Space(20f)]
     [SerializeField] private List<StageCollectObject> objectiveItems;
     
     
     private int _maxCount;
     private int _curCount;
-    
-    
 
-    private void Awake()
+
+   
+    public override void Init(StageManager stageManager)
     {
+        base.Init(stageManager);
+        
         _maxCount = objectiveItems.Count;
 
         foreach (var item in objectiveItems)
         {
             item.IsLockInteract = true;
+            item.IsLockDetect = true;
         }
     }
-    
-
 
     public override void Enter()
     {
-        foreach (var item in objectiveItems)
-        {
-            item.IsLockInteract = false;
-            item.ToggleOutline(true);
-        }
+        var item = GetTargetObjectiveObject() as StageCollectObject;
+
+        item.IsLockDetect = false;
+        item.IsLockInteract = false;
     }
     
     
+    public override StageObjectiveObject GetTargetObjectiveObject()
+    {
+        if (objectiveItems.Count > 0)
+        {
+            return objectiveItems[0];
+        }
+
+        return null;
+    }
+
 
     public override string GetProgressText()
     {
         return $"( {_curCount} / {_maxCount} )";
     }
     
-    
 
-    public override bool TryUpdateProgress<T>(T targret, out bool isComplete) 
+    public override void UpdateProgress<T>(T target, out bool isClear)
     {
-        if (targret is StageCollectObject item)
-        {
-            if (objectiveItems.Contains(item))
-            {
-                objectiveItems.Remove(item);
-                
-                Destroy(item.gameObject);
-            
-                _curCount += 1;
+        isClear = false;
 
-                isComplete = _curCount >= _maxCount;
+        if (target == GetTargetObjectiveObject())
+        {
+            Destroy(target.gameObject);
+
+            objectiveItems.RemoveAt(0);
             
-                if (_curCount >= _maxCount)
-                {
-                    onCompleteEvent?.Invoke();
-                }
-                
-                return true;
+            _curCount += 1;
+
+            if (_curCount >= _maxCount)
+            {
+                isClear = true;
+            }
+            else
+            {
+                var item = GetTargetObjectiveObject() as StageCollectObject;
+
+                item.IsLockDetect = false;
+                item.IsLockInteract = false;
             }
         }
-
-        isComplete = false;
-        return false;
     }
-    
 }

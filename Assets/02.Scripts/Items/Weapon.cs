@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -29,8 +30,6 @@ public abstract class Weapon : MonoBehaviour
 
     #region Sound & Animation
     [SerializeField] protected Animator WeaponAnimator;
-    [SerializeField] protected AudioSource audioSource;
-    [SerializeField] protected AudioClip audioClip;
     [SerializeField] protected GameObject playerArm;
     #endregion
 
@@ -44,10 +43,14 @@ public abstract class Weapon : MonoBehaviour
     protected bool isShootable;
     protected float lastFireTime;
 
-    protected void Awake()
+
+    protected AudioManager _audioManager;
+
+    private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
+        _audioManager = AudioManager.Instance;
     }
+
 
     protected virtual void OnEnable()
     {
@@ -63,13 +66,6 @@ public abstract class Weapon : MonoBehaviour
         StopAllCoroutines();
     }
     
-    protected void PlaySound(AudioClip clip)
-    {
-        audioSource.Stop();
-        audioSource.clip = audioClip;
-        audioSource.Play();
-    }
-
 
     public virtual void Fire()
     {

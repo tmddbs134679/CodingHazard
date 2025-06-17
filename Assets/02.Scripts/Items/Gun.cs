@@ -1,8 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.Build.Content;
 using UnityEngine;
 
 public class Gun : Weapon
@@ -27,7 +24,6 @@ public class Gun : Weapon
     [SerializeField] private int spareAmmo;
 
 
-
     [Header("ReCoil")]
     [SerializeField] private float recoilx = 0.01f;
     [SerializeField] private float recoily = 0.01f;
@@ -41,7 +37,8 @@ public class Gun : Weapon
     [SerializeField] private float zoomFOV = 40;
     [SerializeField] private float zoomSpeed = 10f;
 
-
+    [Header("Audio")]
+    [SerializeField] private AudioID audioID;
 
     private Camera mainCam;
     private bool isZoom = false;
@@ -51,7 +48,7 @@ public class Gun : Weapon
     {
         mainCam = Camera.main;
 
-
+        
     }
 
     protected override void OnEnable()
@@ -157,8 +154,9 @@ public class Gun : Weapon
 
         Ray ray = mainCam.ViewportPointToRay(veiwport);
 
-
-        PlaySound(audioClip);
+        
+        _audioManager.PlayAudio(audioID, 0.10f);
+        
 
         PlayAttackAnimation(isZoom);
 

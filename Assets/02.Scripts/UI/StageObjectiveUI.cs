@@ -8,68 +8,65 @@ using UnityEngine;
 public class StageObjectiveUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI titleText;
-    
     [SerializeField] private TextMeshProUGUI progressTMPPrefab;
+    
     [SerializeField] private Transform progressTMPRoot;
     
     [SerializeField] private RectTransform hidePoint;
     [SerializeField] private RectTransform showPoint;
-
-    private StageManager _stageManager;
+    [SerializeField] private RectTransform mapMarker;
 
     private TextMeshProUGUI _curTMP;
+    
+    private StageManager _stageManager;
+    private Camera _mainCamera;
 
-    private Dictionary<StageObjective, TextMeshProUGUI> progressTMPDict = new();
-
+    private string _distanceText;
     
     private void Start()    
     {
+        _mainCamera =Camera.main;
+        
         _stageManager = StageManager.Instance;
 
         _stageManager.OnChangedObjective += SetTitle;
         _stageManager.OnChangedObjective += ShowProgress;
-        _stageManager.OnChangedObjective += SetProgress;
-
-        _stageManager.OnObjectiveUpdatedProgress += SetProgress;
-
-        for (int i = 0; i < _stageManager.Objectives.Count; i++)
-        {
-            var targetObjective = _stageManager.Objectives[i];
-            
-            var text = Instantiate(progressTMPPrefab, progressTMPRoot);
-
-            text.transform.position = hidePoint.transform.position;
-            
-            text.gameObject.SetActive(false);
-
-            progressTMPDict[targetObjective] = text;
-
-            if (i == 0)
-            {
-                SetTitle(targetObjective);
-                SetProgress(targetObjective);
-                ShowProgress(targetObjective);
-            }
-        }
+        
+        SetTitle(_stageManager.CurObjective);
+        ShowProgress(_stageManager.CurObjective);
     }
 
     private void OnDestroy()
     {
         _stageManager.OnChangedObjective -= SetTitle;
         _stageManager.OnChangedObjective -= ShowProgress;
+    }
 
-        _stageManager.OnObjectiveUpdatedProgress -= SetProgress;
+    private void Update()
+    {
+        var targetObjective = _stageManager.CurObjective;
+        
+        if (targetObjective != null)
+        {
+            var targetObject = targetObjective.GetTargetObjectiveObject();
+
+            if (targetObject != null)
+            {
+                Vector3 screenPos = _mainCamera.WorldToScreenPoint(targetObject.MarkerPoint.position);
+
+                mapMarker.position = screenPos;
+                
+                Vector3 diff = _stageManager.PlayerController.transform.position - targetObject.MarkerPoint.position;
+
+                _curTMP.text = $"•  {targetObjective.Description} {targetObjective.GetProgressText()}  ( {(int)diff.magnitude}M )";
+            }
+        }
     }
 
 
     private void SetTitle(StageObjective objective)
     {
         titleText.text = GetTitleText(objective.ObjectiveType);
-    }
-    
-    private void SetProgress(StageObjective objective)
-    {
-        progressTMPDict[objective].text = $"•  {objective.Description} {objective.GetProgressText()}";
     }
 
     private string GetTitleText(StageObjectiveType type)
@@ -97,10 +94,10 @@ public class StageObjectiveUI : MonoBehaviour
         }
 
         targetColor.a = 1;
-
-        _curTMP = progressTMPDict[objective];
-
-        _curTMP.gameObject.SetActive(true);
+        
+        _curTMP = Instantiate(progressTMPPrefab, progressTMPRoot);
+        
+        _curTMP.transform.position = hidePoint.transform.position;
 
         _curTMP.color = targetColor;
         

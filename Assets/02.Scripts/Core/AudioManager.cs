@@ -45,7 +45,7 @@ public class AudioManager : Singleton<AudioManager>
         }        
     }
     
-    public void PlayAudio(AudioID id)
+    public void PlayAudio(AudioID id, float volume)
     {
         if (_audioEntries.TryGetValue(id, out AudioEntry entry))
         {
@@ -57,7 +57,7 @@ public class AudioManager : Singleton<AudioManager>
 
             audioSource.clip = entry.clip;
 
-            audioSource.volume = entry.volume;
+            audioSource.volume = volume;
 
             audioSource.Play();
         }

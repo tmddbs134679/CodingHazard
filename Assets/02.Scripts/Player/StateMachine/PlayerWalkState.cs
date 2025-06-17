@@ -32,11 +32,11 @@ public class PlayerWalkState : PlayerBaseState
             {
                 if (useWalkSound)
                 {
-                    AudioManager.Instance.PlayAudio(AudioID.PlayerWalk1);
+                    AudioManager.Instance.PlayAudio(AudioID.PlayerWalk1, 0.025f);
                 }
                 else
                 {
-                    AudioManager.Instance.PlayAudio(AudioID.PlayerWalk2);
+                    AudioManager.Instance.PlayAudio(AudioID.PlayerWalk2, 0.025f);
                 }
                 useWalkSound = !useWalkSound;
                 walkTimer = walkInterval;

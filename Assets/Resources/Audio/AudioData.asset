@@ -14,17 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Entries>k__BackingField:
   - id: 0
-    audioType: 0
-    clip: {fileID: 8300000, guid: be64544bade297e4d872dd74c66256d2, type: 3}
-    volume: 1
+    audioType: 2
+    clip: {fileID: 8300000, guid: 38b450e2adcb6f542acc8c1d423bd8dc, type: 3}
     isLoop: 0
   - id: 1
     audioType: 2
     clip: {fileID: 8300000, guid: 622f42e8d781b8a44b119174e4ed9708, type: 3}
-    volume: 0.05
     isLoop: 0
   - id: 2
     audioType: 2
     clip: {fileID: 8300000, guid: 18524d7f295d11b40a2b7bd3d9ef3561, type: 3}
-    volume: 0.05
     isLoop: 0

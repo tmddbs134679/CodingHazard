@@ -3,29 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StageReachedObjective : StageObjective
+public class StageReachObjective : StageObjective
 {
     public override StageObjectiveType ObjectiveType => StageObjectiveType.Reach;
-    
-    public StageReachObject Objective => objective;
 
+    [Space(20f)]
     [SerializeField] private StageReachObject objective;
 
 
     public override void Enter()
     {
-        objective.ToggleOutline(true);
     }
+
+    public override StageObjectiveObject GetTargetObjectiveObject()
+    {
+        return objective;
+    }
+    
 
     public override string GetProgressText()
     {
         return "";
     }
 
-    public override bool TryUpdateProgress<T>(T targret, out bool isComplete)
+    public override void UpdateProgress<T>(T target, out bool isClear)
     {
-        isComplete = true;
-        return true;
+        isClear = true;
     }
 }
 

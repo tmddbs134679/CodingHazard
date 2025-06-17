@@ -39,11 +39,11 @@ public class PlayerSprintState : PlayerBaseState
         {
             if (useSprintSound)
             {
-                AudioManager.Instance.PlayAudio(AudioID.PlayerWalk1);
+                AudioManager.Instance.PlayAudio(AudioID.PlayerWalk1,0.075f);
             }
             else
             {
-                AudioManager.Instance.PlayAudio(AudioID.PlayerWalk2);
+                AudioManager.Instance.PlayAudio(AudioID.PlayerWalk2, 0.075f);
             }
             useSprintSound = !useSprintSound;
             sprintTimer = sprintInterval;

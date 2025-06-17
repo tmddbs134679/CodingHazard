@@ -10,7 +10,5 @@ public class AudioEntry
 
     public AudioClip clip;
     
-    public float volume = 1f;
-    
     public bool isLoop;
 }
