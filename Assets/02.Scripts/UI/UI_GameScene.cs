@@ -47,6 +47,7 @@ public class UI_GameScene : UI_Base
             return false;
 
         #region Object Bind
+        BindObject(typeof(GameObjects));
         BindImage(typeof(Images));
         BindText(typeof(Texts));
         #endregion
@@ -96,11 +97,20 @@ public class UI_GameScene : UI_Base
 
     }
 
+    #region Swap
 
     private Sequence currentSequence; 
     private void UpdateQuickSlot(int selectedWeaponIndex)
     {
-        //selectedWeaponIndex;
+
+        //총알 오브젝트 보이기 처리
+        if (selectedWeaponIndex == 1)
+            FadeOut();
+        else
+            FadeIn();
+
+
+
         if (currentSequence != null && currentSequence.IsActive())
         {
             currentSequence.Kill(); 
@@ -140,6 +150,17 @@ public class UI_GameScene : UI_Base
         });
     }
 
+    void FadeOut()
+    {
+        GetObject((int)GameObjects.BulletObject).GetComponent<CanvasGroup>().DOFade(0f, 1f).SetEase(Ease.Linear);
+    }
+
+    void FadeIn()
+    {
+        GetObject((int)GameObjects.BulletObject).GetComponent<CanvasGroup>().DOFade(1f, 1f).SetEase(Ease.Linear);
+    }
+
+    #endregion
 
     private Tween pulseTween;
     private void DetectionEyeVisible(bool isVisible)
