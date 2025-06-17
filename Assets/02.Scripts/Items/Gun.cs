@@ -11,6 +11,13 @@ public class Gun : Weapon
     [SerializeField] private Transform firePoint;
 
 
+    [Header("ReCoil")]
+    [SerializeField] private Transform curPos;
+    [SerializeField] private float recoilx = 0.01f;
+    [SerializeField] private float recoily = 0.01f;
+    [SerializeField] private float recoilz = 0.05f;
+
+
     [SerializeField] private int Ammo { get; set; }
 
     [Header("Camera")]
@@ -93,16 +100,12 @@ public class Gun : Weapon
 
         PlayAttackAnimation(isZoom);
          
-       
-        if (Physics.Raycast(ray, out RaycastHit hit, range))
+       LayerMask layerMask = 1<<9;
+        if (Physics.Raycast(ray, out RaycastHit hit, range,layerMask))
         {
-            if (hit.collider.gameObject.layer != 9)
-            {
 
-                return;
-
-               
-            }
+            Debug.Log("맞음");
+           
             if (hit.collider.TryGetComponent<HitBox>(out var enemy))
             {
                 
@@ -111,11 +114,34 @@ public class Gun : Weapon
              
                 
             }
-
           
         }
+        StartCoroutine(ApplyRecoil());
         
             
+    }
+
+    private IEnumerator ApplyRecoil()
+    {
+        if (curPos == null)
+        {
+            yield break;
+        }
+
+        Vector3 recoil = new Vector3(Random.Range(-recoilx, recoilx), Random.Range(-recoily, recoily), -recoilz);
+        Vector3 originPos = curPos.localPosition;
+        Vector3 targetPos = originPos + recoil;
+
+        float time = 0f;
+        float recoilSpeed = 20f;
+
+        while (time < 1f)
+        {
+            time += Time.deltaTime * recoilSpeed;
+            curPos.localPosition = Vector3.Lerp(targetPos, originPos, time);
+            yield return null;
+        }
+
     }
 
     

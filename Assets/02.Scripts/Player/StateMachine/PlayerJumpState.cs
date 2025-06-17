@@ -24,6 +24,8 @@ public class PlayerJumpState : PlayerBaseState
         {
             _controller.isCrouching = false;
         }
+
+        PlayerEvent.OnJump?.Invoke();
     }
 
     public override void Update()

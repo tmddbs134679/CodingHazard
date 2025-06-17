@@ -51,38 +51,36 @@ public class UI_ClearPopup : UI_Base
 
         #endregion
     }
-
-    private void Start()
+    public IEnumerator StartCreditScrollCoroutine()
     {
-        ToastObject();
-        FadeIn();
-        StartCreditScroll();
-    }
-    private void StartCreditScroll()
-    {
-        float endpos = GetObject((int)GameObjects.TextObject).GetComponent<RectTransform>().anchoredPosition.y + 2200;
-        GetObject((int)GameObjects.TextObject).GetComponent<RectTransform>().DOAnchorPosY(endpos, 20f).SetEase(Ease.InOutSine);
-    }
+        var rt = GetObject((int)GameObjects.TextObject).GetComponent<RectTransform>();
+        float endpos = rt.anchoredPosition.y + 1900;
 
+        yield return rt.DOAnchorPosY(endpos, 15f)
+                       .SetEase(Ease.InOutSine)
+                       .WaitForCompletion();
+    }
 
 
     public float fadeTime = 5f;
     public float showTime = 5f;
-    private void ToastObject()
+    public IEnumerator ToastCoroutine()
     {
-        GetText((int)Texts.ToastPopupText).gameObject.SetActive(true);
-        // Fade In ¡æ À¯Áö ¡æ Fade Out
-        Sequence seq = DOTween.Sequence();
+        var txt = GetText((int)Texts.ToastPopupText);
+        txt.gameObject.SetActive(true);
 
-        seq.Append(GetText((int)Texts.ToastPopupText).DOFade(1f, fadeTime))      
-           .AppendInterval(showTime)                 
-           .Append(GetText((int)Texts.ToastPopupText).DOFade(0f, fadeTime));    
+        yield return txt.DOFade(1f, fadeTime).WaitForCompletion();  
+        yield return new WaitForSeconds(showTime);                  
+        yield return txt.DOFade(0f, fadeTime - 2).WaitForCompletion();  
     }
 
     private const float CONST_FADETIME = 5f;
-    private void FadeIn()
+    public IEnumerator FadeInCoroutine()
     {
         GetImage((int)Images.background).gameObject.SetActive(true);
-        GetImage((int)Images.background).DOFade(1f, CONST_FADETIME).SetEase(Ease.Linear);
+        yield return GetImage((int)Images.background)
+            .DOFade(1f, CONST_FADETIME)
+            .SetEase(Ease.Linear)
+            .WaitForCompletion();
     }
 }

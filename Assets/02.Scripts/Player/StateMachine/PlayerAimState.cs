@@ -43,6 +43,7 @@ public class PlayerAimState : PlayerBaseState
         base.Exit();
         _stateMachine.Controller.isAiming = false;
         _stateMachine.Controller.fpsVirtualCamera.ZoomOut(0.5f);
+        PlayerEvent.Aiming?.Invoke(true);
     }
 
     public override void OnAttackInput()

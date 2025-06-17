@@ -35,7 +35,7 @@ public abstract class Weapon : MonoBehaviour
     //protected static readonly int IsMoving = Animator.StringToHash("IsMoving"); 아직 애니메이션x
     protected static readonly int ReLoadingTrigger = Animator.StringToHash("ReLoad");
     protected static readonly int AimFireTrigger = Animator.StringToHash("AimFire");
-    protected static readonly int FireTrigger = Animator.StringToHash("Fire");
+    protected static readonly int FireTrigger = Animator.StringToHash("Fire"); //일단 칼은 이거 그대로 가져가서 사용함
 
     protected bool isShootable;
     protected float lastFireTime;

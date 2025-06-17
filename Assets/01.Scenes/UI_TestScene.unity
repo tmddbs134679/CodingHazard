@@ -476,7 +476,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &232518898
 RectTransform:
   m_ObjectHideFlags: 0
@@ -809,7 +809,7 @@ GameObject:
   - component: {fileID: 896782388}
   - component: {fileID: 896782387}
   m_Layer: 5
-  m_Name: ToastPopupObject
+  m_Name: ToastPopupText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1994,19 +1994,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1874949594476095902, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1874949594476095902, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1874949594476095902, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 437.7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1874949594476095902, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2882192331505704447, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
       propertyPath: m_Name
@@ -2014,23 +2014,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2882192331505704447, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3050254282646337611, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3050254282646337611, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3050254282646337611, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3050254282646337611, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4257209563752815414, guid: b66ef4691aed25947926b273d9a777c6, type: 3}
       propertyPath: m_Pivot.x
