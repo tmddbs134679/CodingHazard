@@ -8,10 +8,16 @@ public class PlayerCondition : MonoBehaviour
     public Condition hp;
     public Condition stamina;
 
+
+    private void Awake()
+    {
+        hp.type = Condition.ConditionType.HP;
+        stamina.type = Condition.ConditionType.Stamina;
+    }
     private void Start()
     {
-        hp.curValue = hp.maxValue = 100f;
-        stamina.curValue = stamina.maxValue = 100f;
+        hp.CurValue = hp.maxValue = 100f;
+        stamina.CurValue = stamina.maxValue = 100f;
 
         StartCoroutine(RecoverCondition());
     }
@@ -19,7 +25,7 @@ public class PlayerCondition : MonoBehaviour
     private void Update()
     {
         // Dead
-        if (hp.curValue <= 0f)
+        if (hp.CurValue <= 0f)
         {
             Debug.Log("Player is Dead.");
         }
@@ -31,12 +37,12 @@ public class PlayerCondition : MonoBehaviour
         {
             yield return new WaitForSeconds(1f);
 
-            if (hp.curValue < hp.maxValue)
+            if (hp.CurValue < hp.maxValue)
             {
-                AddHp(5f);
+                AddHp(1f);
             }
             
-            if (stamina.curValue < stamina.maxValue)
+            if (stamina.CurValue < stamina.maxValue)
             {
                 AddStamina(5f); // 초당 5 회복
             }
@@ -45,28 +51,25 @@ public class PlayerCondition : MonoBehaviour
 
     public void AddHp(float amount)
     {
-        hp.curValue = Mathf.Min(hp.curValue + amount, hp.maxValue);
+        hp.CurValue = Mathf.Min(hp.curValue + amount, hp.maxValue);
     }
     
     public void TakeDamage(float amount)
     {
-        hp.curValue = Mathf.Max(hp.curValue - amount, 0f);
-        PlayerEvent.OnHpChanged?.Invoke(hp.curValue);
-    
+        hp.CurValue = Mathf.Max(hp.curValue - amount, 0f);
+        PlayerEvent.OnTakeDamaged?.Invoke();
     }
 
     public void AddStamina(float amount)
     {
-        stamina.curValue = Mathf.Min(stamina.curValue + amount, stamina.maxValue);
-        PlayerEvent.OnStaminaChanged?.Invoke(amount);
+        stamina.CurValue = Mathf.Min(stamina.CurValue + amount, stamina.maxValue);
     }
 
     public void UseStamina(float amount)
     {
-        if (stamina.curValue >= 0f)
+        if (stamina.CurValue >= 0f)
         {
-            stamina.curValue -= amount * Time.deltaTime;
-            PlayerEvent.OnStaminaChanged?.Invoke(-amount);
+            stamina.CurValue -= amount * Time.deltaTime;
         }
     }
 }

@@ -72,7 +72,7 @@ public class UI_GameScene : UI_Base
     {
         PlayerEvent.Swap += UpdateQuickSlot;
         PlayerEvent.OnDetectMonster += DetectionEyeVisible;
-        PlayerEvent.OnHpChanged += UpdateBloodScreen;
+        PlayerEvent.OnTakeDamaged += UpdateBloodScreen;
         PlayerEvent.OnItemCheck += SetItemText;
         PlayerEvent.OnUpdateBullet += SetInitBullet;
     }
@@ -81,7 +81,7 @@ public class UI_GameScene : UI_Base
     {
         PlayerEvent.Swap -= UpdateQuickSlot;
         PlayerEvent.OnDetectMonster -= DetectionEyeVisible;
-        PlayerEvent.OnHpChanged -= UpdateBloodScreen;
+        PlayerEvent.OnTakeDamaged -= UpdateBloodScreen;
         PlayerEvent.OnItemCheck -= SetItemText;
         PlayerEvent.OnUpdateBullet -= SetInitBullet;
     }
@@ -189,7 +189,7 @@ public class UI_GameScene : UI_Base
 
 
     private Tween _bloodTween;
-    private void UpdateBloodScreen(float _)
+    private void UpdateBloodScreen()
     {
         _bloodTween?.Kill();
 
