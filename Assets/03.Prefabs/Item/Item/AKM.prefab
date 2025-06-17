@@ -2435,15 +2435,22 @@ MonoBehaviour:
   damage: 10
   range: 100
   fireRate: 0.1
-  WeaponAnimator: {fileID: 0}
+  weapontype: 0
   DropObject: {fileID: 6975497155788886916, guid: af04242725a232e4e80b3a671f2c90c4, type: 3}
   muzzleFlash: {fileID: 7365101767869646173}
+  muzzleSmoke: {fileID: 0}
+  WeaponAnimator: {fileID: 0}
   audioSource: {fileID: 0}
   audioClip: {fileID: 0}
   playerArm: {fileID: 0}
-  weapontype: 0
   fireMode: 0
   firePoint: {fileID: 5196564782949691759}
+  curAmmo: 30
+  maxAmmo: 30
+  spareAmmo: 90
+  recoilx: 0.01
+  recoily: 0.01
+  recoilz: 0.05
   normalFOV: 50
   zoomFOV: 40
   zoomSpeed: 10

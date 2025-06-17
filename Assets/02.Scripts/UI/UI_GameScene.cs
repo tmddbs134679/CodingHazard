@@ -10,13 +10,15 @@ public class UI_GameScene : UI_Base
 {
     #region Enum
   
-    enum Buttons
+    enum GameObjects
     {
-  
+        BulletObject,
     }
     enum Texts
     {
-        ItemText
+        ItemText,
+        MaxBulletText,
+        SpareBulletText
     }
     enum Images
     {
@@ -71,7 +73,7 @@ public class UI_GameScene : UI_Base
         PlayerEvent.OnDetectMonster += DetectionEyeVisible;
         PlayerEvent.OnHpChanged += UpdateBloodScreen;
         PlayerEvent.OnItemCheck += SetItemText;
-
+        PlayerEvent.OnUpdateBullet += SetInitBullet;
     }
 
     private void OnDisable()
@@ -80,6 +82,7 @@ public class UI_GameScene : UI_Base
         PlayerEvent.OnDetectMonster -= DetectionEyeVisible;
         PlayerEvent.OnHpChanged -= UpdateBloodScreen;
         PlayerEvent.OnItemCheck -= SetItemText;
+        PlayerEvent.OnUpdateBullet -= SetInitBullet;
     }
 
     private void Update()
@@ -184,5 +187,18 @@ public class UI_GameScene : UI_Base
         GetText((int)Texts.ItemText).gameObject.SetActive(true);
         GetText((int)Texts.ItemText).text = item.ItemData.DisplayName;
     }
+
+
+    public void SetInitBullet(int maxBullet, int currentBullet)
+    {
+        GetText((int)Texts.MaxBulletText).text = "/ " + maxBullet.ToString();
+        GetText((int)Texts.SpareBulletText).text = currentBullet.ToString();
+    }
+
+    public void UpdateCurrentBullet(int current)
+    {
+        GetText((int)Texts.SpareBulletText).text = current.ToString();
+    }
+
 
 }
