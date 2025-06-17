@@ -150,8 +150,8 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.01
-  far clip plane: 1000
-  field of view: 60
+  far clip plane: 10
+  field of view: 90.00001
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -189,10 +189,10 @@ MonoBehaviour:
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 2147483648
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -324,7 +324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dofLayerMask:
     serializedVersion: 2
-    m_Bits: 951
+    m_Bits: 947
   headbobFrequency: 10
   headbobAmplitude: 0.05
   minXLook: -85
@@ -449,7 +449,7 @@ MonoBehaviour:
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1073741824
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
@@ -589,6 +589,7 @@ MonoBehaviour:
   isMoving: 0
   isCrouching: 0
   isSprinting: 0
+  canSprint: 0
   isReloading: 0
   isAiming: 0
   isAttacking: 0
@@ -644,6 +645,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   checkRate: 0.05
+  detectionRadius: 10
   itemText: {fileID: 0}
 --- !u!114 &8332048441860605962
 MonoBehaviour:

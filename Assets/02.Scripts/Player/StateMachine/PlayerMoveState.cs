@@ -49,8 +49,7 @@ public class PlayerMoveState : PlayerBaseState
         }
         
         // sprint 가능
-        if (_stateMachine.Controller.isSprintHold
-            && _stateMachine.Controller.Condition.UseStamina(_stateMachine.SprintStamina))
+        if (_stateMachine.Controller.isSprintHold)
         {
            
             _stateMachine.ChangeState(new PlayerSprintState(_stateMachine));
