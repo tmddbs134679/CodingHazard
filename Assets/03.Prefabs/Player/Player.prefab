@@ -645,7 +645,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   checkRate: 0.05
-  detectionRadius: 10
+  detectionRadius: 20
   itemText: {fileID: 0}
 --- !u!114 &8332048441860605962
 MonoBehaviour:
