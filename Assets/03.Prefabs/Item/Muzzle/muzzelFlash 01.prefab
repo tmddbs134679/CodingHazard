@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2362062}
   - component: {fileID: 10866208}
   - component: {fileID: 5838443279733564509}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: muzzelFlash 01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
