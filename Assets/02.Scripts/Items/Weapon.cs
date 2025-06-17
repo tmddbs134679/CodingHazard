@@ -16,24 +16,27 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected float damage = 10f;
     [SerializeField] protected float range = 100f;
     [SerializeField] protected float fireRate = 0.1f;
+    [SerializeField] protected WeaponType weapontype;
     
 
-    [SerializeField] protected Animator WeaponAnimator;
 
     [SerializeField] protected GameObject DropObject;
 
+    #region MuzzleEffect
     [SerializeField] protected GameObject muzzleFlash;
     [SerializeField] protected ParticleSystem muzzleSmoke;
+    #endregion
+
+    #region Sound & Animation
+    [SerializeField] protected Animator WeaponAnimator;
     [SerializeField] protected AudioSource audioSource;
     [SerializeField] protected AudioClip audioClip;
     [SerializeField] protected GameObject playerArm;
-    [SerializeField] protected WeaponType weapontype;
+    #endregion
 
-
-    //Aciont
-
+    
     protected static readonly int IsAiming = Animator.StringToHash("IsAiming");
-    //protected static readonly int IsMoving = Animator.StringToHash("IsMoving"); 아직 애니메이션x
+    protected static readonly int IsSprint = Animator.StringToHash("IsSprint");
     protected static readonly int ReLoadingTrigger = Animator.StringToHash("ReLoad");
     protected static readonly int AimFireTrigger = Animator.StringToHash("AimFire");
     protected static readonly int FireTrigger = Animator.StringToHash("Fire"); //일단 칼은 이거 그대로 가져가서 사용함
@@ -49,13 +52,14 @@ public abstract class Weapon : MonoBehaviour
     protected virtual void OnEnable()
     {
         PlayerEvent.OnAttack += Fire;
-        
+        PlayerEvent.OnSprint += SprintMove;
     }
 
 
     protected virtual void OnDisable()
     {
         PlayerEvent.OnAttack -= Fire;
+        PlayerEvent.OnSprint -= SprintMove;
         StopAllCoroutines();
     }
     
@@ -112,6 +116,16 @@ public abstract class Weapon : MonoBehaviour
 
     }
 
+    protected void SprintMove(bool isSprint)
+    {
+        if (isSprint == null)
+        {
+            Debug.Log("달리기 애니메이션 없음");
+            return;
+
+        }
+        WeaponAnimator.SetBool(IsSprint, isSprint);
+    }
 
 
     public void DropItem()
@@ -128,7 +142,11 @@ public abstract class Weapon : MonoBehaviour
             yield break;
         }
         muzzleFlash.SetActive(true);
-
+        if (muzzleSmoke != null)
+        {
+            muzzleSmoke.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear); //재시작을 위한 코드
+            muzzleSmoke.Play();
+        }
         yield return new WaitForSeconds(fireRate *0.5f);
 
         muzzleFlash.SetActive(false);

@@ -12,7 +12,6 @@ public class Gun : Weapon
 
 
     [Header("ReCoil")]
-   // [SerializeField] private Transform curPos;
     [SerializeField] private float recoilx = 0.01f;
     [SerializeField] private float recoily = 0.01f;
     [SerializeField] private float recoilz = 0.05f;
