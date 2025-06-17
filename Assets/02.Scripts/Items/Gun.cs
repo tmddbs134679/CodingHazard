@@ -120,9 +120,9 @@ public class Gun : Weapon
                   Debug.Log("공격 성공");
                 }
             }
-            StartCoroutine(ApplyRecoil());
           
         }
+        StartCoroutine(ApplyRecoil());
         
             
     }
