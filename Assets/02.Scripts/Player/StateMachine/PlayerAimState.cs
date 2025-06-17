@@ -11,7 +11,8 @@ public class PlayerAimState : PlayerBaseState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("Enter Aim State"); 
+        Debug.Log("Enter Aim State");
+        _stateMachine.Controller.isAiming = true;
         _stateMachine.Controller.fpsVirtualCamera.ZoomIn(-20f, 0.5f);
     }
 
@@ -40,6 +41,7 @@ public class PlayerAimState : PlayerBaseState
     public override void Exit()
     {
         base.Exit();
+        _stateMachine.Controller.isAiming = false;
         _stateMachine.Controller.fpsVirtualCamera.ZoomOut(0.5f);
     }
 

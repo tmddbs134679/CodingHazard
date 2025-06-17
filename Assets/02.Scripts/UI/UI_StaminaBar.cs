@@ -11,7 +11,15 @@ public class UI_StaminaBar : UI_Base
         StaminaDamageBar,
         StaminaBar,
     }
+    public void OnEnable()
+    {
+        PlayerEvent.OnStaminaChanged += SetStaminaRatio;
+    }
 
+    public void OnDisable()
+    {
+        PlayerEvent.OnStaminaChanged -= SetStaminaRatio;
+    }
     public override bool Init()
     {
         if (base.Init() == false)
@@ -19,11 +27,11 @@ public class UI_StaminaBar : UI_Base
         BindImage(typeof(Images));
         return true;
     }
-    public void SetStaminaRatio(ref float hp)
+
+    public void SetStaminaRatio(float curvalue)
     {
-        hp -= 20;
-        float maxHp = 100f;
-        float ratio = Mathf.Clamp01(hp / maxHp);
+        //스테미나 확실하게 ㅁ어케 작동하는지 모르겠음
+        float ratio = Mathf.Clamp01(curvalue / StageManager.Instance.PlayerController.GetComponent<PlayerCondition>().stamina.maxValue);
         float scaledRatio = ratio * clampratio;
         GetImage((int)Images.StaminaBar).fillAmount = scaledRatio;
 

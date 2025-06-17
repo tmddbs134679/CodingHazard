@@ -55,7 +55,7 @@ public class Gun : Weapon
 
 
         //업데이트에서 하면 너무 많이 입력됨
-       
+    
     }
 
     private void ZoomWeapon()
@@ -96,29 +96,23 @@ public class Gun : Weapon
         }
 
         Ray ray = mainCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-        Debug.DrawRay(ray.origin,ray.direction*range, Color.red); //나중에 제거 예정
         PlaySound(audioClip);
 
         PlayAttackAnimation(isZoom);
          
-       
-        if (Physics.Raycast(ray, out RaycastHit hit, range))
+       LayerMask layerMask = 1<<9;
+        if (Physics.Raycast(ray, out RaycastHit hit, range,layerMask))
         {
-            if (hit.collider.gameObject.layer != 9)
-            {
 
-                return;
-
-               
-            }
-            if (hit.collider.TryGetComponent<EnemyBase>(out var enemy))
+            Debug.Log("맞음");
+           
+            if (hit.collider.TryGetComponent<HitBox>(out var enemy))
             {
-                if (!enemy.IsDead)
-                {
+                
                     //나중에 변경될 수 있음 
-                    enemy.Damaged(damage);
-                  Debug.Log("공격 성공");
-                }
+                    enemy.Damaged(damage,hit);
+             
+                
             }
           
         }

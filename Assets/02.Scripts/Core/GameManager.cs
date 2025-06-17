@@ -16,9 +16,5 @@ public class GameManager : Singleton<GameManager>
 
         GraphicsSettingManager.SetBaseState();
     }
-
-    public void TestStartStage(string sceneName)
-    {
-        SceneLoadManager.Instance.LoadScene(sceneName);
-    }
+  
 }

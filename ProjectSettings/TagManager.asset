@@ -15,8 +15,8 @@ TagManager:
   - Ground
   - Obstacle
   - Enemy
-  - 
-  - 
+  - Interactable
+  - Weapon
   - 
   - 
   - 

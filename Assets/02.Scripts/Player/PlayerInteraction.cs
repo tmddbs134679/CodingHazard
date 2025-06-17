@@ -1,39 +1,81 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
+    public float interactableDistance = 3f;
+    public LayerMask interactableLayer;
     public float checkRate = 0.05f;
     private float lastCheckTime;
-    public float maxCheckDistance;
-    public LayerMask layerMask;
 
-    public GameObject curInteractGameObject;
-    private Camera camera;
+    private DroppedItem currentTargetItem;
 
-    void Start()
-    {
-        camera = Camera.main;
-    }
+    public TextMeshProUGUI itemText;
 
     private void Update()
     {
         if (Time.time - lastCheckTime > checkRate)
         {
             lastCheckTime = Time.time;
-
-            Ray ray = camera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+            
+            Ray ray = GetComponentInChildren<Camera>().ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
             RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, maxCheckDistance, layerMask))
+            
+            Debug.DrawRay(ray.origin, ray.direction * interactableDistance, Color.red, 0.1f);
+            
+            if (Physics.Raycast(ray, out hit, interactableDistance, interactableLayer))
             {
-                if (hit.collider.gameObject.layer != layerMask)
+                DroppedItem item = hit.collider.GetComponent<DroppedItem>();
+
+                
+                if (item != null)
                 {
+                    // Fake Null 상태로... 이중 확인
+                    if (currentTargetItem != null && currentTargetItem == null)
+                    {
+                        currentTargetItem = null;
+                    }
                     
+                    if (!item.IsLockInteract)
+                        return;
+
+                    SetItemText(item);
+                    
+                    if (currentTargetItem != item)
+                    {
+                        currentTargetItem?.ToggleOutline(false);
+                        currentTargetItem = item;
+                        currentTargetItem.ToggleOutline(true);
+                    }
+                    return;
                 }
             }
+            
+            if (currentTargetItem != null)
+            {
+                currentTargetItem.ToggleOutline(false);
+                currentTargetItem = null;
+                itemText.gameObject.SetActive(false);
+            }
         }
+    }
+
+    private void SetItemText(DroppedItem item)
+    {
+        itemText.gameObject.SetActive(true);
+        itemText.text = item.ItemData.DisplayName;
+    }
+    
+    public void OnInteractInput()
+    {
+        if (currentTargetItem != null)
+        {
+            currentTargetItem.OnInteract();
+            itemText.gameObject.SetActive(false);
+        }
+            
     }
 }

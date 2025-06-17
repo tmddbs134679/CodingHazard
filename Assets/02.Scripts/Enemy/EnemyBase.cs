@@ -16,6 +16,8 @@ public class EnemyBase : MonoBehaviour
     [SerializeField]
     public EnemyDetection detection;
     bool isDamaged;
+    private bool isAttack;
+    public bool IsAttack {  get { return isAttack; } }
     public bool IsDamaged { set { isDamaged = value; }  get { return isDamaged; } }
     bool isDead;
     public bool IsDead { get { return isDead; } }
@@ -53,6 +55,8 @@ public class EnemyBase : MonoBehaviour
     {
         if (invincibility)
             return;
+        PlayerEvent.OnMonsterHit?.Invoke();
+        detection.SeeTarget();
         Debug.Log(dmg + " 입음");
         isDamaged=true;
         invincibility=false;
@@ -66,7 +70,7 @@ public class EnemyBase : MonoBehaviour
         isDead=true;
         Debug.Log("사망");
        MonsterManager.Instance.Dead(this);
-        
+        PlayerEvent.OnKillConfirmed?.Invoke();
     }
     bool invincibility = false;
     IEnumerator MotionE(int para)
@@ -127,23 +131,26 @@ public class EnemyBase : MonoBehaviour
     void Attack()
     {
         Debug.Log("공격");
-        animator.SetBool(aniPara.AttackParaHash, true);
-        detection.Target.TakeDamage(status.DMG);
+
     }
     IEnumerator AttackE()
     {
-        while (true)
-        {
+        
+            isAttack = true;
             animator.SetBool(aniPara.AttackParaHash, true);
             Attack();
-            animator.SetBool(aniPara.AttackParaHash, false);
+           
+           
             yield return new WaitForSeconds(status.AttackCoolTime);
-        }
+            animator.SetBool(aniPara.AttackParaHash, false);
+            isAttack = false;
+        attack= null;
     }
     Coroutine attack=null;
     public void StartAttack()
     {
-        Debug.Log("공격 시행");
+        detection.SeeTarget();
+        controller.Look(detection.Target.gameObject.transform.position-transform.position);
         animator.SetBool(aniPara.AttackParaHash, true);
         animator.SetBool(aniPara.RunParaHash, false);
         if (attack == null) {
@@ -151,15 +158,7 @@ public class EnemyBase : MonoBehaviour
           }
         
     }
-    public void StopAttack()
-    {
-      
-        animator.SetBool(aniPara.AttackParaHash, false);
-      
-        if (attack != null) { 
-            StopCoroutine(attack);
-        }
-    }
+ 
     void OnDrawGizmos()
     {
         if (status == null) return;

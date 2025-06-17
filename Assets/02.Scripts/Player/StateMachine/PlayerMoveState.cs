@@ -37,7 +37,6 @@ public class PlayerMoveState : PlayerBaseState
         if (input.magnitude <= 0.1f)
         {
             // 입력 안 들어온 거면 Idle
-            _stateMachine.Controller.isMoving = false;
             _stateMachine.ChangeState(new PlayerIdleState(_stateMachine));
             return;
         }
@@ -45,7 +44,6 @@ public class PlayerMoveState : PlayerBaseState
         // Jump 가능
         if (_stateMachine.Controller.isJumpPressed)
         {
-            _stateMachine.Controller.isMoving = false;
             _stateMachine.ChangeState(new PlayerJumpState(_stateMachine));
             return;
         }
@@ -54,28 +52,25 @@ public class PlayerMoveState : PlayerBaseState
         if (_stateMachine.Controller.isSprintHold
             && _stateMachine.Controller.Condition.UseStamina(_stateMachine.SprintStamina))
         {
-            _stateMachine.Controller.isMoving = false;
+            PlayerEvent.OnStaminaChanged?.Invoke(_stateMachine.SprintStamina);
             _stateMachine.ChangeState(new PlayerSprintState(_stateMachine));
         }
         
         // Aim 가능
         if (_stateMachine.Controller.isAimHold)
         {
-            _stateMachine.Controller.isMoving = false;
             _stateMachine.ChangeState(new PlayerAimState(_stateMachine));
         }
 
         // 걷기 가능
         if (_stateMachine.Controller.isWalkingHold)
         {
-            _stateMachine.Controller.isMoving = false;
             _stateMachine.ChangeState(new PlayerWalkState(_stateMachine));    
         }
         
         // 장전 가능
         if (_stateMachine.Controller.isReloadPressed)
         {
-            _stateMachine.Controller.isMoving = false;
             _stateMachine.ChangeState(new PlayerReloadState(_stateMachine));    
         }
 
@@ -85,7 +80,13 @@ public class PlayerMoveState : PlayerBaseState
             OnAttackInput();
         }
     }
-    
+
+    public override void Exit()
+    {
+        base.Exit();
+        _stateMachine.Controller.isMoving = false;
+    }
+
     public override void OnAttackInput()
     {
         //이 상태일때 다르게 동작할때 무언가?

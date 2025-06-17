@@ -36,7 +36,6 @@ public class PlayerWalkState : PlayerBaseState
         if (input.magnitude <= 0.1f)
         {
             // 입력 안 들어온 거면 Idle
-            _stateMachine.Controller.isWalking = false;
             _stateMachine.ChangeState(new PlayerIdleState(_stateMachine));
             return;
         }
@@ -44,20 +43,17 @@ public class PlayerWalkState : PlayerBaseState
         // ctrl 안 누르고 있으면 move로 돌아감
         if (!_stateMachine.Controller.isWalkingHold)
         {
-            _stateMachine.Controller.isWalking = false;
             _stateMachine.ChangeState(new PlayerMoveState(_stateMachine));
         }
         
         if (_stateMachine.Controller.isJumpPressed)
         {
-            _stateMachine.Controller.isWalking = false;
             _stateMachine.ChangeState(new PlayerJumpState(_stateMachine));
         }
         
         // Aim 가능
         if (_stateMachine.Controller.isAimHold)
         {
-            _stateMachine.Controller.isMoving = false;
             _stateMachine.ChangeState(new PlayerAimState(_stateMachine));
         }
         
@@ -65,14 +61,12 @@ public class PlayerWalkState : PlayerBaseState
         if (_stateMachine.Controller.isSprintHold
             && _stateMachine.Controller.Condition.UseStamina(_stateMachine.SprintStamina))
         {
-            _stateMachine.Controller.isWalking = false;
             _stateMachine.ChangeState(new PlayerSprintState(_stateMachine));
         }
         
         // 장전 가능
         if (_stateMachine.Controller.isReloadPressed)
         {
-            _stateMachine.Controller.isMoving = false;
             _stateMachine.ChangeState(new PlayerReloadState(_stateMachine));    
         }
 
@@ -80,6 +74,12 @@ public class PlayerWalkState : PlayerBaseState
         {
             OnAttackInput();
         }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        _stateMachine.Controller.isWalking = false;
     }
 
     public override void OnAttackInput()

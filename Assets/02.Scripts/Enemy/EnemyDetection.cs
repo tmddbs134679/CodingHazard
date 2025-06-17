@@ -40,6 +40,11 @@ public class EnemyDetection :MonoBehaviour
     {
         alertLevel = 50;
     }
+    public void SeeTargetSpawn(PlayerCondition con)
+    {
+        target = con;
+        alertLevel = 50;
+    }
     public void addAlert(float val)
     {
         
@@ -115,7 +120,7 @@ public class EnemyDetection :MonoBehaviour
         return false;
 
     }
-    public bool ListenTarget()
+    public float ListenTarget()
     {
 
         Collider[] hits = Physics.OverlapSphere(transform.position, soundRange, targetMask);
@@ -124,11 +129,18 @@ public class EnemyDetection :MonoBehaviour
         {
 
             target = hit.gameObject.GetComponent<PlayerCondition>();
-            return true;
+            PlayerController con = hit.GetComponent<PlayerController>();
+
+            if (con.isWalking)
+                return 2;
+            if(con.isMoving)
+            return 5;
+            if(con.isSprinting)
+                return 10;
           
         }
      
-        return false;
+        return 0;
     }
     public bool CanAttack()
     {

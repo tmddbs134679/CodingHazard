@@ -62,9 +62,12 @@ public class Knife : Weapon
 
         foreach (var hit in hits)
         {
-            if (hit.TryGetComponent<EnemyBase>(out var enemy) && !enemy.IsDead)
+            if (hit.TryGetComponent<HitBox>(out var enemy))
             {
-                enemy.Damaged(damage);
+                Vector3 hitPoint = hit.ClosestPoint(origin);
+                Vector3 normal = (hitPoint - origin).normalized;
+
+                enemy.Damaged(damage, hitPoint, normal);
                 Debug.Log("칼 타격 성공");
             }
         }

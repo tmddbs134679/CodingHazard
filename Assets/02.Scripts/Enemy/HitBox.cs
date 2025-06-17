@@ -7,12 +7,35 @@ public class HitBox : MonoBehaviour
     public enum BodyPart { Head, Body }
     public BodyPart partType;
 
-    public EnemyBase enemy; 
+    public EnemyBase enemy;
+    [SerializeField] GameObject bloodEffectPrefab;
+   
+    void SpawnBloodEffect(Vector3 pos,Vector3 normal)
+    {
+        
+        GameObject blood = Instantiate(
+            bloodEffectPrefab,
+            pos,                            
+            Quaternion.LookRotation(normal)    
+        );
 
-    public void Damage(float dmg)
+        
+        Destroy(blood, 1f);
+    }
+    public void Damaged(float dmg,Vector3 pos, Vector3 normal)
     {
         float finalDamage = dmg;
-
+        SpawnBloodEffect(pos,normal);
+        if (partType == BodyPart.Head)
+            finalDamage *= 2;
+        Debug.Log("ÃÑ ¸ÂÀ½");
+        enemy.animator.SetBool(enemy.aniPara.DamagedParaHash, true);
+        enemy.Damaged(finalDamage);
+    }
+    public void Damaged(float dmg, RaycastHit hit)
+    {
+        float finalDamage = dmg;
+        SpawnBloodEffect(hit.point,hit.normal);
         if (partType == BodyPart.Head)
             finalDamage *= 2;
 

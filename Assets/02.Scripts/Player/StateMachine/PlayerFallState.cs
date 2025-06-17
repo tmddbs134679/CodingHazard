@@ -30,7 +30,6 @@ public class PlayerFallState : PlayerBaseState
         // 장전 가능
         if (_stateMachine.Controller.isReloadPressed)
         {
-            _stateMachine.Controller.isMoving = false;
             _stateMachine.ChangeState(new PlayerReloadState(_stateMachine));    
         }
         
