@@ -18,8 +18,8 @@ public abstract class PlayerBaseState : State
     
     protected Vector3 GetMoveDirection(Vector2 input)
     {
-        Vector3 forward = _stateMachine.MainCamTransform.forward;
-        Vector3 right = _stateMachine.MainCamTransform.right;
+        Vector3 forward = _stateMachine.FPScamTransform.forward;
+        Vector3 right = _stateMachine.FPScamTransform.right;
         forward.y = 0f;
         right.y = 0f;
 

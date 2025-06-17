@@ -5,7 +5,7 @@ public class PlayerStateMachine
     public PlayerController Controller { get; private set; }
     public PlayerBaseState CurrentState { get; private set; }
     
-    public Transform MainCamTransform { get; set; }
+    public Transform FPScamTransform { get; set; }
     public float MovementSpeed { get; set; } = 5f;
     public float WalkSpeed { get; set; } = 2.5f;
     public float SprintSpeed { get; set; } = 10f;
