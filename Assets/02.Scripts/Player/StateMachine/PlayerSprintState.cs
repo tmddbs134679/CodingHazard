@@ -9,6 +9,7 @@ public class PlayerSprintState : PlayerBaseState
 
     public override void Enter()
     {
+     
         base.Enter();
         Debug.Log("Enter SprintState");
         
@@ -20,6 +21,8 @@ public class PlayerSprintState : PlayerBaseState
         }
         
         _stateMachine.Controller.fpsVirtualCamera.ZoomIn(20f, 0.5f);
+
+        PlayerEvent.OnSprint?.Invoke(true);
     }
 
     public override void Update()
@@ -55,5 +58,6 @@ public class PlayerSprintState : PlayerBaseState
         Debug.Log("Sprint Zoom Out");
         _stateMachine.Controller.isSprinting = false;
         _stateMachine.Controller.fpsVirtualCamera.ZoomOut(0.5f);
+        PlayerEvent.OnSprint?.Invoke(false);
     }
 }

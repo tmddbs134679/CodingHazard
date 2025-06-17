@@ -11,7 +11,7 @@ public class PlayerCondition : MonoBehaviour
     private void Start()
     {
         hp.curValue = hp.maxValue = 100f;
-        stamina.curValue = stamina.maxValue = 50f;
+        stamina.curValue = stamina.maxValue = 100f;
 
         StartCoroutine(RecoverCondition());
     }
@@ -58,6 +58,7 @@ public class PlayerCondition : MonoBehaviour
     public void AddStamina(float amount)
     {
         stamina.curValue = Mathf.Min(stamina.curValue + amount, stamina.maxValue);
+        PlayerEvent.OnStaminaChanged?.Invoke(amount);
     }
 
     public bool UseStamina(float amount)
@@ -65,6 +66,7 @@ public class PlayerCondition : MonoBehaviour
         if (stamina.curValue >= amount)
         {
             stamina.curValue -= amount;
+            PlayerEvent.OnStaminaChanged?.Invoke(-amount);
             return true;
         }
         return false;

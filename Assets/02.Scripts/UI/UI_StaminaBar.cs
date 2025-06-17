@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_StaminaBar : UI_Base
 {
@@ -28,16 +29,33 @@ public class UI_StaminaBar : UI_Base
         return true;
     }
 
+    float _lastFillAmount = -1;
     public void SetStaminaRatio(float curvalue)
     {
-        //스테미나 확실하게 ㅁ어케 작동하는지 모르겠음
-        float ratio = Mathf.Clamp01(curvalue / StageManager.Instance.PlayerController.GetComponent<PlayerCondition>().stamina.maxValue);
+        float max = StageManager.Instance.PlayerController.GetComponent<PlayerCondition>().stamina.maxValue;
+        float ratio = Mathf.Clamp01(curvalue / max);
         float scaledRatio = ratio * clampratio;
-        GetImage((int)Images.StaminaBar).fillAmount = scaledRatio;
 
-        DOTween.Kill(GetImage((int)Images.StaminaDamageBar));
+        Image bar = GetImage((int)Images.StaminaBar);
+        Image dmgBar = GetImage((int)Images.StaminaDamageBar);
 
-        GetImage((int)Images.StaminaDamageBar).DOFillAmount(scaledRatio, 1f).SetEase(Ease.OutQuad);
+        // 1. 즉시 갱신되는 주 바
+        bar.fillAmount = scaledRatio;
+
+        // 2. 감소 or 회복 판단
+        if (_lastFillAmount > scaledRatio)
+        {
+            // 감소 중이면 Tween 사용 (천천히 따라오게)
+            DOTween.Kill(dmgBar);
+            dmgBar.DOFillAmount(scaledRatio, 1f).SetEase(Ease.OutQuad);
+        }
+        else
+        {
+            // 회복 중이면 바로 채워버림
+            dmgBar.fillAmount = scaledRatio;
+        }
+
+        _lastFillAmount = scaledRatio;
     }
 
 }

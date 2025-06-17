@@ -53,9 +53,10 @@ public class EnemyBase : MonoBehaviour
     }
     public void Damaged(float dmg)
     {
+        PlayerEvent.OnMonsterHit?.Invoke();
+
         if (invincibility)
             return;
-        PlayerEvent.OnMonsterHit?.Invoke();
         detection.SeeTarget();
         Debug.Log(dmg + " ¿‘¿Ω");
         isDamaged=true;

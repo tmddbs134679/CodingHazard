@@ -52,7 +52,7 @@ public class PlayerMoveState : PlayerBaseState
         if (_stateMachine.Controller.isSprintHold
             && _stateMachine.Controller.Condition.UseStamina(_stateMachine.SprintStamina))
         {
-            PlayerEvent.OnStaminaChanged?.Invoke(_stateMachine.SprintStamina);
+           
             _stateMachine.ChangeState(new PlayerSprintState(_stateMachine));
         }
         
@@ -79,6 +79,8 @@ public class PlayerMoveState : PlayerBaseState
         {
             OnAttackInput();
         }
+
+       
     }
 
     public override void Exit()
