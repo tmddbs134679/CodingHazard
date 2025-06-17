@@ -95,8 +95,6 @@ public class FPSVirtualCamera : MonoBehaviour
             if (hit.collider != null)
             {
                 _dof.focusDistance.value = hit.distance;
-                
-                Debug.Log(hit.collider.gameObject.name);
             }
             else
             {
