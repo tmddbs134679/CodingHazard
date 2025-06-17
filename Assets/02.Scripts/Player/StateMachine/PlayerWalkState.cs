@@ -6,6 +6,10 @@ using UnityEngine;
 // 느린 걸음
 public class PlayerWalkState : PlayerBaseState
 {
+    private float walkTimer;
+    private float walkInterval = 0.5f;
+    private bool useWalkSound = true;
+    
     public PlayerWalkState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -20,6 +24,24 @@ public class PlayerWalkState : PlayerBaseState
     {
         Vector2 input = GetMovementInput();
         Vector3 dir = GetMoveDirection(input);
+        
+        if (input.magnitude > 0.1f)
+        {
+            walkTimer -= Time.deltaTime;
+            if (walkTimer <= 0f)
+            {
+                if (useWalkSound)
+                {
+                    AudioManager.Instance.PlayAudio(AudioID.PlayerWalk1);
+                }
+                else
+                {
+                    AudioManager.Instance.PlayAudio(AudioID.PlayerWalk2);
+                }
+                useWalkSound = !useWalkSound;
+                walkTimer = walkInterval;
+            }
+        }
         
         if (_stateMachine.Controller.isCrouching)
         {
