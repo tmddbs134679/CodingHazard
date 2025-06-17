@@ -41,6 +41,13 @@ public class PlayerMoveState : PlayerBaseState
             return;
         }
         
+        // if (!_stateMachine.Controller.canSprint 
+        //     && _stateMachine.Controller.Condition.stamina.curValue 
+        //         >= _stateMachine.SprintStamina)
+        // {
+        //     _stateMachine.Controller.canSprint = true;
+        // }
+        
         // Jump 가능
         if (_stateMachine.Controller.isJumpPressed)
         {
@@ -49,9 +56,8 @@ public class PlayerMoveState : PlayerBaseState
         }
         
         // sprint 가능
-        if (_stateMachine.Controller.isSprintHold)
+        if (_stateMachine.Controller.isSprintHold && _stateMachine.Controller.canSprint)
         {
-           
             _stateMachine.ChangeState(new PlayerSprintState(_stateMachine));
         }
         
@@ -78,8 +84,6 @@ public class PlayerMoveState : PlayerBaseState
         {
             OnAttackInput();
         }
-
-       
     }
 
     public override void Exit()
