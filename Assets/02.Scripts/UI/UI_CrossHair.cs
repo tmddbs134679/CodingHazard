@@ -79,18 +79,6 @@ public class UI_CrossHair : UI_Base
 
     }
 
-    public float recoilScaleAmount = 1.3f;
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            AinmateAimCrosshair();
-        }
-
-    }
-
-
     #region MainCrossHair
     private const float tweenDuration = 0.1f;
 
@@ -100,7 +88,7 @@ public class UI_CrossHair : UI_Base
         if (StageManager.Instance.PlayerController.isAimHold) 
             return;
         MainCrossHairActive();
-       // ActiveCrossHair(false);
+
         AnimateRecoilCrosshair(GetObject((int)GameObjects.AimHair));
     }
     void MainCrossHairActive()
@@ -141,6 +129,7 @@ public class UI_CrossHair : UI_Base
 
     #region AimCrossHair
 
+    public float recoilScaleAmount = 1.3f;
     private void AnimateRecoilCrosshair(GameObject crossHair)
     {
         crossHair.transform.DOKill();
@@ -158,24 +147,29 @@ public class UI_CrossHair : UI_Base
     private void AinmateAimCrosshair()
     {
         GetObject((int)GameObjects.AimHair).transform.DOKill();
-
-
         Sequence seq = DOTween.Sequence();
         seq.Join(GetObject((int)GameObjects.AimHair).transform.DOScale(_originalScale * aimShrinkScale, aimTweenDuration).SetEase(Ease.InOutSine));
 
         seq.OnComplete(() =>
         {
-           
             MainCrossHairInActive();
         });
     }
-  
+    private void ResetAimCrosshair()
+    {
+        GetObject((int)GameObjects.CrossHair).SetActive(true);
+        GetObject((int)GameObjects.AimHair).transform.DOKill(); // 트윈 중첩 방지
+
+        GetObject((int)GameObjects.AimHair).transform
+            .DOScale(_originalScale, aimTweenDuration)
+            .SetEase(Ease.InOutSine);
+    }
     void HandleAim(bool IsAiming)
     {
         if (IsAiming)
             AinmateAimCrosshair();
         else
-            MainCrossHairActive();
+            ResetAimCrosshair();
     }
 
     #endregion

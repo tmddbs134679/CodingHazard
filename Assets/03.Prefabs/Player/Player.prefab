@@ -324,7 +324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dofLayerMask:
     serializedVersion: 2
-    m_Bits: 951
+    m_Bits: 947
   headbobFrequency: 10
   headbobAmplitude: 0.05
   minXLook: -85
@@ -589,6 +589,7 @@ MonoBehaviour:
   isMoving: 0
   isCrouching: 0
   isSprinting: 0
+  canSprint: 0
   isReloading: 0
   isAiming: 0
   isAttacking: 0
@@ -644,6 +645,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   checkRate: 0.05
+  detectionRadius: 20
   itemText: {fileID: 0}
 --- !u!114 &8332048441860605962
 MonoBehaviour:
