@@ -92,11 +92,10 @@ public class EnemyDetection :MonoBehaviour
             ChangeState(AlertState.Calm);
         }
     }
-    public bool FindTarget()
+    public bool AngleFind(float Range,float Angle)
     {
-   
-        Collider[] hits = Physics.OverlapSphere(transform.position, sightRange, targetMask);
-     
+        Collider[] hits = Physics.OverlapSphere(transform.position, Range, targetMask);
+
         if (hits.Length == 0)
             return false;
         foreach (var hit in hits)
@@ -104,21 +103,26 @@ public class EnemyDetection :MonoBehaviour
             Vector3 directionToTarget = (hit.transform.position - transform.position).normalized;
             float angleToTarget = Vector3.Angle(transform.forward, directionToTarget);
 
-            if (angleToTarget <= sightAngle * 0.5f)
+            if (angleToTarget <= Angle * 0.5f)
             {
                 float distanceToTarget = Vector3.Distance(transform.position, hit.transform.position);
 
                 if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstacleMask))
                 {
-      
+
                     target = hit.gameObject.GetComponent<PlayerCondition>();
                     return true;
                 }
-               
+
             }
         }
 
         return false;
+    }
+    public bool FindTarget()
+    {
+   
+       return AngleFind(sightRange,sightAngle);
 
     }
     public float ListenTarget()
@@ -148,7 +152,7 @@ public class EnemyDetection :MonoBehaviour
     }
     public bool CanAttack()
     {
-        if (target==null)
+        if (target == null)
             return false;
         if (Vector3.Distance(target.transform.position, transform.position) <= attackRange)
         {
