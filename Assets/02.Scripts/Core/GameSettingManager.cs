@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
@@ -15,13 +18,15 @@ public class GameSettingManager : MonoBehaviour
 
     
     [SerializeField] private GameSettings baseSettings;
-    
-    
-    private Volume _volume;
-    
-    public void Init()
+
+    [SerializeField] private GameObject gameVolumesRoot;
+    [SerializeField] private GameObject lobbyVolumesRoot;
+
+    private Volume[] _gameVolumes;
+
+    private void Awake()
     {
-        _volume = GetComponent<Volume>();
+        _gameVolumes = gameVolumesRoot.transform.GetComponentsInChildren<Volume>();
     }
 
     public void SetBaseState()
@@ -58,21 +63,42 @@ public class GameSettingManager : MonoBehaviour
    
     public void ToggleVolumeComponent<T>(bool state) where T : VolumeComponent
     {
-        if (TryGetVolumeComponent(out T component))
+        if (TryGetVolumeComponents(out List<T> components))
         {
-            component.active = state;
+            foreach (var component in components)
+            {
+                component.active = state;
+            }
         }
     }
 
     public bool TryGetVolumeComponent<T>(out T targetComponent) where T : VolumeComponent
     {
-        if (_volume.profile.TryGet(out T component))
+        foreach (var volume in _gameVolumes)
         {
-            targetComponent = component;
-            return true;
+            if (volume.profile.TryGet(out T component))
+            {
+                targetComponent = component;
+                return true;
+            }
         }
-
         targetComponent = null;
+        return false;
+    }
+    
+    public bool TryGetVolumeComponents<T>(out List<T> targetComponent) where T : VolumeComponent
+    {
+        targetComponent = new();
+        
+        foreach (var volume in _gameVolumes)
+        {
+            if (volume.profile.TryGet(out T component))
+            {
+                targetComponent.Add(component);
+                return true;
+            }
+        }
+        
         return false;
     }
 }
