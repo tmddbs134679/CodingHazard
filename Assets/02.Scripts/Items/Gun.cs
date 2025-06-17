@@ -48,7 +48,7 @@ public class Gun : Weapon
 
 
         //업데이트에서 하면 너무 많이 입력됨
-       
+    
     }
 
     private void ZoomWeapon()
@@ -89,7 +89,6 @@ public class Gun : Weapon
         }
 
         Ray ray = mainCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-        Debug.DrawRay(ray.origin,ray.direction*range, Color.red); //나중에 제거 예정
         PlaySound(audioClip);
 
         PlayAttackAnimation(isZoom);
