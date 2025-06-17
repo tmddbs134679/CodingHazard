@@ -16,7 +16,7 @@ MonoBehaviour:
   hp: 100
   dmg: 10
   soundRange: 15
-  sightRange: 5
+  sightRange: 10
   attackRange: 2.25
   sightAngle: 100
   attackCoolTime: 2

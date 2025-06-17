@@ -101,12 +101,15 @@ public class EnemyBase : MonoBehaviour
         isAttack = false;
         stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         animator.Play(stateInfo.fullPathHash, 0, 0f);
+        controller.Agent.updatePosition = false;
+        controller.Agent.updateRotation = false;
         while (!stateInfo.IsName("Damaged") || stateInfo.normalizedTime < 1f)
       {
 
             yield return null;
             stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         }
+     
         animator.SetBool(para, false);
         isDamaged = false;
         invincibility = false;
@@ -118,7 +121,9 @@ public class EnemyBase : MonoBehaviour
         transform.position = pos+new Vector3(0,0.1f,0);
         transform.rotation = rot;
         mon.SetParent(gameObject.transform);
-      
+        controller.Agent.updatePosition = true;
+        controller.Agent.updateRotation = true;
+
     }
     Coroutine DmdC;
     public void DamagedMotion()
@@ -175,11 +180,13 @@ public class EnemyBase : MonoBehaviour
         yield return null;
         stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        yield return new WaitForSeconds(2.63f);
-        controller.Agent.updatePosition = true;
-        controller.Agent.updateRotation = true;
+        yield return new WaitForSeconds(2.5f);
         animator.SetBool(aniPara.AttackParaHash, false);
         animator.SetBool(aniPara.RunParaHash, true);
+        yield return new WaitForSeconds(0.2f);
+        controller.Agent.updatePosition = true;
+        controller.Agent.updateRotation = true;
+  
         isAttack = false;
         attack= null;
         animator.applyRootMotion = false;
