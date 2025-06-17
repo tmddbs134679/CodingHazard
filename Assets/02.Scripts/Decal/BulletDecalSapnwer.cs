@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletDecalSapnwer : MonoBehaviour
+public class BulletDecalSapnwer : Singleton<BulletDecalSapnwer>
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    //[SerializeField] private float decalLifetime = 5f;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    //public void SpawnDecal(Vector3 point, Vector3 normal)
+    //{
+    //    var decal = Instantiate(bulletHolePrefab, point + normal * 0.01f, Quaternion.LookRotation(normal));
+    //    Destroy(decal, decalLifetime);
+    //}
 }

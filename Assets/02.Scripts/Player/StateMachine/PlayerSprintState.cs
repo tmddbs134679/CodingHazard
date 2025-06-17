@@ -27,19 +27,20 @@ public class PlayerSprintState : PlayerBaseState
 
     public override void Update()
     {
+        if (_stateMachine.Controller.Condition.stamina.curValue <= 0f)
+        {
+            _stateMachine.ChangeState(new PlayerMoveState(_stateMachine));
+            return;
+        }
+        
         _stateMachine.Controller.Condition.UseStamina(_stateMachine.SprintStamina);
+        
         
         sprintDirection = _stateMachine.Controller.playerTrans.forward;
         Move(sprintDirection, _stateMachine.SprintSpeed);
         
         _stateMachine.Controller.fpsVirtualCamera.UpdateHeadBob(_stateMachine.SprintSpeed);
         
-        if (_stateMachine.Controller.Condition.stamina.curValue <= 0)
-        {
-            // Sprint 끝나면 Idle 상태로 전환
-            _stateMachine.ChangeState(new PlayerIdleState(_stateMachine));
-            return;
-        }
         
         if (_stateMachine.Controller.isJumpPressed)
         {

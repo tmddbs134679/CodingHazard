@@ -7,6 +7,7 @@ public static class PlayerEvent
 {
     public static Action OnAttack;
     public static Action OnReLoad;
+    public static Action<int,int> OnUpdateBullet;
     public static Action<DroppedItem> OnItemCheck;
     public static Action OnJump;
     public static Action<bool> OnSprint;
