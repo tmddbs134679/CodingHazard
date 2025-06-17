@@ -53,7 +53,9 @@ public class PlayerController : MonoBehaviour
     public CharacterController Controller { get; private set; }
     public ForceReceiver ForceReceiver { get; private set; }
     #endregion
-    
+
+    public WeaponManager WeaponManager { get; private set; }
+
     private void Awake()
     {
         playerInput = new PlayerInputs();
@@ -66,6 +68,8 @@ public class PlayerController : MonoBehaviour
         Interaction = GetComponent<PlayerInteraction>();
         ForceReceiver = GetComponent<ForceReceiver>();
         Animator = GetComponentInChildren<Animator>();
+        WeaponManager = GetComponent<WeaponManager>();
+        
 
 
         stateMachine.FPScamTransform = fpsVirtualCamera.transform;

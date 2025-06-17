@@ -127,11 +127,8 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (currentTargetItem != null)
         {
-            if (currentTargetItem is StageCollectObject collectObject)
-            {
-                collectObject.Collect();
-                itemText.gameObject.SetActive(false);
-            }
+            currentTargetItem.Interact();
+            itemText.gameObject.SetActive(false);
         }
     }
 }

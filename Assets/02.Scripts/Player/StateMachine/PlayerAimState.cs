@@ -13,7 +13,11 @@ public class PlayerAimState : PlayerBaseState
         base.Enter();
         Debug.Log("Enter Aim State");
         _stateMachine.Controller.isAiming = true;
-        _stateMachine.Controller.fpsVirtualCamera.ZoomIn(-20f, 0.5f);
+
+        if (_stateMachine.Controller.WeaponManager.CurrentWpeaWeapon is Gun)
+        {
+            _stateMachine.Controller.fpsVirtualCamera.ZoomIn(-20f, 0.5f);
+        }
         PlayerEvent.Aiming?.Invoke(true);
     }
 
@@ -43,7 +47,11 @@ public class PlayerAimState : PlayerBaseState
     {
         base.Exit();
         _stateMachine.Controller.isAiming = false;
-        _stateMachine.Controller.fpsVirtualCamera.ZoomOut(0.5f);
+        
+        if (_stateMachine.Controller.WeaponManager.CurrentWpeaWeapon is Gun)
+        {
+            _stateMachine.Controller.fpsVirtualCamera.ZoomOut(0.5f);
+        }
         PlayerEvent.Aiming?.Invoke(false);
     }
 

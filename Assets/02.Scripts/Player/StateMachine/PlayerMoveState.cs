@@ -64,7 +64,11 @@ public class PlayerMoveState : PlayerBaseState
         // Aim 가능
         if (_stateMachine.Controller.isAimHold)
         {
-            _stateMachine.ChangeState(new PlayerAimState(_stateMachine));
+            if (_controller.WeaponManager.CurrentWpeaWeapon is Gun)
+            {
+                _stateMachine.Controller.isMoving = false;
+                _stateMachine.ChangeState(new PlayerAimState(_stateMachine));
+            }
         }
 
         // 걷기 가능

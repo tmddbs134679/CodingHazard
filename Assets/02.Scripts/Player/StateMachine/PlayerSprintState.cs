@@ -20,7 +20,10 @@ public class PlayerSprintState : PlayerBaseState
             _controller.isCrouching = false;
         }
         
-        _stateMachine.Controller.fpsVirtualCamera.ZoomIn(20f, 0.5f);
+        if (_stateMachine.Controller.WeaponManager.CurrentWpeaWeapon is Gun)
+        {
+            _stateMachine.Controller.fpsVirtualCamera.ZoomIn(-20f, 0.5f);
+        }
 
         PlayerEvent.OnSprint?.Invoke(true);
     }
@@ -59,7 +62,12 @@ public class PlayerSprintState : PlayerBaseState
         base.Exit();
         Debug.Log("Sprint Zoom Out");
         _stateMachine.Controller.isSprinting = false;
-        _stateMachine.Controller.fpsVirtualCamera.ZoomOut(0.5f);
+        
+        if (_stateMachine.Controller.WeaponManager.CurrentWpeaWeapon is Gun)
+        {
+            _stateMachine.Controller.fpsVirtualCamera.ZoomOut(0.5f);
+        }
+     
         PlayerEvent.OnSprint?.Invoke(false);
     }
 }

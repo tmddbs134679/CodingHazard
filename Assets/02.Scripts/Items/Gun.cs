@@ -146,18 +146,13 @@ public class Gun : Weapon
 
             if (hit.collider.TryGetComponent<HitBox>(out var enemy))
             {
-
                 //나중에 변경될 수 있음 
                 enemy.Damaged(damage, hit);
-
-
             }
-
         }
         StartCoroutine(ApplyRecoil());
         curAmmo--;
         PlayerEvent.OnUpdateBullet?.Invoke(spareAmmo, curAmmo);
-        Debug.Log(curAmmo);
     }
 
     private IEnumerator ApplyRecoil()
