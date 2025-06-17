@@ -25,7 +25,6 @@ public class StageCollectObejctive : StageObjective
         foreach (var item in objectiveItems)
         {
             item.IsLockInteract = true;
-            item.IsLockDetect = true;
         }
     }
     
@@ -36,7 +35,7 @@ public class StageCollectObejctive : StageObjective
         foreach (var item in objectiveItems)
         {
             item.IsLockInteract = false;
-            item.IsLockDetect = false;
+            item.ToggleOutline(true);
         }
     }
     

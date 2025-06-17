@@ -12,14 +12,9 @@ public class StageReachedObjective : StageObjective
     [SerializeField] private StageReachObject objective;
 
 
-    private void Awake()
-    {
-        objective.IsLockDetect = true;
-    }
-
     public override void Enter()
     {
-        objective.IsLockDetect = false;
+        objective.ToggleOutline(true);
     }
 
     public override string GetProgressText()
