@@ -25,6 +25,8 @@ public class HitBox : MonoBehaviour
     public void Damaged(float dmg,Vector3 pos, Vector3 normal)
     {
         float finalDamage = dmg;
+        if(enemy.IsDead) 
+            return;
         SpawnBloodEffect(pos,normal);
         if (partType == BodyPart.Head)
             finalDamage *= 2;
