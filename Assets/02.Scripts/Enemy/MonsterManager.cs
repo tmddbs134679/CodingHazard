@@ -45,7 +45,14 @@ public class MonsterManager : Singleton<MonsterManager>
             return EnemyDetection.AlertState.Calm;
     }
     public void Dead(EnemyBase mon) {
+        if(!monsters.Contains(mon))
+            return;
         monsters.Remove(mon);
+        if(mon.detection.State== EnemyDetection.AlertState.Alert)
+            Elert(false);
+        if(mon.detection.State==EnemyDetection.AlertState.Suspicious)
+            Elert(true);
+
         monNum--;
     }
     public void Suspicious(bool a)
@@ -56,9 +63,14 @@ public class MonsterManager : Singleton<MonsterManager>
     }
     public void Elert(bool a)
     {
+
         if (a)
         elertNum++;
         else
             elertNum--;
+        if(elertNum>0)
+            PlayerEvent.OnDetectMonster(true);
+        if (elertNum == 0)
+            PlayerEvent.OnDetectMonster(false);
     }
 }

@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
+using UnityEngine.U2D;
 using UnityEngine.UIElements;
 
 public class EnemyBase : MonoBehaviour
@@ -16,7 +19,8 @@ public class EnemyBase : MonoBehaviour
     [SerializeField]
     public EnemyDetection detection;
     bool isDamaged;
-    private bool isAttack;
+    public bool isAttack;
+    public Transform mon;
     public bool IsAttack {  get { return isAttack; } }
     public bool IsDamaged { set { isDamaged = value; }  get { return isDamaged; } }
     bool isDead;
@@ -54,9 +58,10 @@ public class EnemyBase : MonoBehaviour
     public void Damaged(float dmg)
     {
         PlayerEvent.OnMonsterHit?.Invoke();
-
+      
+        mon.transform.LookAt(detection.Target.transform.position);
         //if (invincibility)
-            //return;
+        //return;
         detection.SeeTarget();
         Debug.Log(dmg + " 입음");
         isDamaged=true;
@@ -81,20 +86,24 @@ public class EnemyBase : MonoBehaviour
         PlayerEvent.OnKillConfirmed?.Invoke();
     }
     bool invincibility = false;
-    IEnumerator MotionE(int para)
-    {
-        Debug.Log("데미지 모션");
-        animator.SetBool(aniPara.DamagedParaHash, true);
-        animator.SetBool(para, true);
-        invincibility=true;
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        
-        yield return null;
 
+
+    IEnumerator MotionE(int para)
+ {
+        animator.applyRootMotion = true;
+        animator.SetBool(aniPara.DamagedParaHash, true);
+        animator.SetBool(aniPara.AttackParaHash, false);
+        animator.SetBool(para, true);
+        invincibility = true;
+        controller.Agent.isStopped = true;
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        yield return null;
+        isAttack = false;
         stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         animator.Play(stateInfo.fullPathHash, 0, 0f);
-        while (!stateInfo.IsName("Damaged")||stateInfo.normalizedTime < 1f)
-        {
+        while (!stateInfo.IsName("Damaged") || stateInfo.normalizedTime < 1f)
+      {
+
             yield return null;
             stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         }
@@ -102,6 +111,14 @@ public class EnemyBase : MonoBehaviour
         isDamaged = false;
         invincibility = false;
         DmdC = null;
+        animator.applyRootMotion = false;
+        Vector3 pos = mon.position;
+        Quaternion rot = mon.rotation;
+        mon.SetParent(null);
+        transform.position = pos+new Vector3(0,0.1f,0);
+        transform.rotation = rot;
+        mon.SetParent(gameObject.transform);
+      
     }
     Coroutine DmdC;
     public void DamagedMotion()
@@ -143,29 +160,50 @@ public class EnemyBase : MonoBehaviour
         Debug.Log("공격");
 
     }
+
     IEnumerator AttackE()
     {
-        
-            isAttack = true;
+        controller.Look(detection.Target.gameObject.transform.position - transform.position);
+        animator.applyRootMotion = true;
+        isAttack = true;
+        controller.Agent.isStopped=true;
             animator.SetBool(aniPara.AttackParaHash, true);
-            Attack();
-           
-           
-            yield return new WaitForSeconds(status.AttackCoolTime);
-            animator.SetBool(aniPara.AttackParaHash, false);
-            isAttack = false;
+        Attack();
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        controller.Agent.updatePosition = false;
+        controller.Agent.updateRotation = false;
+        yield return null;
+        stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        yield return new WaitForSeconds(2.63f);
+        controller.Agent.updatePosition = true;
+        controller.Agent.updateRotation = true;
+        animator.SetBool(aniPara.AttackParaHash, false);
+        animator.SetBool(aniPara.RunParaHash, true);
+        isAttack = false;
         attack= null;
+        animator.applyRootMotion = false;
+        Vector3 pos = mon.position;
+        Quaternion rot = mon.rotation;
+        mon.SetParent(null);
+        transform.position = pos + new Vector3(0, 0.1f, 0);
+        transform.rotation = rot;
+        mon.SetParent(gameObject.transform);
+        controller.Agent.isStopped = false;
+
+
     }
     Coroutine attack=null;
     public void StartAttack()
     {
         detection.SeeTarget();
-        controller.Look(detection.Target.gameObject.transform.position-transform.position);
-        animator.SetBool(aniPara.AttackParaHash, true);
+
+  
+  
         animator.SetBool(aniPara.RunParaHash, false);
-        if (attack == null) {
-            attack = StartCoroutine(AttackE());
-          }
+        if(!isAttack)
+         attack = StartCoroutine(AttackE());
+         
         
     }
  
