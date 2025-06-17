@@ -33,7 +33,7 @@ public class UI_CrossHair : UI_Base
         PlayerEvent.OnAttack += AttackAnim;
         PlayerEvent.OnJump += PlayBloomAuto;
         PlayerEvent.OnSprint += HandleSprint;
-        PlayerEvent.Aiming += ActiveCrossHair;
+        PlayerEvent.Aiming += HandleAim;
     }
 
   
@@ -45,7 +45,7 @@ public class UI_CrossHair : UI_Base
         PlayerEvent.OnAttack -= AttackAnim;
         PlayerEvent.OnJump -= PlayBloomAuto;
         PlayerEvent.OnSprint -= HandleSprint;
-        PlayerEvent.Aiming -= ActiveCrossHair;
+        PlayerEvent.Aiming -= HandleAim;
     }
     public override bool Init()
     {
@@ -83,11 +83,11 @@ public class UI_CrossHair : UI_Base
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown(KeyCode.V))
         {
             AinmateAimCrosshair();
         }
- 
+
     }
 
     private const float tweenDuration = 0.1f;
@@ -96,8 +96,8 @@ public class UI_CrossHair : UI_Base
     {
         if (StageManager.Instance.PlayerController.isAimHold) 
             return;
-
-        ActiveCrossHair(false);
+        Active();
+       // ActiveCrossHair(false);
         AnimateRecoilCrosshair(GetObject((int)GameObjects.AimHair));
     }
 
@@ -134,16 +134,37 @@ public class UI_CrossHair : UI_Base
 
         seq.OnComplete(() =>
         {
-            ActiveCrossHair(true);
+           
+            InActive();
         });
     }
   
+    void Active()
+    {
+        GetObject((int)GameObjects.AimHair).gameObject.transform.localScale = _originalScale;
+        GetObject((int)GameObjects.CrossHair).SetActive(true);
+    }
+
+    void InActive()
+    {
+        GetObject((int)GameObjects.CrossHair).SetActive(false);
+    }
 
     private void ActiveCrossHair(bool isactive)
     {
         GetObject((int)GameObjects.AimHair).gameObject.transform.localScale = _originalScale;
         GetObject((int)GameObjects.CrossHair).SetActive(!isactive);
     }
+
+    void HandleAim(bool IsAiming)
+    {
+        if (IsAiming)
+            AinmateAimCrosshair();
+        else
+            Active();
+    }
+
+
     private void AutoHideAfterDelay(GameObject crossHair, float delay = 0.2f)
     {
         crossHair.transform.DOKill(); 
