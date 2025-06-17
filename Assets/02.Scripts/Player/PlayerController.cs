@@ -30,17 +30,17 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Camera Look
-    [SerializeField, Range(-90f, 0f)] private float minXLook = -60f;
-    [SerializeField, Range(0f, 90f)] private float maxXLook = 30f;
-    [SerializeField, Range(50f, 300f)] private float lookSensitivity = 100f;
+    // [SerializeField, Range(-90f, 0f)] private float minXLook = -60f;
+    // [SerializeField, Range(0f, 90f)] private float maxXLook = 30f;
+    // [SerializeField, Range(50f, 300f)] private float lookSensitivity = 100f;
     public Transform playerTrans;
-    private Transform camTrans;
-    private float xRotation = 0f;
+    public Transform camTrans;
+    // private float xRotation = 0f;
     #endregion
 
     #region Camera Move
-    private Vector2 curMovementInput;
-    [SerializeField] private float moveSpeed;
+    // private Vector2 curMovementInput;
+    // [SerializeField] private float moveSpeed;
     [SerializeField] public FPSVirtualCamera fpsVirtualCamera;
     #endregion
 
@@ -56,16 +56,17 @@ public class PlayerController : MonoBehaviour
     {
         playerInput = new PlayerInputs();
         playerActions = playerInput.Player;
+        playerActions.Enable();
 
-        Condition = GetComponent<PlayerCondition>();
-        Interaction = GetComponent<PlayerInteraction>();
         stateMachine = new PlayerStateMachine(this);
-        Animator = GetComponentInChildren<Animator>();
+        Condition = GetComponent<PlayerCondition>();
         Controller = GetComponent<CharacterController>();
+        Interaction = GetComponent<PlayerInteraction>();
         ForceReceiver = GetComponent<ForceReceiver>();
+        Animator = GetComponentInChildren<Animator>();
 
 
-        stateMachine.MainCamTransform = Camera.main?.transform;
+        stateMachine.FPScamTransform = fpsVirtualCamera.transform;
 
         playerInput.Player.Rifle.performed += index => PlayerEvent.Swap?.Invoke(0);
         playerInput.Player.Pistol.performed += index => PlayerEvent.Swap?.Invoke(1);
@@ -83,7 +84,7 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         
-        camTrans = stateMachine.MainCamTransform;
+        camTrans = fpsVirtualCamera.transform;
         playerTrans = transform;
         
         stateMachine.Initialize(new PlayerIdleState(stateMachine));
@@ -115,19 +116,19 @@ public class PlayerController : MonoBehaviour
     }
     
     // Animation Clip 길이 구하기
-    public float GetAnimationClipLength(string clipName)
-    {
-        var clips = Animator.runtimeAnimatorController.animationClips;
-
-        foreach (var clip in clips)
-        {
-            if (clip.name == clipName)
-                return clip.length;
-        }
-
-        Debug.LogWarning($"Clip '{clipName}' not found!");
-        return 2f; // fallback
-    }
+    // public float GetAnimationClipLength(string clipName)
+    // {
+    //     var clips = Animator.runtimeAnimatorController.animationClips;
+    //
+    //     foreach (var clip in clips)
+    //     {
+    //         if (clip.name == clipName)
+    //             return clip.length;
+    //     }
+    //
+    //     Debug.LogWarning($"Clip '{clipName}' not found!");
+    //     return 2f; // fallback
+    // }
     
     /*private void Look()
     {
@@ -182,8 +183,5 @@ public class PlayerController : MonoBehaviour
         
             // 주/보조 무기(총)일 경우 총을 쏘는 Method 실행
         */
-
-
-
     }
 }

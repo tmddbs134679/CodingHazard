@@ -522,6 +522,7 @@ GameObject:
   - component: {fileID: 4950234256913021620}
   - component: {fileID: 529108531940432719}
   - component: {fileID: 8332048441860605962}
+  - component: {fileID: 2133794175214244469}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -593,11 +594,8 @@ MonoBehaviour:
   isAiming: 0
   isAttacking: 0
   isJumping: 0
-  minXLook: -30
-  maxXLook: 60
-  lookSensitivity: 80
   playerTrans: {fileID: 8504809558934303775}
-  moveSpeed: 0
+  camTrans: {fileID: 0}
   fpsVirtualCamera: {fileID: 2372937977120384787}
 --- !u!114 &8033334737337003115
 MonoBehaviour:
@@ -660,6 +658,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponAnchor: {fileID: 456778721506785163}
+  weaponPrefabs:
+  - {fileID: 4757154998141492074, guid: 08e63662931172e4788dea77c765acde, type: 3}
+  - {fileID: 2323879503507624389, guid: f8d21ded0f4919641b12564b818065ad, type: 3}
+--- !u!114 &2133794175214244469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4430118988471167130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66c952ead9e9faa4784b1b80bea8e8ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponAnchor: {fileID: 7837387422874978323}
   weaponPrefabs:
   - {fileID: 4757154998141492074, guid: 08e63662931172e4788dea77c765acde, type: 3}
   - {fileID: 2323879503507624389, guid: f8d21ded0f4919641b12564b818065ad, type: 3}

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
@@ -11,6 +12,8 @@ public class PlayerInteraction : MonoBehaviour
     private float lastCheckTime;
 
     private DroppedItem currentTargetItem;
+
+    public TextMeshProUGUI itemText;
 
     private void Update()
     {
@@ -38,6 +41,8 @@ public class PlayerInteraction : MonoBehaviour
                     
                     if (!item.IsLockInteract)
                         return;
+
+                    SetItemText(item);
                     
                     if (currentTargetItem != item)
                     {
@@ -53,13 +58,24 @@ public class PlayerInteraction : MonoBehaviour
             {
                 currentTargetItem.ToggleOutline(false);
                 currentTargetItem = null;
+                itemText.gameObject.SetActive(false);
             }
         }
+    }
+
+    private void SetItemText(DroppedItem item)
+    {
+        itemText.gameObject.SetActive(true);
+        itemText.text = item.ItemData.DisplayName;
     }
     
     public void OnInteractInput()
     {
         if (currentTargetItem != null)
+        {
             currentTargetItem.OnInteract();
+            itemText.gameObject.SetActive(false);
+        }
+            
     }
 }

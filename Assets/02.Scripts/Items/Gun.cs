@@ -11,6 +11,13 @@ public class Gun : Weapon
     [SerializeField] private Transform firePoint;
 
 
+    [Header("ReCoil")]
+   // [SerializeField] private Transform curPos;
+    [SerializeField] private float recoilx = 0.01f;
+    [SerializeField] private float recoily = 0.01f;
+    [SerializeField] private float recoilz = 0.05f;
+
+
     [SerializeField] private int Ammo { get; set; }
 
     [Header("Camera")]
@@ -31,35 +38,41 @@ public class Gun : Weapon
 
     }
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        PlayerEvent.Aiming += ZoomWeapon;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        PlayerEvent.Aiming -= ZoomWeapon;
+}
+
     protected void Update()
     {
 
         base.Update();
 
-      //  HandleFireInput();
 
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            //이벤트 연결하기 
-            isZoom = !isZoom;
-            ZoomWeapon();
-        }
-
-
-        //업데이트에서 하면 너무 많이 입력됨
     
     }
 
-    private void ZoomWeapon()
+    private void ZoomWeapon(bool isZoom)
     {
-      //  weaponPos.localPosition = Vector3.Lerp(weaponPos.localPosition, targetPos, Time.deltaTime);
+
+
+        this.isZoom = isZoom;
         WeaponAnimator.SetBool(IsAiming, isZoom);
-        float targetFOV = isZoom ? zoomFOV : normalFOV;
-        if (mainCam != null)
-        {
-            mainCam.fieldOfView = targetFOV;
-        }
+       
+        
+        
+        //float targetFOV = isZoom ? zoomFOV : normalFOV;
+       //if (mainCam != null)
+       //{
+       //    mainCam.fieldOfView = targetFOV;
+       //}
 
     }
 
@@ -93,16 +106,12 @@ public class Gun : Weapon
 
         PlayAttackAnimation(isZoom);
          
-       
-        if (Physics.Raycast(ray, out RaycastHit hit, range))
+       LayerMask layerMask = 1<<9;
+        if (Physics.Raycast(ray, out RaycastHit hit, range,layerMask))
         {
-            if (hit.collider.gameObject.layer != 9)
-            {
 
-                return;
-
-               
-            }
+            Debug.Log("맞음");
+           
             if (hit.collider.TryGetComponent<HitBox>(out var enemy))
             {
                 
@@ -111,11 +120,31 @@ public class Gun : Weapon
              
                 
             }
-
           
         }
+        StartCoroutine(ApplyRecoil());
         
             
+    }
+
+    private IEnumerator ApplyRecoil()
+    {
+       
+
+        Vector3 recoil = new Vector3(Random.Range(-recoilx, recoilx), Random.Range(-recoily, recoily), -recoilz);
+        Vector3 originPos = this.transform.localPosition;
+        Vector3 targetPos = originPos + recoil;
+
+        float time = 0f;
+        float recoilSpeed = 20f;
+
+        while (time < 1f)
+        {
+            time += Time.deltaTime * recoilSpeed;
+            this.transform.localPosition = Vector3.Lerp(targetPos, originPos, time);
+            yield return null;
+        }
+
     }
 
     

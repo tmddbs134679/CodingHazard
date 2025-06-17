@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,13 +30,22 @@ public class UI_CrossHair : UI_Base
     {
         PlayerEvent.OnKillConfirmed += AnimateKillCrosshair;
         PlayerEvent.OnMonsterHit += MonsterHitCrossHair;
+        PlayerEvent.OnAttack += AttackAnim;
+        PlayerEvent.OnJump += PlayBloomAuto;
+        PlayerEvent.OnSprint += HandleSprint;
+        PlayerEvent.Aiming += ActiveCrossHair;
     }
 
+  
 
     private void OnDisable()
     {
         PlayerEvent.OnKillConfirmed -= AnimateKillCrosshair;
         PlayerEvent.OnMonsterHit -= MonsterHitCrossHair;
+        PlayerEvent.OnAttack -= AttackAnim;
+        PlayerEvent.OnJump -= PlayBloomAuto;
+        PlayerEvent.OnSprint -= HandleSprint;
+        PlayerEvent.Aiming -= ActiveCrossHair;
     }
     public override bool Init()
     {
@@ -73,22 +83,23 @@ public class UI_CrossHair : UI_Base
 
     private void Update()
     {
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            OnAimEnd();
-            AnimateRecoilCrosshair(GetObject((int)GameObjects.AimHair));
-        }
-        else if(Input.GetMouseButtonDown(1))
+        if(Input.GetMouseButtonDown(1))
         {
             AinmateAimCrosshair();
-            
         }
  
     }
 
     private const float tweenDuration = 0.1f;
 
+    private void AttackAnim()
+    {
+        if (StageManager.Instance.PlayerController.isAimHold) 
+            return;
+
+        ActiveCrossHair(true);
+        AnimateRecoilCrosshair(GetObject((int)GameObjects.AimHair));
+    }
 
     private void MonsterHitCrossHair()
     {
@@ -123,19 +134,16 @@ public class UI_CrossHair : UI_Base
 
         seq.OnComplete(() =>
         {
-            OnAimStart();
+            ActiveCrossHair(false);
         });
     }
-    public void OnAimStart()
-    {
-        GetObject((int)GameObjects.CrossHair).SetActive(false);
-    }
+  
 
-    public void OnAimEnd()
+    private void ActiveCrossHair(bool isactive)
     {
-        GetObject((int)GameObjects.CrossHair).SetActive(true);
+        GetObject((int)GameObjects.AimHair).gameObject.transform.localScale = _originalScale;
+        GetObject((int)GameObjects.CrossHair).SetActive(isactive);
     }
-
     private void AutoHideAfterDelay(GameObject crossHair, float delay = 0.2f)
     {
         crossHair.transform.DOKill(); 
@@ -193,5 +201,38 @@ public class UI_CrossHair : UI_Base
         }
     }
 
+
+
+    public RectTransform aimHair;
+    public float bloomScale = 1.5f;
+    public float bloomTime = 0.1f;
+    public float shrinkTime = 0.2f;
+
+
+    void HandleSprint(bool isSprinting)
+    {
+        if (isSprinting)
+            PlayBloom();
+        else
+            ShrinkBack();
+    }
+    public void PlayBloom()
+    {
+        DOTween.Kill(GetObject((int)GameObjects.AimHair)); // 중복 방지
+
+        GetObject((int)GameObjects.AimHair).GetComponent<RectTransform>().DOScale(_originalScale * bloomScale, bloomTime).SetEase(Ease.OutQuad);
+    }
+
+    public void ShrinkBack()
+    {
+        GetObject((int)GameObjects.AimHair).GetComponent<RectTransform>().DOScale(_originalScale, shrinkTime).SetEase(Ease.OutQuad);
+    }
+
+    // 자동으로 수축되는 버전
+    public void PlayBloomAuto()
+    {
+        PlayBloom();
+        DOVirtual.DelayedCall(bloomTime + 0.05f, () => ShrinkBack());
+    }
 
 }

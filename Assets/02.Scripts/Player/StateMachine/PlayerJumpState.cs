@@ -24,6 +24,8 @@ public class PlayerJumpState : PlayerBaseState
         {
             _controller.isCrouching = false;
         }
+
+        PlayerEvent.OnJump?.Invoke();
     }
 
     public override void Update()
@@ -43,21 +45,18 @@ public class PlayerJumpState : PlayerBaseState
             && _stateMachine.Controller.Controller.isGrounded 
             && _stateMachine.Controller.isJumping)
         {
-            _stateMachine.Controller.isJumping = false;
             _stateMachine.ChangeState(new PlayerIdleState(_stateMachine));
         }
         
         // 떨어질 때
         if (_stateMachine.Controller.ForceReceiver.Movement.y <= 0f)
         {
-            _stateMachine.Controller.isJumping = false;
             _stateMachine.ChangeState(new PlayerFallState(_stateMachine));
         }
         
         // 장전 가능
         if (_stateMachine.Controller.isReloadPressed)
         {
-            _stateMachine.Controller.isMoving = false;
             _stateMachine.ChangeState(new PlayerReloadState(_stateMachine));    
         }
 
@@ -67,7 +66,13 @@ public class PlayerJumpState : PlayerBaseState
             OnAttackInput();
         }
     }
-    
+
+    public override void Exit()
+    {
+        base.Exit();
+        _stateMachine.Controller.isJumping = false;
+    }
+
     public override void OnAttackInput()
     {
         _controller.Attack();
