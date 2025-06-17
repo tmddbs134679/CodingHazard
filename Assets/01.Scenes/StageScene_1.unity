@@ -14381,6 +14381,10 @@ PrefabInstance:
       propertyPath: field of view
       value: 67.67275
       objectReference: {fileID: 0}
+    - target: {fileID: 8332048441860605962, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
+      propertyPath: weaponPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 1603891455436130839, guid: 7b4f3ee034e357c4c9a0aea8cfaea514, type: 3}
     - target: {fileID: 8504809558934303775, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 16.85
