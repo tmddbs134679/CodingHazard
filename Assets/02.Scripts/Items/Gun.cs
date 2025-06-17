@@ -93,6 +93,8 @@ public class Gun : Weapon
                 spareAmmo = 0;
             }
         }
+
+        PlayerEvent.OnUpdateBullet?.Invoke(spareAmmo, curAmmo);
     }
 
     private void ZoomWeapon(bool isZoom)
@@ -154,6 +156,7 @@ public class Gun : Weapon
         }
         StartCoroutine(ApplyRecoil());
         curAmmo--;
+        PlayerEvent.OnUpdateBullet?.Invoke(spareAmmo, curAmmo);
         Debug.Log(curAmmo);
     }
 

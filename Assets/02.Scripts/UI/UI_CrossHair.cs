@@ -12,7 +12,7 @@ public class UI_CrossHair : UI_Base
         CrossHair,
         AimHair,
         DamageCrossHair,
-        KillEffectCrossHair
+        KillEffectCrossHair,
     }
     enum Images
     {
@@ -21,8 +21,6 @@ public class UI_CrossHair : UI_Base
        KillUp,
        KillDown,
     }
-
-
     private Vector3 _originalScale;
 
 
