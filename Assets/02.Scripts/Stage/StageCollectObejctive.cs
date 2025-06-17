@@ -24,7 +24,7 @@ public class StageCollectObejctive : StageObjective
 
         foreach (var item in objectiveItems)
         {
-            item.ToggleLockInteract(false);
+            item.ToggleLockInteract(true);
         }
     }
     
@@ -34,7 +34,7 @@ public class StageCollectObejctive : StageObjective
     {
         foreach (var item in objectiveItems)
         {
-            item.ToggleLockInteract(true);
+            item.ToggleLockInteract(false);
         }
     }
     
@@ -51,8 +51,6 @@ public class StageCollectObejctive : StageObjective
     {
         if (targret is DroppedItem item)
         {
-            Debug.Log(gameObject.name);
-            
             if (objectiveItems.Contains(item))
             {
                 objectiveItems.Remove(item);

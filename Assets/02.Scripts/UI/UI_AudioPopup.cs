@@ -80,6 +80,8 @@ public class UI_AudioPopup : UI_Base
 
         HoverInit();
         #endregion
+
+        #region Toggle Bind
         GetToggle((int)Toggles.MasterToggle).gameObject.BindEvent(() =>
         {
             OnClickToggle(
@@ -118,6 +120,9 @@ public class UI_AudioPopup : UI_Base
             );
         });
 
+        #endregion
+
+        #region Slider or Text Add
         volumeSliders.Add(GameObjects.MasterSlider, GetObject((int)GameObjects.MasterSlider).GetComponent<Slider>());
         volumeTexts.Add(GameObjects.MasterSlider, GetText((int)Texts.MasterValueText));
         volumeSliders.Add(GameObjects.BGMSlider, GetObject((int)GameObjects.BGMSlider).GetComponent<Slider>());
@@ -126,6 +131,9 @@ public class UI_AudioPopup : UI_Base
         volumeTexts.Add(GameObjects.SFXSlider, GetText((int)Texts.SFXValueText));
         volumeSliders.Add(GameObjects.VoiceSlider, GetObject((int)GameObjects.VoiceSlider).GetComponent<Slider>());
         volumeTexts.Add(GameObjects.VoiceSlider, GetText((int)Texts.VoiceValueText));
+
+        #endregion
+
 
         TogglesInit();
         BackgroundInit();
@@ -138,6 +146,8 @@ public class UI_AudioPopup : UI_Base
   
             UpdateVolumeText(type, kvp.Value.value);
         }
+
+
         return true;
     }
 

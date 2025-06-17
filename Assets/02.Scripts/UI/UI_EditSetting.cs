@@ -60,18 +60,13 @@ public class UI_EditSetting : UI_Base
         // 토글 클릭 시 행동
         GetToggle((int)Toggles.DisplayToggle).gameObject.BindEvent(OnClickDisplayToggle);
         GetToggle((int)Toggles.AudioToggle).gameObject.BindEvent(OnClickAudioToggle);
-
-
-
+        #endregion
 
         TogglesInit();
         GetToggle((int)Toggles.DisplayToggle).gameObject.GetComponent<Toggle>().isOn = true;
         OnClickDisplayToggle();
 
-        #endregion
         _AudioPopup.gameObject.SetActive(false);
-
-       // Refresh();
 
         return true;
     }

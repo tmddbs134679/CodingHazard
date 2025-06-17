@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerReloadState : PlayerBaseState
 {
@@ -14,6 +14,7 @@ public class PlayerReloadState : PlayerBaseState
         Debug.Log("Enter Reload State");
         _stateMachine.Controller.isReloading = true;
         timer = 2f; // 장전 시간 설정 / 후에 아마 애니메이션 길이로 설정
+        PlayerEvent.OnReLoad?.Invoke();
     }
 
     public override void Update()

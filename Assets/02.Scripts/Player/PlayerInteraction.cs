@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
@@ -13,7 +14,16 @@ public class PlayerInteraction : MonoBehaviour
 
     private DroppedItem currentTargetItem;
 
+    public float detectionRadius = 10f;
+    private Vector3 playerPos;
+    private HashSet<DroppedItem> preDetectedItems = new();
+
     public TextMeshProUGUI itemText;
+
+    private void Start()
+    {
+        StartCoroutine(ItemDetectorLoop());
+    }
 
     private void Update()
     {
@@ -39,7 +49,7 @@ public class PlayerInteraction : MonoBehaviour
                         currentTargetItem = null;
                     }
                     
-                    if (!item.IsLockInteract)
+                    if (item.IsLockInteract)
                         return;
 
                     //SetItemText(item);
@@ -47,9 +57,7 @@ public class PlayerInteraction : MonoBehaviour
 
                     if (currentTargetItem != item)
                     {
-                        currentTargetItem?.ToggleOutline(false);
                         currentTargetItem = item;
-                        currentTargetItem.ToggleOutline(true);
                     }
                     return;
                 }
@@ -57,11 +65,62 @@ public class PlayerInteraction : MonoBehaviour
             
             if (currentTargetItem != null)
             {
-                currentTargetItem.ToggleOutline(false);
                 currentTargetItem = null;
                 itemText.gameObject.SetActive(false);
             }
         }
+    }
+    
+    private IEnumerator ItemDetectorLoop()
+    {
+        WaitForSeconds wait = new WaitForSeconds(0.3f);
+        
+        while (true)
+        {
+            DetectItems();
+            
+            yield return wait;
+        }
+    }
+
+    private void DetectItems()
+    {
+        playerPos = gameObject.transform.position;
+        
+        Collider[] detectedColliders = Physics.OverlapSphere(playerPos, detectionRadius, interactableLayer);
+        HashSet<DroppedItem> curDetectedItems = new();
+        
+        foreach (Collider col in detectedColliders)
+        {
+            if (col.TryGetComponent(out DroppedItem item))
+            {
+                if (item.IsLockInteract)
+                    return;
+                
+                curDetectedItems.Add(item);
+
+                if (!preDetectedItems.Contains(item))
+                {
+                    item.ToggleOutline(true);
+                }
+            }
+        }
+
+        foreach (var preItem in preDetectedItems)
+        {
+            if (!curDetectedItems.Contains(preItem))
+            {
+                preItem.ToggleOutline(false);
+            }
+        }
+
+        preDetectedItems = curDetectedItems;
+    }
+    
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(playerPos, detectionRadius);
     }
 
     

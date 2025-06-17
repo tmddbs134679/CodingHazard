@@ -17,7 +17,9 @@ public class PlayerController : MonoBehaviour
     public bool isMoving = false;
     public bool isCrouching = false;
     public bool isSprinting = false;
-    public bool isSprintHold => playerActions.Sprint.IsPressed();
+    public bool canSprint = false;
+    public bool isSprintHold => (playerActions.Sprint.IsPressed() 
+                                 && (Condition.stamina.curValue > 0f));
     public bool isReloading = false;
     public bool isReloadPressed => playerActions.Reloading.WasPressedThisFrame();
     public bool isAiming = false;
@@ -83,6 +85,8 @@ public class PlayerController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        canSprint = true;
         
         camTrans = fpsVirtualCamera.transform;
         playerTrans = transform;
@@ -98,7 +102,13 @@ public class PlayerController : MonoBehaviour
         //Look();
         
         fpsVirtualCamera.MouseDelta = playerActions.Look.ReadValue<Vector2>();
-        
+
+        if (Condition.stamina.curValue <= 0f)
+            canSprint = false;
+
+        if (Condition.stamina.curValue > 30f)
+            canSprint = true;
+
         // Crouch 판정 및 처리
         if (playerActions.Sit.WasPressedThisFrame())
         {
@@ -174,9 +184,7 @@ public class PlayerController : MonoBehaviour
         fpsVirtualCamera.PlayRecoilToFire(Vector3.one);
         PlayerEvent.OnAttack?.Invoke();
         //공격 입력시 호출해주고 무기에서 Fire구독해서 사용할예정
-
-
-
+        
         /*  // 현재 무기가 근접 무기일 경우 MeleeAttackState
          * if (현재 무기 == 근접 무기)
          *      stateMachine.ChangeState(new PlayerMeleeAttackState(stateMachine));

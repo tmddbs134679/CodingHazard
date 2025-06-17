@@ -3,13 +3,13 @@ using UnityEngine;
 public class PlayerSprintState : PlayerBaseState
 {
     private Vector3 sprintDirection;
+    
     public PlayerSprintState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
     }
 
     public override void Enter()
     {
-     
         base.Enter();
         Debug.Log("Enter SprintState");
         
@@ -27,18 +27,20 @@ public class PlayerSprintState : PlayerBaseState
 
     public override void Update()
     {
-        _stateMachine.Controller.Condition.stamina.curValue -= _stateMachine.SprintStamina * Time.deltaTime;
-        sprintDirection = _stateMachine.Controller.playerTrans.forward;
-        
-        Move(sprintDirection, _stateMachine.SprintSpeed);
-        _stateMachine.Controller.fpsVirtualCamera.UpdateHeadBob(_stateMachine.SprintSpeed);
-        
-        if (_stateMachine.Controller.Condition.stamina.curValue <= 0)
+        if (_stateMachine.Controller.Condition.stamina.curValue <= 0f)
         {
-            // Sprint 끝나면 Idle 상태로 전환
-            _stateMachine.ChangeState(new PlayerIdleState(_stateMachine));
+            _stateMachine.ChangeState(new PlayerMoveState(_stateMachine));
             return;
         }
+        
+        _stateMachine.Controller.Condition.UseStamina(_stateMachine.SprintStamina);
+        
+        
+        sprintDirection = _stateMachine.Controller.playerTrans.forward;
+        Move(sprintDirection, _stateMachine.SprintSpeed);
+        
+        _stateMachine.Controller.fpsVirtualCamera.UpdateHeadBob(_stateMachine.SprintSpeed);
+        
         
         if (_stateMachine.Controller.isJumpPressed)
         {

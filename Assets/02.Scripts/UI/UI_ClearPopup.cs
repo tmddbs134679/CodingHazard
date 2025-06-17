@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class UI_ClearPopup : UI_Base
 {
+    #region Enum
     enum GameObjects
     {
         TextObject,
@@ -21,6 +22,8 @@ public class UI_ClearPopup : UI_Base
     {
         background,
     }
+
+#endregion
 
     public override bool Init()
     {
