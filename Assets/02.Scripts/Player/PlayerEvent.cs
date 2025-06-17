@@ -6,7 +6,7 @@ using UnityEngine;
 public static class PlayerEvent 
 {
     public static Action OnAttack;
-    public static Action<DroppedItem> OnItemCheck;
+    public static Action<StageObjectiveObject> OnItemCheck;
     public static Action OnJump;
     public static Action<bool> OnSprint;
     public static Action<int> Swap;

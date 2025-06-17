@@ -12,11 +12,11 @@ public class PlayerInteraction : MonoBehaviour
     public float checkRate = 0.05f;
     private float lastCheckTime;
 
-    private DroppedItem currentTargetItem;
+    private StageObjectiveObject currentTargetItem;
 
     public float detectionRadius = 10f;
     private Vector3 playerPos;
-    private HashSet<DroppedItem> preDetectedItems = new();
+    private HashSet<StageObjectiveObject> preDetectedItems = new();
 
     public TextMeshProUGUI itemText;
 
@@ -38,7 +38,7 @@ public class PlayerInteraction : MonoBehaviour
             
             if (Physics.Raycast(ray, out hit, interactableDistance, interactableLayer))
             {
-                DroppedItem item = hit.collider.GetComponent<DroppedItem>();
+                StageObjectiveObject item = hit.collider.GetComponent<StageObjectiveObject>();
 
                 
                 if (item != null)
@@ -88,11 +88,11 @@ public class PlayerInteraction : MonoBehaviour
         playerPos = gameObject.transform.position;
         
         Collider[] detectedColliders = Physics.OverlapSphere(playerPos, detectionRadius, interactableLayer);
-        HashSet<DroppedItem> curDetectedItems = new();
+        HashSet<StageObjectiveObject> curDetectedItems = new();
         
         foreach (Collider col in detectedColliders)
         {
-            if (col.TryGetComponent(out DroppedItem item))
+            if (col.TryGetComponent(out StageObjectiveObject item))
             {
                 if (item.IsLockInteract)
                     return;
@@ -128,9 +128,11 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (currentTargetItem != null)
         {
-            currentTargetItem.OnInteract();
-            itemText.gameObject.SetActive(false);
+            if (currentTargetItem is StageCollectObject collectObject)
+            {
+                collectObject.Collect();
+                itemText.gameObject.SetActive(false);
+            }
         }
-            
     }
 }

@@ -48,15 +48,6 @@ public class StageManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            ClearStage();
-        }
-    }
-
-
     public void UpdateObjectives<T>(T target) where T : MonoBehaviour
     {
         if (objectives.Count > 0)
@@ -90,29 +81,8 @@ public class StageManager : MonoBehaviour
 
     public void ClearStage()
     {
-        //Time.timeScale = 0;
-
         PlayerController.BlockInput();
 
         OnClearStage?.Invoke();
-
-        //fadeScreen.FadeOut(
-        //    () =>
-        //    {
-        //        Cursor.lockState = CursorLockMode.None;
-        //        Cursor.visible = true;
-
-        //        fadeScreen.gameObject.SetActive(false);
-        //        tempResultUI.gameObject.SetActive(true);
-        //    });
-
-        // tempResultButton.onClick.AddListener(TempClickEndButton);
-    }
-
-    void TempClickEndButton()
-    {
-        SceneLoadManager.Instance.LoadScene("LobbyScene");
-        
-        Time.timeScale = 1;
     }
 }

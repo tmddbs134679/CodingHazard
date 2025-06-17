@@ -91,7 +91,7 @@ MonoBehaviour:
   <PlayerController>k__BackingField: {fileID: 0}
   objectives:
   - {fileID: 4951611351565459095}
-  - {fileID: 6561441485508063899}
+  - {fileID: 6133555600528148797}
   fadeScreen: {fileID: 0}
   tempResultUI: {fileID: 0}
   tempResultButton: {fileID: 0}
@@ -167,9 +167,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5379286951995597955}
-  - component: {fileID: 6561441485508063899}
+  - component: {fileID: 6133555600528148797}
   m_Layer: 0
-  m_Name: TempCollectObjective (1)
+  m_Name: ExitReachObjective
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,7 +190,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2059424940213736831}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6561441485508063899
+--- !u!114 &6133555600528148797
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -199,16 +199,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4567012571819095752}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2a5a6843c876104aa4863014ef13108, type: 3}
+  m_Script: {fileID: 11500000, guid: 84007cafd10d1904f87db3f00920d500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Description>k__BackingField: Root2
+  <Description>k__BackingField: "\uC9C0\uC815 \uC704\uCE58\uAE4C\uC9C0 \uB3C4\uCC29"
   onCompleteEvent:
     m_PersistentCalls:
       m_Calls: []
-  objectiveItems:
-  - {fileID: 0}
-  - {fileID: 0}
+  objective: {fileID: 0}
 --- !u!1 &7667716689102466820
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,7 +218,7 @@ GameObject:
   - component: {fileID: 3172088314129863569}
   - component: {fileID: 4951611351565459095}
   m_Layer: 0
-  m_Name: TempCollectObjective
+  m_Name: PillCollectObjective
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -253,12 +251,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2a5a6843c876104aa4863014ef13108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Description>k__BackingField: Root1
+  <Description>k__BackingField: "\uD68C\uBCF5\uC81C \uD68D\uB4DD\uD558\uAE30"
   onCompleteEvent:
     m_PersistentCalls:
       m_Calls: []
   objectiveItems:
-  - {fileID: 0}
   - {fileID: 0}
 --- !u!1 &9123993111409037154
 GameObject:

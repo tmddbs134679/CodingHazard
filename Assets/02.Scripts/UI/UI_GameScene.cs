@@ -179,10 +179,10 @@ public class UI_GameScene : UI_Base
 
 
 
-    private void SetItemText(DroppedItem item)
+    private void SetItemText(StageObjectiveObject item)
     {
         GetText((int)Texts.ItemText).gameObject.SetActive(true);
-        GetText((int)Texts.ItemText).text = item.ItemData.DisplayName;
+        GetText((int)Texts.ItemText).text = "획득";
     }
 
 }

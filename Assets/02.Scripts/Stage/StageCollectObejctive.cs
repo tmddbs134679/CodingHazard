@@ -6,11 +6,11 @@ using UnityEngine;
 public class StageCollectObejctive : StageObjective
 {
     public override StageObjectiveType ObjectiveType => StageObjectiveType.Collect;
-    public List<DroppedItem> ObjectiveItems => objectiveItems;
+    public List<StageCollectObject> ObjectiveItems => objectiveItems;
     
     
     [Space(10f)]
-    [SerializeField] private List<DroppedItem> objectiveItems;
+    [SerializeField] private List<StageCollectObject> objectiveItems;
     
     
     private int _maxCount;
@@ -49,7 +49,7 @@ public class StageCollectObejctive : StageObjective
 
     public override bool TryUpdateProgress<T>(T targret, out bool isComplete) 
     {
-        if (targret is DroppedItem item)
+        if (targret is StageCollectObject item)
         {
             if (objectiveItems.Contains(item))
             {
