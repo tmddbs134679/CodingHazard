@@ -134,9 +134,9 @@ public class EnemyDetection :MonoBehaviour
             if (con.isAttacking)
                 return 150;
             if (con.isSprinting)
-                return 50;
+                return 100;
             if (con.isMoving)
-                return 10;
+                return 50;
             if (con.isWalking)
                 return 2;
             
