@@ -19,7 +19,7 @@ public class EnemyBase : MonoBehaviour
     [SerializeField]
     public EnemyDetection detection;
     bool isDamaged;
-    private bool isAttack;
+    public bool isAttack;
     public Transform mon;
     public bool IsAttack {  get { return isAttack; } }
     public bool IsDamaged { set { isDamaged = value; }  get { return isDamaged; } }
@@ -118,7 +118,7 @@ public class EnemyBase : MonoBehaviour
         transform.position = pos+new Vector3(0,0.1f,0);
         transform.rotation = rot;
         mon.SetParent(gameObject.transform);
-        controller.Agent.isStopped = false;
+      
     }
     Coroutine DmdC;
     public void DamagedMotion()
@@ -163,15 +163,19 @@ public class EnemyBase : MonoBehaviour
 
     IEnumerator AttackE()
     {
+        controller.Look(detection.Target.gameObject.transform.position - transform.position);
         animator.applyRootMotion = true;
         isAttack = true;
         controller.Agent.isStopped=true;
             animator.SetBool(aniPara.AttackParaHash, true);
         Attack();
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        yield return null;
+        stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        yield return new WaitForSeconds(status.AttackCoolTime);
-            animator.SetBool(aniPara.AttackParaHash, false);
-            isAttack = false;
+        yield return new WaitForSeconds(2.65f);
+        animator.SetBool(aniPara.AttackParaHash, false);
+         isAttack = false;
         attack= null;
         animator.applyRootMotion = false;
         Vector3 pos = mon.position;
@@ -188,7 +192,7 @@ public class EnemyBase : MonoBehaviour
     public void StartAttack()
     {
         detection.SeeTarget();
-        controller.Look(detection.Target.gameObject.transform.position-transform.position);
+
   
   
         animator.SetBool(aniPara.RunParaHash, false);
