@@ -15,12 +15,12 @@ MonoBehaviour:
   name: Normal Zombie
   hp: 100
   dmg: 10
-  soundRange: 10
-  sightRange: 5
-  attackRange: 1.2
+  soundRange: 15
+  sightRange: 10
+  attackRange: 2.25
   sightAngle: 100
-  attackCoolTime: 3
-  moveSpeed: 0.5
+  attackCoolTime: 2
+  moveSpeed: 1
   lostCoolTime: 30
   PatrolNodes:
   - {x: 30, y: 0, z: 5}

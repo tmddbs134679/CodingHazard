@@ -1,4 +1,4 @@
-using DG.Tweening;
+ï»¿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class UI_StaminaBar : UI_Base
 {
-    private const float clampratio = 0.35f; //0.35 ~ 0 À» 1ºÎÅÍ 0ºñÀ²·Î ¸ÂÃß´Â °ª
+    private const float clampratio = 0.35f; //0.35 ~ 0 ì„ 1ë¶€í„° 0ë¹„ìœ¨ë¡œ ë§ì¶”ëŠ” ê°’
     enum Images
     {
         StaminaDamageBar,
@@ -14,12 +14,12 @@ public class UI_StaminaBar : UI_Base
     }
     public void OnEnable()
     {
-        PlayerEvent.OnStaminaChanged += SetStaminaRatio;
+       PlayerEvent.OnStaminaChanged += SetStaminaRatio;
     }
 
     public void OnDisable()
     {
-        PlayerEvent.OnStaminaChanged -= SetStaminaRatio;
+       PlayerEvent.OnStaminaChanged -= SetStaminaRatio;
     }
     public override bool Init()
     {
@@ -39,19 +39,19 @@ public class UI_StaminaBar : UI_Base
         Image bar = GetImage((int)Images.StaminaBar);
         Image dmgBar = GetImage((int)Images.StaminaDamageBar);
 
-        // 1. Áï½Ã °»½ÅµÇ´Â ÁÖ ¹Ù
+        // 1. ì¦‰ì‹œ ê°±ì‹ ë˜ëŠ” ì£¼ ë°”
         bar.fillAmount = scaledRatio;
 
-        // 2. °¨¼Ò or È¸º¹ ÆÇ´Ü
+        // 2. ê°ì†Œ or íšŒë³µ íŒë‹¨
         if (_lastFillAmount > scaledRatio)
         {
-            // °¨¼Ò ÁßÀÌ¸é Tween »ç¿ë (ÃµÃµÈ÷ µû¶ó¿À°Ô)
+            // ê°ì†Œ ì¤‘ì´ë©´ Tween ì‚¬ìš© (ì²œì²œíˆ ë”°ë¼ì˜¤ê²Œ)
             DOTween.Kill(dmgBar);
             dmgBar.DOFillAmount(scaledRatio, 1f).SetEase(Ease.OutQuad);
         }
         else
         {
-            // È¸º¹ ÁßÀÌ¸é ¹Ù·Î Ã¤¿ö¹ö¸²
+            // íšŒë³µ ì¤‘ì´ë©´ ë°”ë¡œ ì±„ì›Œë²„ë¦¼
             dmgBar.fillAmount = scaledRatio;
         }
 

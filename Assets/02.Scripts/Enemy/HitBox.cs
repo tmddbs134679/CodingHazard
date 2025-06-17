@@ -18,7 +18,7 @@ public class HitBox : MonoBehaviour
             pos,                            
             Quaternion.LookRotation(normal)    
         );
-
+        blood.transform.SetParent(enemy.transform);
         
         Destroy(blood, 1f);
     }

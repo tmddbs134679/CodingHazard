@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem.XR;
 
 public class EnemyController : MonoBehaviour
 {
@@ -44,7 +45,8 @@ public class EnemyController : MonoBehaviour
     }
     public void MoveTo(Vector3 targetPosition,bool isRun)
     {
-        if(isRun) agent.speed = moveSpeed*2;
+        agent.isStopped = false;
+        if (isRun) agent.speed = moveSpeed*2;
         else
         {
             agent.speed = moveSpeed;

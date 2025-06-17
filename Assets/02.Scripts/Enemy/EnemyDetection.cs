@@ -81,6 +81,7 @@ public class EnemyDetection :MonoBehaviour
     }
     public void Update()
     {
+        if(alertLevel>=0)
         alertLevel-=Time.deltaTime;
         if (alertLevel >= 30)
             ChangeState(AlertState.Alert);
@@ -130,13 +131,16 @@ public class EnemyDetection :MonoBehaviour
 
             target = hit.gameObject.GetComponent<PlayerCondition>();
             PlayerController con = hit.GetComponent<PlayerController>();
-
+            if (con.isAttacking)
+                return 150;
+            if (con.isSprinting)
+                return 10;
+            if (con.isMoving)
+                return 5;
             if (con.isWalking)
                 return 2;
-            if(con.isMoving)
-            return 5;
-            if(con.isSprinting)
-                return 10;
+            
+           
           
         }
      
