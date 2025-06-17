@@ -4,6 +4,10 @@ public class PlayerSprintState : PlayerBaseState
 {
     private Vector3 sprintDirection;
     
+    private float sprintTimer;
+    private float sprintInterval = 0.25f;
+    private bool useSprintSound = true;
+    
     public PlayerSprintState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -27,6 +31,22 @@ public class PlayerSprintState : PlayerBaseState
 
     public override void Update()
     {
+        sprintTimer -= Time.deltaTime;
+        if (sprintTimer <= 0f)
+        {
+            if (useSprintSound)
+            {
+                AudioManager.Instance.PlayAudio(AudioID.PlayerWalk1);
+            }
+            else
+            {
+                AudioManager.Instance.PlayAudio(AudioID.PlayerWalk2);
+            }
+            useSprintSound = !useSprintSound;
+            sprintTimer = sprintInterval;
+        }
+        
+        
         if (_stateMachine.Controller.Condition.stamina.curValue <= 0f)
         {
             _stateMachine.ChangeState(new PlayerMoveState(_stateMachine));
