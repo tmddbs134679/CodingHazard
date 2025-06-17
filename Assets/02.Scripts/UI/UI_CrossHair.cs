@@ -28,7 +28,7 @@ public class UI_CrossHair : UI_Base
     {
         PlayerEvent.OnKillConfirmed += AnimateKillCrosshair;
         PlayerEvent.OnMonsterHit += MonsterHitCrossHair;
-        PlayerEvent.OnAttack += AttackAnim;
+      //  PlayerEvent.OnAttack += AttackAnim;
         PlayerEvent.OnJump += PlayBloomAuto;
         PlayerEvent.OnSprint += HandleSprint;
         PlayerEvent.Aiming += HandleAim;
@@ -40,7 +40,7 @@ public class UI_CrossHair : UI_Base
     {
         PlayerEvent.OnKillConfirmed -= AnimateKillCrosshair;
         PlayerEvent.OnMonsterHit -= MonsterHitCrossHair;
-        PlayerEvent.OnAttack -= AttackAnim;
+     //   PlayerEvent.OnAttack -= AttackAnim;
         PlayerEvent.OnJump -= PlayBloomAuto;
         PlayerEvent.OnSprint -= HandleSprint;
         PlayerEvent.Aiming -= HandleAim;
