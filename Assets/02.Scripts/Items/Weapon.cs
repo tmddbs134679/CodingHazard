@@ -48,14 +48,16 @@ public abstract class Weapon : MonoBehaviour
     protected virtual void OnEnable()
     {
         PlayerEvent.OnAttack += Fire;
+        
     }
 
 
-    protected void OnDisable()
+    protected virtual void OnDisable()
     {
         PlayerEvent.OnAttack -= Fire;
         StopAllCoroutines();
     }
+    
     protected void PlaySound(AudioClip clip)
     {
         audioSource.Stop();

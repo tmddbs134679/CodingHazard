@@ -38,31 +38,37 @@ public class Gun : Weapon
 
     }
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        PlayerEvent.Aiming += ZoomWeapon;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        PlayerEvent.Aiming -= ZoomWeapon;
+}
+
     protected void Update()
     {
 
         base.Update();
 
-      //  HandleFireInput();
 
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            //이벤트 연결하기 
-            isZoom = !isZoom;
-           ZoomWeapon();
-        }
-
-
-        //업데이트에서 하면 너무 많이 입력됨
     
     }
 
-    private void ZoomWeapon()
+    private void ZoomWeapon(bool isZoom)
     {
-      //  weaponPos.localPosition = Vector3.Lerp(weaponPos.localPosition, targetPos, Time.deltaTime);
+
+
+        this.isZoom = isZoom;
         WeaponAnimator.SetBool(IsAiming, isZoom);
-       //float targetFOV = isZoom ? zoomFOV : normalFOV;
+       
+        
+        
+        //float targetFOV = isZoom ? zoomFOV : normalFOV;
        //if (mainCam != null)
        //{
        //    mainCam.fieldOfView = targetFOV;
