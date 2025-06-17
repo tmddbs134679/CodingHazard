@@ -90,7 +90,7 @@ public class StageManager : MonoBehaviour
 
     public void ClearStage()
     {
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
 
         PlayerController.BlockInput();
 
