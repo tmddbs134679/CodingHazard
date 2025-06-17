@@ -670,16 +670,30 @@ MonoBehaviour:
   damage: 10
   range: 100
   fireRate: 0.1
-  WeaponAnimator: {fileID: 0}
+  weapontype: 0
   DropObject: {fileID: 0}
   muzzleFlash: {fileID: 0}
-  audioSource: {fileID: 0}
-  audioClip: {fileID: 8300000, guid: 2ae41e984ff1f3e4a840a1a46b6a8816, type: 3}
+  muzzleSmoke: {fileID: 0}
+  WeaponAnimator: {fileID: 0}
+  playerArm: {fileID: 0}
+  spreadWidth: 0
+  spreadHeight: 0
   fireMode: 1
   firePoint: {fileID: 1840094310885633292}
-  weaponPos: {fileID: 0}
-  normalPos: {fileID: 0}
-  zoomPos: {x: 0, y: 0, z: 0}
+  curAmmo: 0
+  maxAmmo: 0
+  spareAmmo: 0
+  recoilx: 0.01
+  recoily: 0.01
+  recoilz: 0.05
+  normalFOV: 50
+  zoomFOV: 40
+  zoomSpeed: 10
+  audioID: 0
+  bulletDecalPrefab: {fileID: 0}
+  hitLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!82 &7153050908538287418
 AudioSource:
   m_ObjectHideFlags: 0

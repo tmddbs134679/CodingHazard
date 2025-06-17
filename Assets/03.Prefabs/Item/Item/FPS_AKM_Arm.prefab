@@ -7582,26 +7582,6 @@ PrefabInstance:
       value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 680182615532408467, guid: 2ef791e35ae1b514fa519e6b344cf842, type: 3}
-      propertyPath: curAmmo
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 680182615532408467, guid: 2ef791e35ae1b514fa519e6b344cf842, type: 3}
-      propertyPath: maxAmmo
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 680182615532408467, guid: 2ef791e35ae1b514fa519e6b344cf842, type: 3}
-      propertyPath: recoily
-      value: 0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 680182615532408467, guid: 2ef791e35ae1b514fa519e6b344cf842, type: 3}
-      propertyPath: recoilz
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 680182615532408467, guid: 2ef791e35ae1b514fa519e6b344cf842, type: 3}
-      propertyPath: fireMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 680182615532408467, guid: 2ef791e35ae1b514fa519e6b344cf842, type: 3}
       propertyPath: audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 38b450e2adcb6f542acc8c1d423bd8dc, type: 3}
@@ -7609,10 +7589,6 @@ PrefabInstance:
       propertyPath: playerArm
       value: 
       objectReference: {fileID: 6520109395152534269}
-    - target: {fileID: 680182615532408467, guid: 2ef791e35ae1b514fa519e6b344cf842, type: 3}
-      propertyPath: spareAmmo
-      value: 120
-      objectReference: {fileID: 0}
     - target: {fileID: 680182615532408467, guid: 2ef791e35ae1b514fa519e6b344cf842, type: 3}
       propertyPath: muzzleFlash
       value: 

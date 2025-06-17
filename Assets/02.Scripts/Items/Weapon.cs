@@ -75,19 +75,12 @@ public abstract class Weapon : MonoBehaviour
         }
         else
         {
-
-
             isShootable = true;
             lastFireTime = Time.time;
 
         }
-
-
         //사운드도 나중에 추가
         //디테일 맞추면서 하는것도 나중에 
-
-
-
     }
 
 

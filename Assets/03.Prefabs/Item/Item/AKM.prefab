@@ -2437,23 +2437,28 @@ MonoBehaviour:
   fireRate: 0.1
   weapontype: 0
   DropObject: {fileID: 6975497155788886916, guid: af04242725a232e4e80b3a671f2c90c4, type: 3}
-  muzzleFlash: {fileID: 7365101767869646173}
+  muzzleFlash: {fileID: 0}
   muzzleSmoke: {fileID: 0}
   WeaponAnimator: {fileID: 0}
-  audioSource: {fileID: 0}
-  audioClip: {fileID: 0}
   playerArm: {fileID: 0}
-  fireMode: 0
+  spreadWidth: 0
+  spreadHeight: 0
+  fireMode: 1
   firePoint: {fileID: 5196564782949691759}
   curAmmo: 30
   maxAmmo: 30
-  spareAmmo: 90
+  spareAmmo: 120
   recoilx: 0.01
-  recoily: 0.01
-  recoilz: 0.05
+  recoily: 0.02
+  recoilz: 0
   normalFOV: 50
   zoomFOV: 40
   zoomSpeed: 10
+  audioID: 0
+  bulletDecalPrefab: {fileID: 179232, guid: b2ac1383a96f94a50b7ed458be173bbd, type: 3}
+  hitLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &7024773960602722740
 GameObject:
   m_ObjectHideFlags: 0
