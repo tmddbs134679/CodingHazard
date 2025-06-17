@@ -4,7 +4,9 @@ public enum AudioType { Master, BGM, SFX }
 
 public enum AudioID
 {
-    PistolFire
+    PistolFire,
+    PlayerWalk1,
+    PlayerWalk2
 }
 
 

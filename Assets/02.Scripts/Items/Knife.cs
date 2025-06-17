@@ -8,10 +8,10 @@ public class Knife : Weapon
     [Header("Setting")]
     [SerializeField] private float attackRange = 2f;
     [SerializeField] private float attackAngle = 90f;
-    [SerializeField] private float attackDelay = 0.3f;
+    [SerializeField] private float attackDelay = 1f;
     [SerializeField] private LayerMask hitLayer; //적layer
 
-
+    private bool attackQueued = false;
     private bool isAttacking = false;
 
     public override void Fire()
@@ -19,6 +19,12 @@ public class Knife : Weapon
         base.Fire();
         if (!isShootable)
         {
+            return;
+        }
+
+        if (isAttacking)
+        {
+            attackQueued = true;
             return;
         }
 
@@ -39,6 +45,7 @@ public class Knife : Weapon
     private IEnumerator AttackRoutine()
     {
         isAttacking = true;
+        attackQueued = false;
 
         PlayAttackAnimation(false);
         yield return new WaitForSeconds(attackDelay);

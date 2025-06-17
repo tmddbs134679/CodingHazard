@@ -1,10 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 // 기본 이동
 public class PlayerMoveState : PlayerBaseState
 {
+    private float moveTimer;
+    private float moveInterval = 0.35f;
+    private bool useMoveSound = true;
+
+    
     public PlayerMoveState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -20,6 +26,24 @@ public class PlayerMoveState : PlayerBaseState
     {
         Vector2 input = GetMovementInput();
         Vector3 dir = GetMoveDirection(input);
+
+        if (input.magnitude > 0.1f)
+        {
+            moveTimer -= Time.deltaTime;
+            if (moveTimer <= 0f)
+            {
+                if (useMoveSound)
+                {
+                    AudioManager.Instance.PlayAudio(AudioID.PlayerWalk1);
+                }
+                else
+                {
+                    AudioManager.Instance.PlayAudio(AudioID.PlayerWalk2);
+                }
+                useMoveSound = !useMoveSound;
+                moveTimer = moveInterval;
+            }
+        }
         
         // 앉았는지 아닌지
         if (_stateMachine.Controller.isCrouching)
