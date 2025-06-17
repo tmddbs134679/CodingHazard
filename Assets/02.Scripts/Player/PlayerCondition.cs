@@ -61,14 +61,12 @@ public class PlayerCondition : MonoBehaviour
         PlayerEvent.OnStaminaChanged?.Invoke(amount);
     }
 
-    public bool UseStamina(float amount)
+    public void UseStamina(float amount)
     {
-        if (stamina.curValue >= amount)
+        if (stamina.curValue >= 0f)
         {
-            stamina.curValue -= amount;
+            stamina.curValue -= amount * Time.deltaTime;
             PlayerEvent.OnStaminaChanged?.Invoke(-amount);
-            return true;
         }
-        return false;
     }
 }
