@@ -40,6 +40,11 @@ public class EnemyDetection :MonoBehaviour
     {
         alertLevel = 50;
     }
+    public void SeeTargetSpawn(PlayerCondition con)
+    {
+        target = con;
+        alertLevel = 50;
+    }
     public void addAlert(float val)
     {
         
