@@ -170,12 +170,17 @@ public class EnemyBase : MonoBehaviour
             animator.SetBool(aniPara.AttackParaHash, true);
         Attack();
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        controller.Agent.updatePosition = false;
+        controller.Agent.updateRotation = false;
         yield return null;
         stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        yield return new WaitForSeconds(2.65f);
+        yield return new WaitForSeconds(2.63f);
+        controller.Agent.updatePosition = true;
+        controller.Agent.updateRotation = true;
         animator.SetBool(aniPara.AttackParaHash, false);
-         isAttack = false;
+        animator.SetBool(aniPara.RunParaHash, true);
+        isAttack = false;
         attack= null;
         animator.applyRootMotion = false;
         Vector3 pos = mon.position;
