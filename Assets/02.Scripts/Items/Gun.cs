@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.Build.Content;
 using UnityEngine;
 
 public class Gun : Weapon
@@ -11,6 +12,10 @@ public class Gun : Weapon
     public int CuAmmo { get { return curAmmo; } }
     public int MaxAmmo { get { return maxAmmo; } }
     public int SpareAmmo { get { return spareAmmo; } }
+
+    [Header("Ray")]
+    [SerializeField] private float spreadWidth; //가로 
+    [SerializeField] private float spreadHeight;  //세로
 
 
     [SerializeField] private FireMode fireMode;
@@ -127,15 +132,32 @@ public class Gun : Weapon
         {
             return;
         }
-
         base.Fire();
         StartCoroutine("OnMuzzleFlashEffect");
+
+        Vector3 veiwport;
+
         if (isShootable == false)
         {
             return;
         }
+        if (isZoom)
+        {
+            veiwport = new Vector3(0.5f, 0.5f, 0f); //정가운데
+        }
+        else
+        {
+            float halfW = spreadWidth * 0.5f;
+            float halfH = spreadHeight * 0.5f;
+            float randX = Random.Range(0.5f - halfW, 0.5f + halfW);
+            float randY = Random.Range(0.5f - halfH, 0.5f + halfH);
+            veiwport = new Vector3(randX, randY, 0f);
+           
+        }
 
-        Ray ray = mainCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+        Ray ray = mainCam.ViewportPointToRay(veiwport);
+
+
         PlaySound(audioClip);
 
         PlayAttackAnimation(isZoom);
