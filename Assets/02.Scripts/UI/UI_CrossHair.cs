@@ -97,7 +97,7 @@ public class UI_CrossHair : UI_Base
         if (StageManager.Instance.PlayerController.isAimHold) 
             return;
 
-        ActiveCrossHair(true);
+        ActiveCrossHair(false);
         AnimateRecoilCrosshair(GetObject((int)GameObjects.AimHair));
     }
 
@@ -134,7 +134,7 @@ public class UI_CrossHair : UI_Base
 
         seq.OnComplete(() =>
         {
-            ActiveCrossHair(false);
+            ActiveCrossHair(true);
         });
     }
   
@@ -142,7 +142,7 @@ public class UI_CrossHair : UI_Base
     private void ActiveCrossHair(bool isactive)
     {
         GetObject((int)GameObjects.AimHair).gameObject.transform.localScale = _originalScale;
-        GetObject((int)GameObjects.CrossHair).SetActive(isactive);
+        GetObject((int)GameObjects.CrossHair).SetActive(!isactive);
     }
     private void AutoHideAfterDelay(GameObject crossHair, float delay = 0.2f)
     {
