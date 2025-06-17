@@ -17,9 +17,9 @@ MonoBehaviour:
   dmg: 10
   soundRange: 10
   sightRange: 5
-  attackRange: 1.2
+  attackRange: 2
   sightAngle: 100
-  attackCoolTime: 3
+  attackCoolTime: 2
   moveSpeed: 0.5
   lostCoolTime: 30
   PatrolNodes:
