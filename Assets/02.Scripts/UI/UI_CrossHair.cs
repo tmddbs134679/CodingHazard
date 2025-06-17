@@ -90,24 +90,57 @@ public class UI_CrossHair : UI_Base
 
     }
 
+
+    #region MainCrossHair
     private const float tweenDuration = 0.1f;
 
+    //기본 좌클릭 공격
     private void AttackAnim()
     {
         if (StageManager.Instance.PlayerController.isAimHold) 
             return;
-        Active();
+        MainCrossHairActive();
        // ActiveCrossHair(false);
         AnimateRecoilCrosshair(GetObject((int)GameObjects.AimHair));
     }
+    void MainCrossHairActive()
+    {
+        GetObject((int)GameObjects.AimHair).gameObject.transform.localScale = _originalScale;
+        GetObject((int)GameObjects.CrossHair).SetActive(true);
+    }
 
+    void MainCrossHairInActive()
+    {
+        GetObject((int)GameObjects.CrossHair).SetActive(false);
+    }
+    private void AutoHideAfterDelay(GameObject crossHair, float delay = 0.2f)
+    {
+        crossHair.transform.DOKill();
+
+        if (!crossHair.activeSelf)
+            crossHair.SetActive(true);
+
+        crossHair.transform
+            .DOScale(_originalScale, 0)
+            .SetDelay(delay)
+            .OnComplete(() => crossHair.SetActive(false));
+    }
+
+    #endregion
+
+    #region DamagedCrossHair
+    //몬스터 타격 시 크로스 헤어
     private void MonsterHitCrossHair()
     {
         GetObject((int)GameObjects.DamageCrossHair).SetActive(true);
         AnimateRecoilCrosshair(GetObject((int)GameObjects.DamageCrossHair));
         AutoHideAfterDelay(GetObject((int)GameObjects.DamageCrossHair));
     }
-    //�Ѿ��� �߻�� �� ����
+
+    #endregion
+
+    #region AimCrossHair
+
     private void AnimateRecoilCrosshair(GameObject crossHair)
     {
         crossHair.transform.DOKill();
@@ -117,8 +150,6 @@ public class UI_CrossHair : UI_Base
         Vector3 Objectscale = crossHair.GetComponent<RectTransform>().localScale;
         seq.Append(crossHair.transform.DOScale(Objectscale * recoilScaleAmount, tweenDuration).SetEase(Ease.OutQuad));
         seq.Append(crossHair.transform.DOScale(Objectscale, tweenDuration).SetEase(Ease.InQuad));
-  
-      
     }
 
 
@@ -135,49 +166,21 @@ public class UI_CrossHair : UI_Base
         seq.OnComplete(() =>
         {
            
-            InActive();
+            MainCrossHairInActive();
         });
     }
   
-    void Active()
-    {
-        GetObject((int)GameObjects.AimHair).gameObject.transform.localScale = _originalScale;
-        GetObject((int)GameObjects.CrossHair).SetActive(true);
-    }
-
-    void InActive()
-    {
-        GetObject((int)GameObjects.CrossHair).SetActive(false);
-    }
-
-    private void ActiveCrossHair(bool isactive)
-    {
-        GetObject((int)GameObjects.AimHair).gameObject.transform.localScale = _originalScale;
-        GetObject((int)GameObjects.CrossHair).SetActive(!isactive);
-    }
-
     void HandleAim(bool IsAiming)
     {
         if (IsAiming)
             AinmateAimCrosshair();
         else
-            Active();
+            MainCrossHairActive();
     }
 
+    #endregion
 
-    private void AutoHideAfterDelay(GameObject crossHair, float delay = 0.2f)
-    {
-        crossHair.transform.DOKill(); 
-
-        if (!crossHair.activeSelf)
-            crossHair.SetActive(true);
-
-        crossHair.transform
-            .DOScale(_originalScale, 0) 
-            .SetDelay(delay)
-            .OnComplete(() => crossHair.SetActive(false));
-    }
-
+    #region KillCrossHair
 
     private List<Image> killCrossHairs =new List<Image>();
     private Dictionary<Image, Vector2> _originalKillPositions = new Dictionary<Image, Vector2>();
@@ -223,6 +226,9 @@ public class UI_CrossHair : UI_Base
     }
 
 
+    #endregion
+
+    #region Sprint or Jump
 
     public RectTransform aimHair;
     public float bloomScale = 1.5f;
@@ -254,6 +260,7 @@ public class UI_CrossHair : UI_Base
     {
         PlayBloom();
         DOVirtual.DelayedCall(bloomTime + 0.05f, () => ShrinkBack());
+    
     }
-
+    #endregion
 }
