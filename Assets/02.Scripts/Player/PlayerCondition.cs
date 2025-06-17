@@ -12,6 +12,8 @@ public class PlayerCondition : MonoBehaviour
     {
         hp.curValue = hp.maxValue = 100f;
         stamina.curValue = stamina.maxValue = 50f;
+
+        StartCoroutine(RecoverCondition());
     }
 
     private void Update()
@@ -23,6 +25,29 @@ public class PlayerCondition : MonoBehaviour
         }
     }
     
+    private IEnumerator RecoverCondition()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+
+            if (hp.curValue < hp.maxValue)
+            {
+                AddHp(5f);
+            }
+            
+            if (stamina.curValue < stamina.maxValue)
+            {
+                AddStamina(5f); // 초당 5 회복
+            }
+        }
+    }
+
+    public void AddHp(float amount)
+    {
+        hp.curValue = Mathf.Min(hp.curValue + amount, hp.maxValue);
+    }
+    
     public void TakeDamage(float amount)
     {
         hp.curValue = Mathf.Max(hp.curValue - amount, 0f);
@@ -30,7 +55,7 @@ public class PlayerCondition : MonoBehaviour
     
     }
 
-    public void RecoverStamina(float amount)
+    public void AddStamina(float amount)
     {
         stamina.curValue = Mathf.Min(stamina.curValue + amount, stamina.maxValue);
     }
