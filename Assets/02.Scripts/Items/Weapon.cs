@@ -103,11 +103,7 @@ public abstract class Weapon : MonoBehaviour
     {
 
 
-        //test
-        if (Input.GetMouseButton(0))
-        {
-        //    Fire();
-        }
+      
 
         if (Input.GetKeyDown(KeyCode.G))
         {
@@ -118,7 +114,7 @@ public abstract class Weapon : MonoBehaviour
 
     protected void SprintMove(bool isSprint)
     {
-        if (isSprint == null)
+        if (WeaponAnimator == null)
         {
             Debug.Log("달리기 애니메이션 없음");
             return;
