@@ -7,7 +7,7 @@ public class AttackArm : MonoBehaviour
     [SerializeField] EnemyBase enemy;
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Ãæµ¹"+other);
+       
         if(!enemy.IsAttack)
             return;
         PlayerCondition player = other.GetComponent<PlayerCondition>();

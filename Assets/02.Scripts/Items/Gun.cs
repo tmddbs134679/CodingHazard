@@ -94,16 +94,12 @@ public class Gun : Weapon
 
         PlayAttackAnimation(isZoom);
          
-       
-        if (Physics.Raycast(ray, out RaycastHit hit, range))
+       LayerMask layerMask = 1<<9;
+        if (Physics.Raycast(ray, out RaycastHit hit, range,layerMask))
         {
-            if (hit.collider.gameObject.layer != 9)
-            {
 
-                return;
-
-               
-            }
+            Debug.Log("맞음");
+           
             if (hit.collider.TryGetComponent<HitBox>(out var enemy))
             {
                 

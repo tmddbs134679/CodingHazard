@@ -2,15 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+public enum EnemyName { normalZombie }
 public class MonsterManager : Singleton<MonsterManager>
 {
     List<EnemyBase> monsters=new List<EnemyBase> ();
-
+    [SerializeField]
+    List<EnemyBase> MonsterPres = new List<EnemyBase> ();
     int monNum;
     int suspiciousNum;
     int elertNum;
     public int MonNum { get { return monNum; } }
+ 
 
     protected override void Awake()
     {
@@ -21,6 +23,17 @@ public class MonsterManager : Singleton<MonsterManager>
     {
         monsters.Add(a);
         monNum++;
+    }
+    public EnemyBase MakeEnemy(EnemyName enemyName, Transform pos)
+    {
+        EnemyBase mon=null;
+        switch (enemyName)
+        {
+            case EnemyName.normalZombie:
+                mon = Instantiate(MonsterPres[(int)enemyName], pos.position,pos.rotation);
+                break;
+        }
+        return mon;
     }
     public EnemyDetection.AlertState nowState()
     {
