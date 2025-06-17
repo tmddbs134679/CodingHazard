@@ -11,6 +11,19 @@ public class ClearUIController : MonoBehaviour
         
     }
 
+    private void OnEnable()
+    {
+        StageManager.Instance.OnClearStage += Play;
+    }
+
+    private void OnDisable()
+    {
+        StageManager.Instance.OnClearStage -= Play;
+    }
+    private void Play()
+    {
+        StartCoroutine(PlaySequence());
+    }
     private IEnumerator PlaySequence()
     {
         yield return _popup.FadeInCoroutine();             // 1. FadeIn 완료 대기

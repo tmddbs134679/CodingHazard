@@ -14,7 +14,7 @@ public class StageManager : MonoBehaviour
 
     public event UnityAction<StageObjective> OnObjectiveUpdatedProgress;
     public event UnityAction<StageObjective> OnChangedObjective;
-    
+    public event Action OnClearStage;
 
     [field: SerializeField] public PlayerController PlayerController { get; private set; }
 
@@ -45,6 +45,14 @@ public class StageManager : MonoBehaviour
         if (objectives.Count > 0)
         {
             objectives[0].Enter();
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            ClearStage();
         }
     }
 
@@ -85,18 +93,20 @@ public class StageManager : MonoBehaviour
         Time.timeScale = 0;
 
         PlayerController.BlockInput();
-        
-        fadeScreen.FadeOut(
-            () =>
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-                
-                fadeScreen.gameObject.SetActive(false);
-                tempResultUI.gameObject.SetActive(true);
-            });
-        
-        tempResultButton.onClick.AddListener(TempClickEndButton);
+
+        OnClearStage?.Invoke();
+
+        //fadeScreen.FadeOut(
+        //    () =>
+        //    {
+        //        Cursor.lockState = CursorLockMode.None;
+        //        Cursor.visible = true;
+
+        //        fadeScreen.gameObject.SetActive(false);
+        //        tempResultUI.gameObject.SetActive(true);
+        //    });
+
+        // tempResultButton.onClick.AddListener(TempClickEndButton);
     }
 
     void TempClickEndButton()

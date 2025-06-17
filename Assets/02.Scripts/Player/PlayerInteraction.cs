@@ -42,8 +42,9 @@ public class PlayerInteraction : MonoBehaviour
                     if (!item.IsLockInteract)
                         return;
 
-                    SetItemText(item);
-                    
+                    //SetItemText(item);
+                    PlayerEvent.OnItemCheck.Invoke(item);
+
                     if (currentTargetItem != item)
                     {
                         currentTargetItem?.ToggleOutline(false);
@@ -63,11 +64,6 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    private void SetItemText(DroppedItem item)
-    {
-        itemText.gameObject.SetActive(true);
-        itemText.text = item.ItemData.DisplayName;
-    }
     
     public void OnInteractInput()
     {
