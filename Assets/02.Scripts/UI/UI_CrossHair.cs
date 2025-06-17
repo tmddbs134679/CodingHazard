@@ -1,4 +1,4 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,7 +30,7 @@ public class UI_CrossHair : UI_Base
     {
         PlayerEvent.OnKillConfirmed += AnimateKillCrosshair;
         PlayerEvent.OnMonsterHit += MonsterHitCrossHair;
-        PlayerEvent.OnAttack += AttackAnim;
+       // PlayerEvent.OnAttack += AttackAnim;
         PlayerEvent.OnJump += PlayBloomAuto;
         PlayerEvent.OnSprint += HandleSprint;
         PlayerEvent.Aiming += ActiveCrossHair;
@@ -42,7 +42,7 @@ public class UI_CrossHair : UI_Base
     {
         PlayerEvent.OnKillConfirmed -= AnimateKillCrosshair;
         PlayerEvent.OnMonsterHit -= MonsterHitCrossHair;
-        PlayerEvent.OnAttack -= AttackAnim;
+     //   PlayerEvent.OnAttack -= AttackAnim;
         PlayerEvent.OnJump -= PlayBloomAuto;
         PlayerEvent.OnSprint -= HandleSprint;
         PlayerEvent.Aiming -= ActiveCrossHair;

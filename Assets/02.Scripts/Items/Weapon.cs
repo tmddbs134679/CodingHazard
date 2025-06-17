@@ -128,7 +128,7 @@ public abstract class Weapon : MonoBehaviour
         }
         muzzleFlash.SetActive(true);
 
-        yield return new WaitForSeconds(fireRate * 1.2f);
+        yield return new WaitForSeconds(fireRate *0.1f);
 
         muzzleFlash.SetActive(false);
     }
