@@ -17,7 +17,9 @@ public class PlayerController : MonoBehaviour
     public bool isMoving = false;
     public bool isCrouching = false;
     public bool isSprinting = false;
-    public bool isSprintHold => playerActions.Sprint.IsPressed();
+    public bool canSprint = false;
+    public bool isSprintHold => (playerActions.Sprint.IsPressed() 
+                                 && (Condition.stamina.curValue > stateMachine.SprintStamina));
     public bool isReloading = false;
     public bool isReloadPressed => playerActions.Reloading.WasPressedThisFrame();
     public bool isAiming = false;
