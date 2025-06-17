@@ -42,6 +42,8 @@ public class UI_EditSetting : UI_Base
 
     private void OnDisable()
     {
+        if (_DisplayPopup == null || _AudioPopup == null) return;
+
         _DisplayPopup.gameObject.SetActive(false);
         _AudioPopup.gameObject.SetActive(false);
     }

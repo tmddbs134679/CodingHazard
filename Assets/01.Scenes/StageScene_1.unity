@@ -19072,6 +19072,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &661719714 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2695891007372459281, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
+  m_PrefabInstance: {fileID: 479869703}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479869705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 316d87c1b82234b588925a14bc380755, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &663281358
 GameObject:
   m_ObjectHideFlags: 0
@@ -43272,6 +43283,10 @@ PrefabInstance:
       propertyPath: objectives.Array.data[1]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3848440280779670826, guid: 701019f0cd54f8949aad3412d78b2770, type: 3}
+      propertyPath: <PlayerController>k__BackingField
+      value: 
+      objectReference: {fileID: 661719714}
     - target: {fileID: 4200743599343868365, guid: 701019f0cd54f8949aad3412d78b2770, type: 3}
       propertyPath: m_InitialState
       value: 0
