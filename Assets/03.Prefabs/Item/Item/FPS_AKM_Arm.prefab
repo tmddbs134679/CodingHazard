@@ -2752,6 +2752,10 @@ PrefabInstance:
       propertyPath: WeaponAnimator
       value: 
       objectReference: {fileID: 6439077386580802560}
+    - target: {fileID: 680182615532408467, guid: 2ef791e35ae1b514fa519e6b344cf842, type: 3}
+      propertyPath: hitLayerMask.m_Bits
+      value: 1985
+      objectReference: {fileID: 0}
     - target: {fileID: 6239359517610320279, guid: 2ef791e35ae1b514fa519e6b344cf842, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

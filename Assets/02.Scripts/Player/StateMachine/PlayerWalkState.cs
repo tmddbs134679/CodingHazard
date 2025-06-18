@@ -80,7 +80,7 @@ public class PlayerWalkState : PlayerBaseState
             {
                 _stateMachine.Controller.isMoving = false;
                 
-                gun.ZoomWeapon(true);
+                _stateMachine.ChangeState(new PlayerAimState(_stateMachine));
             }
         }
         

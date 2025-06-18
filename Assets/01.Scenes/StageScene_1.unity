@@ -16966,37 +16966,9 @@ PrefabInstance:
       propertyPath: itemText
       value: 
       objectReference: {fileID: 153518535}
-    - target: {fileID: 3454704372264668758, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.00002670288
-      objectReference: {fileID: 0}
-    - target: {fileID: 3454704372264668758, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.00000011920929
-      objectReference: {fileID: 0}
-    - target: {fileID: 3454704372264668758, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.000022888184
-      objectReference: {fileID: 0}
     - target: {fileID: 4430118988471167130, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8033334737337003115, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
-      propertyPath: hp.curValue
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8033334737337003115, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
-      propertyPath: hp.maxValue
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8033334737337003115, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
-      propertyPath: stamina.curValue
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8033334737337003115, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
-      propertyPath: stamina.maxValue
-      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8504809558934303775, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17059,11 +17031,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!20 &479869712 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 2384254597144583967, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
-  m_PrefabInstance: {fileID: 479869703}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &481335382
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23548,10 +23515,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2726255979312251485, guid: 4c4f8579a0ddad24ca76e2108541d8a5, type: 3}
-      propertyPath: mainCamera
-      value: 
-      objectReference: {fileID: 479869712}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

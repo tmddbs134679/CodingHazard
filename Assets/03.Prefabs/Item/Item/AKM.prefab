@@ -2459,6 +2459,9 @@ MonoBehaviour:
   audioID: 0
   bulletDecalPrefab: {fileID: 179232, guid: b2ac1383a96f94a50b7ed458be173bbd, type: 3}
   fpsVirtualCamera: {fileID: 0}
+  hitLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &7024773960602722740
 GameObject:
   m_ObjectHideFlags: 0

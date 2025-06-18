@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Gun : Weapon
 {
+    public FPSVirtualCamera FPSVirtualCamera => fpsVirtualCamera;
     public enum FireMode { Single, Auto }
 
     public FireMode CurFireMode => fireMode;
@@ -43,6 +44,9 @@ public class Gun : Weapon
     [SerializeField] private GameObject bulletDecalPrefab;
 
     [SerializeField] private FPSVirtualCamera fpsVirtualCamera;
+
+    [SerializeField] private LayerMask hitLayerMask;
+    
 
     private Camera mainCam;
     private bool isZoom = false;
@@ -101,11 +105,23 @@ public class Gun : Weapon
     {
         this.isZoom = isZoom;
         WeaponAnimator.SetBool(IsAiming, isZoom);
+
+        if (!isZoom)
+        {
+            fpsVirtualCamera.ZoomOut(0.5f);
+        }
     }
+    
+    
 
 
     public override void Fire()
     {
+        if (StageManager.Instance.PlayerController.isReloading)
+        {
+            return;
+        }
+        
         if (curAmmo <= 0)
         {
             timer -= Time.deltaTime;
@@ -151,15 +167,16 @@ public class Gun : Weapon
         
         PlayAttackAnimation(isZoom);
 
-        LayerMask layerMask = 1 << 9;
         
-        
-        if (Physics.Raycast(ray, out RaycastHit hit, range, layerMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, range, hitLayerMask))
         {
             if (hit.collider.TryGetComponent<HitBox>(out var enemy))
             {
-                //나중에 변경될 수 있음 
                 enemy.Damaged(damage, hit);
+            }
+            else if(hit.collider.gameObject.layer != 9)
+            {
+                SpawnBulletHole(hit);
             }
         }
         
@@ -187,11 +204,23 @@ public class Gun : Weapon
     }
 
 
+
     public void AddSpareAmmo(int count)
     {
         spareAmmo += count;
         
         PlayerEvent.OnUpdateBullet?.Invoke(spareAmmo, curAmmo);
+    }
+    
+    private void SpawnBulletHole(RaycastHit hit)
+    {
+        Vector3 spawnPos = hit.point + hit.normal * 0.01f;
+
+        Quaternion rot = Quaternion.LookRotation(hit.normal * -1);
+ 
+        var hole = Instantiate(bulletDecalPrefab, spawnPos, rot);
+        
+        hole.transform.SetParent(hit.collider.transform);
     }
 
 }

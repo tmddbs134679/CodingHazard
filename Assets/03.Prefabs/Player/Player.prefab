@@ -396,7 +396,7 @@ Transform:
   m_GameObject: {fileID: 4334622749731428342}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 23.459972, y: 2.87, z: -78.75998}
+  m_LocalPosition: {x: -0.00002670288, y: 0.00000011920929, z: 0.000022888184}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -868,6 +868,10 @@ PrefabInstance:
       propertyPath: fpsVirtualCamera
       value: 
       objectReference: {fileID: 2372937977120384787}
+    - target: {fileID: 7758483426472547762, guid: 719efbf4aa0592f489ccf902ef021adf, type: 3}
+      propertyPath: hitLayerMask.m_Bits
+      value: 1984
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
