@@ -19,8 +19,11 @@ public class WeaponManager : MonoBehaviour
     private GameObject _currentWeaponGO;
     
     private Weapon _currentWeapon;
-
+    
     private Dictionary<WeaponType, Weapon> _weaponSlots = new();
+
+    private bool _isStart;
+
 
     private void Awake()
     {
@@ -37,6 +40,7 @@ public class WeaponManager : MonoBehaviour
     {
         PlayerEvent.Swap  += EquipWeapon;
         
+        _isStart = true;
 
         EquipWeapon(0);
     }
@@ -56,6 +60,18 @@ public class WeaponManager : MonoBehaviour
             //Destroy(_currentWeaponGO);
             //_currentWeaponGO = null;
         }
+        
+        if (!_isStart)
+        {
+            AudioManager.Instance.PlayAudio(AudioID.WeaponSwap, 1f);
+        }
+        else
+        {
+            _isStart = false;
+        }
+        
+        PlayerEvent.Aiming?.Invoke(false);
+
 
         _currentWeaponGO = weapons[index];
         _currentWeaponGO.SetActive(true);

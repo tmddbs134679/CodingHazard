@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (WeaponManager.CurrentWpeaWeapon is Gun gun)
                 {
-                    if (gun.CurAmmo < gun.MaxAmmo)
+                    if (gun.CurAmmo < gun.MaxAmmo && gun.SpareAmmo > 0)
                     {
                         return true;
                     }
@@ -90,6 +90,13 @@ public class PlayerController : MonoBehaviour
 
 
         stateMachine.FPScamTransform = fpsVirtualCamera.transform;
+
+        PlayerEvent.Swap += (index) =>
+        {
+            stateMachine.ChangeState(new PlayerIdleState(stateMachine));
+            
+            AudioManager.Instance.StopAudio(AudioID.Reload);
+        };
 
         playerInput.Player.Rifle.performed += index => PlayerEvent.Swap?.Invoke(0);
         playerInput.Player.Pistol.performed += index => PlayerEvent.Swap?.Invoke(1);
