@@ -16,17 +16,27 @@ public class EnemySound : MonoBehaviour
     public enum monSound {Run, Idle, Attack,Damaged,Dead}
     private AudioSource source;
     private AudioSource zombieBGM;
+  
     private void Awake()
     {
         source = GetComponent<AudioSource>();   
         zombieBGM = new GameObject("AudioSource").AddComponent<AudioSource>();
-
+        zombieBGM.spatialBlend = 1.0f;       
+        zombieBGM.rolloffMode = AudioRolloffMode.Logarithmic; 
+        zombieBGM.minDistance = 3f;            
+        zombieBGM.maxDistance = 50f;
         zombieBGM.transform.SetParent(transform);
         zombieBGM.clip = clipList[4];
         zombieBGM.volume = 0.3f;
         StartCoroutine(growling());
     }
+    public void StopMusic()
+    {
+        StopAllCoroutines();
+        Destroy(source);
+        Destroy(zombieBGM);
 
+    }
     IEnumerator growling()
     {
         while (true)

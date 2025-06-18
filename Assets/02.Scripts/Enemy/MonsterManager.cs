@@ -68,6 +68,8 @@ public class MonsterManager : Singleton<MonsterManager>
         elertNum++;
         else
             elertNum--;
+        if(elertNum<0)
+            elertNum = 0;
         if(elertNum>0)
             PlayerEvent.OnDetectMonster(true);
         if (elertNum == 0)
