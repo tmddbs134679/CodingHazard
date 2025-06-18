@@ -128,6 +128,7 @@ public class PlayerInteraction : MonoBehaviour
         if (currentTargetItem != null)
         {
             currentTargetItem.Interact();
+            AudioManager.Instance.PlayAudio(AudioID.PlayerInteract, 0.2f);
             itemText.gameObject.SetActive(false);
         }
     }
