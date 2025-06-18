@@ -185,7 +185,7 @@ public class Gun : Weapon
     {
         spareAmmo += count;
         
-        PlayerEvent.OnUpdateBullet?.Invoke(curAmmo, spareAmmo);
+        PlayerEvent.OnUpdateBullet?.Invoke(spareAmmo, curAmmo);
     }
 
 }
