@@ -44,6 +44,7 @@ public class UI_EventHandler : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnPointerEnter(PointerEventData eventData)
     {
         OnPointerEnterHandler?.Invoke();
+        AudioManager.Instance.PlayAudio(AudioID.EnterUI, 0.3f);
     }
 
     public void OnPointerExit(PointerEventData eventData)
