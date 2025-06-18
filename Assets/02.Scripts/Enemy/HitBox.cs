@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,17 @@ public class HitBox : MonoBehaviour
 
     public EnemyBase enemy;
     [SerializeField] GameObject bloodEffectPrefab;
-   
+    public event Action OnDead; 
+    public void Start()
+    {
+        enemy.OnDead += Enemy_OnDead;
+    }
+
+    private void Enemy_OnDead()
+    {
+        Destroy(this);
+    }
+
     void SpawnBloodEffect(Vector3 pos,Vector3 normal)
     {
         

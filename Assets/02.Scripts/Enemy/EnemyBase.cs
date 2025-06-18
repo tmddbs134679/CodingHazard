@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -29,7 +30,7 @@ public class EnemyBase : MonoBehaviour
     public EnemyController Controller {  get { return controller; } }
     public EnemyStatus Status { get { return status; } }
     public Animator animator;
-
+    public event Action OnDead;
     private BT bt;
 
     public Vector3 startPos;
@@ -44,6 +45,7 @@ public class EnemyBase : MonoBehaviour
         startPos = transform.position;
         detection = GetComponent<EnemyDetection>();
         MonsterManager.Instance.AddMon(this);
+        
         
     }
     private void Start()
@@ -64,8 +66,10 @@ public class EnemyBase : MonoBehaviour
         //return;
         detection.SeeTarget();
         Debug.Log(dmg + " ¿‘¿Ω");
-        isDamaged=true;
+  
         invincibility=false;
+        if(isDamaged)
+            return;
         hp-=dmg;
         if (hp <= 0) {
             Dead();
@@ -84,12 +88,14 @@ public class EnemyBase : MonoBehaviour
             DeadC = StartCoroutine(MotionE2(aniPara.DeadParaHash));
         MonsterManager.Instance.Dead(this);
         PlayerEvent.OnKillConfirmed?.Invoke();
+        OnDead.Invoke();
     }
     bool invincibility = false;
 
 
     IEnumerator MotionE(int para)
  {
+        isDamaged = true;
         animator.applyRootMotion = true;
         animator.SetBool(aniPara.DamagedParaHash, true);
         animator.SetBool(aniPara.AttackParaHash, false);
@@ -136,9 +142,11 @@ public class EnemyBase : MonoBehaviour
     {
         animator.applyRootMotion = true;
         animator.SetBool(para, true);
-
+        controller.Agent.updatePosition = false;
+        controller.Agent.updateRotation = false;
+        controller.Agent.isStopped=true;
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        Destroy(this.gameObject, 5f);
+        //Destroy(this.gameObject, 5f);
         yield return null;
 
         stateInfo = animator.GetCurrentAnimatorStateInfo(0);
@@ -149,8 +157,15 @@ public class EnemyBase : MonoBehaviour
             stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         }
 
-        animator.SetBool(aniPara.DamagedParaHash, false);
-        
+        Component[] components = GetComponents<Component>();
+        foreach (Component comp in components)
+        {
+            if (!(comp is Transform))
+            {
+                Destroy(comp);
+            }
+        }
+
     }
     public void DeadMotion()
     {
@@ -168,25 +183,27 @@ public class EnemyBase : MonoBehaviour
 
     IEnumerator AttackE()
     {
-        controller.Look(detection.Target.gameObject.transform.position - transform.position);
+        Vector3 dir = (detection.Target.transform.position - transform.position).normalized;
+        dir.y = 0;
+
+        transform.rotation = Quaternion.LookRotation(dir);
         animator.applyRootMotion = true;
         isAttack = true;
-        controller.Agent.isStopped=true;
             animator.SetBool(aniPara.AttackParaHash, true);
+        animator.SetBool(aniPara.RunParaHash, false);
+
         Attack();
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        controller.Agent.updatePosition = false;
-        controller.Agent.updateRotation = false;
+      
         yield return null;
         stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(2.4f);
         animator.SetBool(aniPara.AttackParaHash, false);
         animator.SetBool(aniPara.RunParaHash, true);
         yield return new WaitForSeconds(0.2f);
-        controller.Agent.updatePosition = true;
-        controller.Agent.updateRotation = true;
-  
+
+        controller.StartMove();
         isAttack = false;
         attack= null;
         animator.applyRootMotion = false;
@@ -204,10 +221,6 @@ public class EnemyBase : MonoBehaviour
     public void StartAttack()
     {
         detection.SeeTarget();
-
-  
-  
-        animator.SetBool(aniPara.RunParaHash, false);
         if(!isAttack)
          attack = StartCoroutine(AttackE());
          

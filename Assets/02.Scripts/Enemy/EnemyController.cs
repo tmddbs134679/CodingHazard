@@ -16,6 +16,8 @@ public class EnemyController : MonoBehaviour
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        agent.autoBraking = true;
+        agent.stoppingDistance = 2.3f;
     }
 
     public void Init(float _moveSpeed)
@@ -35,7 +37,18 @@ public class EnemyController : MonoBehaviour
     }
     public void StopMove()
     {
-        agent.ResetPath();
+        agent.isStopped = true;
+        //agent.ResetPath();
+        agent.updatePosition = false;
+        agent.updateRotation = false;
+        agent.velocity = Vector3.zero;
+    }
+    public void StartMove()
+    {
+        agent.isStopped = false;
+        //agent.ResetPath();
+        agent.updatePosition = true;
+        agent.updateRotation = true;
     }
     public bool HasArrived(float stoppingDistance = 0.2f)
     {
@@ -43,10 +56,11 @@ public class EnemyController : MonoBehaviour
                Agent.remainingDistance <= stoppingDistance &&
                (!Agent.hasPath || Agent.velocity.sqrMagnitude == 0f);
     }
-    public void MoveTo(Vector3 targetPosition,bool isRun)
+    public void MoveTo(Vector3 targetPosition, bool isRun)
     {
+
         agent.isStopped = false;
-        if (isRun) agent.speed = moveSpeed*2;
+        if (isRun) agent.speed = moveSpeed * 2;
         else
         {
             agent.speed = moveSpeed;
@@ -55,5 +69,7 @@ public class EnemyController : MonoBehaviour
         {
             agent.SetDestination(targetPosition);
         }
+
+
     }
 }

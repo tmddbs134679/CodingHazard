@@ -18,14 +18,14 @@ public class ChaseNode : ActionNode
         dir.y = 0;
         forward.y = 0;
          enemy.Controller.Look(dir);
-            
-        enemy.Controller.MoveTo(enemy.detection.Target.transform.position,true);
-        float distance = Vector3.Distance(enemy.detection.Target.transform.position, enemy.transform.position);
 
-        if (distance < 0.1f)
-        {
-            return BT.State.Sucess;
-        }
+        enemy.Controller.StartMove();
+        float distance = Vector3.Distance(enemy.detection.Target.transform.position, enemy.transform.position);
+        enemy.Controller.Agent.isStopped = false;
+       
+        enemy.Controller.MoveTo(enemy.detection.Target.transform.position, true);
+        Debug.Log("플레이어 위치"+enemy.detection.Target.transform.position);
+       
         
         return BT.State.Sucess;
     }
