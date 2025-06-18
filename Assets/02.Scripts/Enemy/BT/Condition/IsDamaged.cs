@@ -36,7 +36,7 @@ public class DeadNode : ActionNode
 {
     public override BT.State Run(EnemyBase enemy)
     {
-        enemy.DeadMotion();
+       // enemy.DeadMotion();
         return BT.State.Sucess;
     }
 }

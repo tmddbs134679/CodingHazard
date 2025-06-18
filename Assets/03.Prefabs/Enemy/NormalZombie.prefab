@@ -68,7 +68,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   partType: 0
   enemy: {fileID: 8744665254089667080}
-  bloodEffectPrefab: {fileID: 1015234100233608938, guid: 06d8d3085cb283c48b5910d2925d5b6a, type: 3}
+  bloodEffectPrefab: {fileID: 5913558295876740844, guid: 6b19566158fd32e43a24e0111aea14b3, type: 3}
 --- !u!1 &4035325710203771788
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,7 +232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   partType: 1
   enemy: {fileID: 8744665254089667080}
-  bloodEffectPrefab: {fileID: 1015234100233608938, guid: 06d8d3085cb283c48b5910d2925d5b6a, type: 3}
+  bloodEffectPrefab: {fileID: 5913558295876740844, guid: 6b19566158fd32e43a24e0111aea14b3, type: 3}
 --- !u!1 &7445413985065963529
 GameObject:
   m_ObjectHideFlags: 0
