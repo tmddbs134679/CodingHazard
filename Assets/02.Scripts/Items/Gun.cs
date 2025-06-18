@@ -119,6 +119,8 @@ public class Gun : Weapon
             {
                 AudioManager.Instance.PlayAudio(AudioID.EmptyGun, 0.3f);
                 
+                Debug.Log(1);
+                
                 timer = interval;
             }
             
