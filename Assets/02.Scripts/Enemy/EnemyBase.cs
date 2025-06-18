@@ -31,6 +31,8 @@ public class EnemyBase : MonoBehaviour
     public EnemyStatus Status { get { return status; } }
     public Animator animator;
     public event Action OnDead;
+    private EnemySound sound;
+    public EnemySound Sound { get { return sound; } }
     private BT bt;
 
     public Vector3 startPos;
@@ -45,7 +47,7 @@ public class EnemyBase : MonoBehaviour
         startPos = transform.position;
         detection = GetComponent<EnemyDetection>();
         MonsterManager.Instance.AddMon(this);
-        
+        sound = GetComponent<EnemySound>();
         
     }
     private void Start()
@@ -60,7 +62,7 @@ public class EnemyBase : MonoBehaviour
     public void Damaged(float dmg)
     {
         PlayerEvent.OnMonsterHit?.Invoke();
-      
+        if(detection.Target!=null)
         mon.transform.LookAt(detection.Target.transform.position);
         //if (invincibility)
         //return;
@@ -68,12 +70,13 @@ public class EnemyBase : MonoBehaviour
         Debug.Log(dmg + " ¿‘¿Ω");
   
         invincibility=false;
-        if(isDamaged)
-            return;
+     
         hp-=dmg;
         if (hp <= 0) {
             Dead();
         }
+        if (isDamaged)
+            return;
         else
         {
             StopAllCoroutines();
@@ -86,15 +89,18 @@ public class EnemyBase : MonoBehaviour
         Debug.Log("ªÁ∏¡");
         if (DeadC == null)
             DeadC = StartCoroutine(MotionE2(aniPara.DeadParaHash));
+        sound.PlaySound(EnemySound.monSound.Dead);
         MonsterManager.Instance.Dead(this);
         PlayerEvent.OnKillConfirmed?.Invoke();
         OnDead.Invoke();
+
     }
     bool invincibility = false;
 
 
     IEnumerator MotionE(int para)
  {
+        Sound.PlaySound(EnemySound.monSound.Damaged);
         isDamaged = true;
         animator.applyRootMotion = true;
         animator.SetBool(aniPara.DamagedParaHash, true);
@@ -140,6 +146,7 @@ public class EnemyBase : MonoBehaviour
     Coroutine DeadC;
     IEnumerator MotionE2(int para)
     {
+        
         animator.applyRootMotion = true;
         animator.SetBool(para, true);
         controller.Agent.updatePosition = false;
@@ -185,23 +192,24 @@ public class EnemyBase : MonoBehaviour
     {
         Vector3 dir = (detection.Target.transform.position - transform.position).normalized;
         dir.y = 0;
-
+       
         transform.rotation = Quaternion.LookRotation(dir);
         animator.applyRootMotion = true;
         isAttack = true;
             animator.SetBool(aniPara.AttackParaHash, true);
         animator.SetBool(aniPara.RunParaHash, false);
-
+       
         Attack();
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
       
         yield return null;
         stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-
-        yield return new WaitForSeconds(2.4f);
+        yield return new WaitForSeconds(0.5f);
+        Sound.PlaySound(EnemySound.monSound.Attack);
+        yield return new WaitForSeconds(2.0f);
         animator.SetBool(aniPara.AttackParaHash, false);
         animator.SetBool(aniPara.RunParaHash, true);
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
 
         controller.StartMove();
         isAttack = false;

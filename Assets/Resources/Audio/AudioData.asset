@@ -25,3 +25,7 @@ MonoBehaviour:
     audioType: 2
     clip: {fileID: 8300000, guid: 18524d7f295d11b40a2b7bd3d9ef3561, type: 3}
     isLoop: 0
+  - id: 4
+    audioType: 2
+    clip: {fileID: 8300000, guid: 258857b6c358d0644a339892e0212203, type: 3}
+    isLoop: 0

@@ -12,7 +12,7 @@ public class EnemyController : MonoBehaviour
  
     private NavMeshAgent agent;
     public NavMeshAgent Agent => agent;
-
+   
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -60,7 +60,9 @@ public class EnemyController : MonoBehaviour
     {
 
         agent.isStopped = false;
-        if (isRun) agent.speed = moveSpeed * 2;
+        if (isRun) { agent.speed = moveSpeed * 2; 
+        
+        }
         else
         {
             agent.speed = moveSpeed;

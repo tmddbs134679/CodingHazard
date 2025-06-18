@@ -6,7 +6,12 @@ public enum AudioID
 {
     AkFire,
     PlayerWalk1,
-    PlayerWalk2
+    PlayerWalk2,
+    ZombieWalk,
+    ZombieRun,
+    ZombieAttack,
+    ZombieDamaged,
+    ZombieDead
 }
 
 

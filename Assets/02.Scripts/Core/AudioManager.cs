@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Rendering;
 
 public class AudioManager : Singleton<AudioManager>
 {
@@ -77,7 +78,34 @@ public class AudioManager : Singleton<AudioManager>
             }
         }
     }
-    
+    public AudioSource StartLoopSound(AudioID id, float volume, AudioSource audio)
+    {
+        if (audio == null)
+        {
+            if (_audioEntries.TryGetValue(id, out AudioEntry entry))
+            {
+                AudioSource audioSource = GetAudioSource();
+
+                audioSource.outputAudioMixerGroup = entry.audioType == AudioType.SFX ? _sfxGroup : _bgmGroup;
+
+                audioSource.loop = entry.isLoop;
+
+                audioSource.clip = entry.clip;
+
+                audioSource.volume = volume;
+
+                audioSource.Play();
+                return audioSource;
+            }
+            return null;
+        }
+        audio.volume = volume;
+        if (audio.isPlaying) 
+            return audio;
+        audio.Play();
+        return audio;
+        
+    }
 
     public void SetVolume(AudioType type,  float volume)
     {

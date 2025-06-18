@@ -16,7 +16,7 @@ public class IdleNode : ActionNode
     {
         enemy.animator.SetBool(enemy.aniPara.RunParaHash, false);
         enemy.animator.SetBool(enemy.aniPara.walkParaHash, true);
-
+       
         wanderTimer += Time.deltaTime;
 
         if (enemy.Controller.HasArrived() || wanderTimer >= wanderTime)
