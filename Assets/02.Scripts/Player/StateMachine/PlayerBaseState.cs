@@ -40,6 +40,8 @@ public abstract class PlayerBaseState : State
         {
             if (gun.CurAmmo <= 0)
             {
+                //틱틱 사운드
+                
                 return false;
             }
         }
