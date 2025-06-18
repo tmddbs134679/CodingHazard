@@ -7,7 +7,8 @@ public enum AudioID
     AkFire,
     PlayerWalk1,
     PlayerWalk2,
-    ClickUI
+    ClickUI,
+    PlayerInteract,
     
 }
 
