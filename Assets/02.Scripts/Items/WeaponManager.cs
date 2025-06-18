@@ -22,6 +22,8 @@ public class WeaponManager : MonoBehaviour
 
     private Dictionary<WeaponType, Weapon> _weaponSlots = new();
 
+    private bool _isStart;
+
     private void Awake()
     {
         for (int i = 0; i < weapons.Length; i++)
@@ -37,13 +39,24 @@ public class WeaponManager : MonoBehaviour
     {
         PlayerEvent.Swap  += EquipWeapon;
         
+        _isStart = true;
 
         EquipWeapon(0);
+
     }
 
 
     private void EquipWeapon(int index)
     {
+        if (!_isStart)
+        {
+            AudioManager.Instance.PlayAudio(AudioID.WeaponSwap, 1f);
+        }
+        else
+        {
+            _isStart = false;
+        }
+
         if (index == _curWeaponIndex || index >= weapons.Length)
         {
             return;
