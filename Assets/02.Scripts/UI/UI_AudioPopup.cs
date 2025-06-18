@@ -142,14 +142,6 @@ public class UI_AudioPopup : UI_Base
         TogglesInit();
         BackgroundInit();
 
-        //foreach (var kvp in volumeSliders)
-        //{
-        //    GameObjects type = kvp.Key;
-        //    kvp.Value.onValueChanged.AddListener((val) => UpdateVolumeText(type, val));
-
-
-        //    UpdateVolumeText(type, kvp.Value.value);
-        //}
         foreach (var kvp in volumeSliders)
         {
             GameObjects uiEnum = kvp.Key;
