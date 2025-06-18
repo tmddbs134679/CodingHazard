@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -101,10 +102,10 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         if (IsInputBlocked) return;
-        
+
         // Player 시선에 따른 카메라 이동
         //Look();
-        
+        FireInput();
         fpsVirtualCamera.MouseDelta = playerActions.Look.ReadValue<Vector2>();
 
         if (Condition.stamina.CurValue <= 0f)
@@ -195,5 +196,39 @@ public class PlayerController : MonoBehaviour
         
             // 주/보조 무기(총)일 경우 총을 쏘는 Method 실행
         */
+    }
+
+
+    private void FireInput()
+    {
+        if (!(WeaponManager.CurrentWpeaWeapon is Gun))
+        {
+            return;
+        }
+
+        Gun gun = (Gun)WeaponManager.CurrentWpeaWeapon;
+
+        if (gun.CurFireMode == Gun.FireMode.Auto)
+        {
+            if (playerActions.Attack.IsPressed() && gun.GetFirerate())
+            {
+                Attack();
+            }
+        }
+
+        else
+        {
+            if (playerActions.Attack.WasPressedThisFrame())
+            {
+                Attack();
+            }
+        }
+       
+
+        //뭐가 필요하지??
+        //눌렸나? 클릭인가? 총종류가 뭔가 이걸 총에서 해야하나?? x 총은 쏘기만 담당하기로 
+
+
+
     }
 }
