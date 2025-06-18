@@ -22,8 +22,6 @@ public class GunAnimationHandler : MonoBehaviour
     public void Reload()
     {
         _gun.Reload();
-        PlayerEvent.OnUpdateBullet?.Invoke(_gun.SpareAmmo, _gun.MaxAmmo);
-
     }
 
     public void OnFinishReload()

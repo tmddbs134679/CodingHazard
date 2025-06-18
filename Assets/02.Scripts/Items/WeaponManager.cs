@@ -19,10 +19,11 @@ public class WeaponManager : MonoBehaviour
     private GameObject _currentWeaponGO;
     
     private Weapon _currentWeapon;
-
+    
     private Dictionary<WeaponType, Weapon> _weaponSlots = new();
 
     private bool _isStart;
+
 
     private void Awake()
     {
@@ -42,7 +43,6 @@ public class WeaponManager : MonoBehaviour
         _isStart = true;
 
         EquipWeapon(0);
-
     }
 
 

@@ -82,18 +82,12 @@ public class Gun : Weapon
         {
             int neededAmmo = maxAmmo - curAmmo;
 
+            int fillAmmo = Mathf.Min(spareAmmo, neededAmmo);
 
-            if (spareAmmo >= neededAmmo)
-            {
-                curAmmo += neededAmmo;
-                spareAmmo -= neededAmmo;
-            }
-
-            else
-            {
-                curAmmo += spareAmmo;
-                spareAmmo = 0;
-            }
+            curAmmo += fillAmmo;
+            spareAmmo -= fillAmmo;
+            
+            PlayerEvent.OnUpdateBullet?.Invoke(spareAmmo, curAmmo);
         }
     }
     
@@ -119,13 +113,12 @@ public class Gun : Weapon
             {
                 AudioManager.Instance.PlayAudio(AudioID.EmptyGun, 0.3f);
                 
-                Debug.Log(1);
-                
                 timer = interval;
             }
             
             return;
         }
+        
         base.Fire();
         StartCoroutine("OnMuzzleFlashEffect");
 

@@ -90,10 +90,6 @@ public abstract class Weapon : MonoBehaviour
     }
     protected void Update()
     {
-
-
-      
-
         if (Input.GetKeyDown(KeyCode.G))
         {
             DropItem();
