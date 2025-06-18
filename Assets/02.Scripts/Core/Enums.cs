@@ -13,7 +13,9 @@ public enum AudioID
     Reload,
     AxeSwap,
     AxeAttack,
-    AxeHit
+    AxeHit,
+    PlayerHurt,
+    
 }
 
 

@@ -59,6 +59,7 @@ public class PlayerCondition : MonoBehaviour
     {
         hp.CurValue = Mathf.Max(hp.curValue - amount, 0f);
         PlayerEvent.OnTakeDamaged?.Invoke();
+        AudioManager.Instance.PlayAudio(AudioID.PlayerHurt, 0.5f);
     }
 
     public void AddStamina(float amount)
