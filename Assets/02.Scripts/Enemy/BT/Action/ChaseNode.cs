@@ -24,7 +24,7 @@ public class ChaseNode : ActionNode
         enemy.Controller.Agent.isStopped = false;
        
         enemy.Controller.MoveTo(enemy.detection.Target.transform.position, true);
-        Debug.Log("플레이어 위치"+enemy.detection.Target.transform.position);
+       // Debug.Log("플레이어 위치"+enemy.detection.Target.transform.position);
        
         
         return BT.State.Sucess;
