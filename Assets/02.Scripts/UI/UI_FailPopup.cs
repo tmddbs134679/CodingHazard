@@ -1,11 +1,9 @@
 using DG.Tweening;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
 
-public class UI_ClearPopup : UI_Base
+public class UI_FailPopup : UI_Base
 {
     #region Enum
     enum GameObjects
@@ -14,8 +12,7 @@ public class UI_ClearPopup : UI_Base
     }
     enum Texts
     {
-        ToastPopupText,
-        TeamNameText
+        FailToastPopupText,
     }
 
     enum Images
@@ -23,7 +20,9 @@ public class UI_ClearPopup : UI_Base
         background,
     }
 
-#endregion
+    #endregion
+
+
 
     public override bool Init()
     {
@@ -47,34 +46,25 @@ public class UI_ClearPopup : UI_Base
 
         #region Color √ ±‚»≠
 
-        Color c = GetText((int)Texts.ToastPopupText).color;
+        Color c = GetText((int)Texts.FailToastPopupText).color;
         c.a = 0;
-        GetText((int)Texts.ToastPopupText).color = c;
-        GetText((int)Texts.ToastPopupText).gameObject.SetActive(false);
+        GetText((int)Texts.FailToastPopupText).color = c;
+        GetText((int)Texts.FailToastPopupText).gameObject.SetActive(false);
 
         #endregion
     }
-    public IEnumerator StartCreditScrollCoroutine()
-    {
-        var rt = GetObject((int)GameObjects.TextObject).GetComponent<RectTransform>();
-        float endpos = rt.anchoredPosition.y + 1900;
-
-        yield return rt.DOAnchorPosY(endpos, 15f)
-                       .SetEase(Ease.InOutSine)
-                       .WaitForCompletion();
-    }
 
 
-    public float fadeTime = 5f;
-    public float showTime = 5f;
+    public float fadeTime = 2f;
+    public float showTime = 2f;
     public IEnumerator ToastCoroutine()
     {
-        var txt = GetText((int)Texts.ToastPopupText);
+        var txt = GetText((int)Texts.FailToastPopupText);
         txt.gameObject.SetActive(true);
 
-        yield return txt.DOFade(1f, fadeTime).WaitForCompletion();  
-        yield return new WaitForSeconds(showTime);                  
-        yield return txt.DOFade(0f, fadeTime - 2).WaitForCompletion();  
+        yield return txt.DOFade(1f, fadeTime).WaitForCompletion();
+        yield return new WaitForSeconds(showTime);
+        yield return txt.DOFade(0f, fadeTime - 2).WaitForCompletion();
     }
 
 
@@ -86,4 +76,5 @@ public class UI_ClearPopup : UI_Base
             .SetEase(Ease.Linear)
             .WaitForCompletion();
     }
+
 }

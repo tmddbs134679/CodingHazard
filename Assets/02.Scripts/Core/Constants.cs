@@ -8,4 +8,6 @@ public static class Constants
     public const float MinMouseSensitivity = 0.1f;
     
     public const string StageSceneName = "StageScene_";
+
+    public const float CONST_FADETIME = 5f;
 }

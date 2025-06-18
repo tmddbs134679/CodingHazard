@@ -107,10 +107,10 @@ public class PlayerController : MonoBehaviour
         
         fpsVirtualCamera.MouseDelta = playerActions.Look.ReadValue<Vector2>();
 
-        if (Condition.stamina.curValue <= 0f)
+        if (Condition.stamina.CurValue <= 0f)
             canSprint = false;
 
-        if (Condition.stamina.curValue > 30f)
+        if (Condition.stamina.CurValue > 30f)
             canSprint = true;
 
         // Crouch 판정 및 처리
