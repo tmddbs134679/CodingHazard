@@ -38,7 +38,7 @@ public class ClearUIController : MonoBehaviour
     {
         yield return _failpopup.FadeInCoroutine();             
         yield return _failpopup.ToastCoroutine();
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(1);
     }
     private IEnumerator PlaySequence()
     {

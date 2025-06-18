@@ -43,7 +43,8 @@ public class UI_EditSetting : UI_Base
         StageManager.Instance.PlayerController.BlockInput();
 
         Time.timeScale = 0;
-        
+        GetObject((int)GameObjects.CheckAudiomarkObject).gameObject.SetActive(false);
+        GetObject((int)GameObjects.CheckDisplaymarkObject).gameObject.SetActive(true);
         _DisplayPopup.gameObject.SetActive(true);
         AudioManager.Instance.PlayAudio(AudioID.EnterUI, 0.5f);
     }

@@ -12,18 +12,18 @@ public class UI_AudioPopup : UI_Base
     #region Enum
     enum GameObjects
     {
-        Master,
-        Bgm,
-        SFX,
-        Voice,
+        MasterObject,
+        BgmObject,
+        SFXObject,
+        VoiceObject,
         MasterVloume,
         BGMVloume,
         SFXVolume,
         VoiceVolume,
-        MasterSlider,
-        BGMSlider,
-        SFXSlider,
-        VoiceSlider,
+        Master,
+        BGM,
+        SFX,
+        Voice,
         MasterActiveObject,
         MasterInActiveObject,
         BGMActiveObject,
@@ -88,7 +88,8 @@ public class UI_AudioPopup : UI_Base
                 GetToggle((int)Toggles.MasterToggle),
                 GetObject((int)GameObjects.MasterActiveObject),
                 GetObject((int)GameObjects.MasterInActiveObject),
-                GetObject((int)GameObjects.MasterVloume)
+                GetObject((int)GameObjects.MasterVloume),
+                AudioType.Master
             );
         });
 
@@ -98,7 +99,8 @@ public class UI_AudioPopup : UI_Base
                 GetToggle((int)Toggles.BgmToggle),
                 GetObject((int)GameObjects.BGMActiveObject),
                 GetObject((int)GameObjects.BGMInActiveObject),
-                GetObject((int)GameObjects.BGMVloume)
+                GetObject((int)GameObjects.BGMVloume),
+                AudioType.BGM
             );
         });
         GetToggle((int)Toggles.SFXToggle).gameObject.BindEvent(() =>
@@ -107,7 +109,8 @@ public class UI_AudioPopup : UI_Base
                 GetToggle((int)Toggles.SFXToggle),
                 GetObject((int)GameObjects.SFXActiveObject),
                 GetObject((int)GameObjects.SFXInActiveObject),
-                GetObject((int)GameObjects.SFXVolume)
+                GetObject((int)GameObjects.SFXVolume),
+                AudioType.SFX
             );
         });
         GetToggle((int)Toggles.VoiceToggle).gameObject.BindEvent(() =>
@@ -116,21 +119,22 @@ public class UI_AudioPopup : UI_Base
                 GetToggle((int)Toggles.VoiceToggle),
                 GetObject((int)GameObjects.VoiceActiveObject),
                 GetObject((int)GameObjects.VoiceInActiveObject),
-                GetObject((int)GameObjects.VoiceVolume)
+                GetObject((int)GameObjects.VoiceVolume),
+                AudioType.Voice
             );
         });
 
         #endregion
 
         #region Slider or Text Add
-        volumeSliders.Add(GameObjects.MasterSlider, GetObject((int)GameObjects.MasterSlider).GetComponent<Slider>());
-        volumeTexts.Add(GameObjects.MasterSlider, GetText((int)Texts.MasterValueText));
-        volumeSliders.Add(GameObjects.BGMSlider, GetObject((int)GameObjects.BGMSlider).GetComponent<Slider>());
-        volumeTexts.Add(GameObjects.BGMSlider, GetText((int)Texts.BGMValueText));
-        volumeSliders.Add(GameObjects.SFXSlider, GetObject((int)GameObjects.SFXSlider).GetComponent<Slider>());
-        volumeTexts.Add(GameObjects.SFXSlider, GetText((int)Texts.SFXValueText));
-        volumeSliders.Add(GameObjects.VoiceSlider, GetObject((int)GameObjects.VoiceSlider).GetComponent<Slider>());
-        volumeTexts.Add(GameObjects.VoiceSlider, GetText((int)Texts.VoiceValueText));
+        volumeSliders.Add(GameObjects.Master, GetObject((int)GameObjects.Master).GetComponent<Slider>());
+        volumeTexts.Add(GameObjects.Master, GetText((int)Texts.MasterValueText));
+        volumeSliders.Add(GameObjects.BGM, GetObject((int)GameObjects.BGM).GetComponent<Slider>());
+        volumeTexts.Add(GameObjects.BGM, GetText((int)Texts.BGMValueText));
+        volumeSliders.Add(GameObjects.SFX, GetObject((int)GameObjects.SFX).GetComponent<Slider>());
+        volumeTexts.Add(GameObjects.SFX, GetText((int)Texts.SFXValueText));
+        volumeSliders.Add(GameObjects.Voice, GetObject((int)GameObjects.Voice).GetComponent<Slider>());
+        volumeTexts.Add(GameObjects.Voice, GetText((int)Texts.VoiceValueText));
 
         #endregion
 
@@ -138,15 +142,34 @@ public class UI_AudioPopup : UI_Base
         TogglesInit();
         BackgroundInit();
 
+        //foreach (var kvp in volumeSliders)
+        //{
+        //    GameObjects type = kvp.Key;
+        //    kvp.Value.onValueChanged.AddListener((val) => UpdateVolumeText(type, val));
+
+
+        //    UpdateVolumeText(type, kvp.Value.value);
+        //}
         foreach (var kvp in volumeSliders)
         {
-            GameObjects type = kvp.Key;
-            kvp.Value.onValueChanged.AddListener((val) => UpdateVolumeText(type, val));
+            GameObjects uiEnum = kvp.Key;
+            Slider slider = kvp.Value;
 
-  
-            UpdateVolumeText(type, kvp.Value.value);
+            // GameObjects → AudioType 변환 (enum 이름이 동일하다는 전제)
+            if (!System.Enum.TryParse(uiEnum.ToString(), out AudioType audioType))
+                continue;
+
+            // 슬라이더 변경 시 텍스트 + 사운드 반영
+            slider.onValueChanged.AddListener((val) =>
+            {
+                UpdateVolumeText(uiEnum, val);  
+               AudioManager.Instance.SetVolume(audioType, val); // 사운드 반영
+            });
+
+            // 초기화 시 반영
+            UpdateVolumeText(uiEnum, slider.value);
+            AudioManager.Instance.SetVolume(audioType, slider.value);
         }
-
 
         return true;
     }
@@ -167,7 +190,7 @@ public class UI_AudioPopup : UI_Base
 
     }
 
-    private void OnClickToggle(Toggle tgl, GameObject activeObj, GameObject inactiveObj, GameObject volumeObj)
+    private void OnClickToggle(Toggle tgl, GameObject activeObj, GameObject inactiveObj, GameObject volumeObj, AudioType type)
     {
         bool isOn = tgl.isOn;
         activeObj.SetActive(isOn);
@@ -176,6 +199,24 @@ public class UI_AudioPopup : UI_Base
         volumeObj.SetActive(isOn);
 
         // Todo : 비활성화 상태이면 볼륨 0만들기
+        if (!isOn)
+        {
+            // 비활성화 시 볼륨 0
+            AudioManager.Instance.SetVolume(type, 0f);
+        }
+        else
+        {
+            foreach (var kvp in volumeSliders)
+            {
+                GameObjects uiEnum = kvp.Key;
+                Slider slider = kvp.Value;
+                if (!System.Enum.TryParse(uiEnum.ToString(), out AudioType audioType))
+                    continue;
+                // 초기화 시 반영
+                UpdateVolumeText(uiEnum, slider.value);
+                AudioManager.Instance.SetVolume(audioType, slider.value);
+            }
+        }
     }
 
     void UpdateVolumeText(GameObjects type, float value)
@@ -196,20 +237,20 @@ public class UI_AudioPopup : UI_Base
 
     private void HoverInit()
     {
-        GetObject((int)GameObjects.Master).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.Master), true), null, EUIEvent.PointerEnter);
-        GetObject((int)GameObjects.Master).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.Master), false), null, EUIEvent.PointerExit);
+        GetObject((int)GameObjects.MasterObject).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.MasterObject), true), null, EUIEvent.PointerEnter);
+        GetObject((int)GameObjects.MasterObject).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.MasterObject), false), null, EUIEvent.PointerExit);
         GetObject((int)GameObjects.MasterVloume).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.MasterVloume), true), null, EUIEvent.PointerEnter);
         GetObject((int)GameObjects.MasterVloume).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.MasterVloume), false), null, EUIEvent.PointerExit);
-        GetObject((int)GameObjects.Bgm).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.Bgm), true), null, EUIEvent.PointerEnter);
-        GetObject((int)GameObjects.Bgm).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.Bgm), false), null, EUIEvent.PointerExit);
+        GetObject((int)GameObjects.BgmObject).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.BgmObject), true), null, EUIEvent.PointerEnter);
+        GetObject((int)GameObjects.BgmObject).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.BgmObject), false), null, EUIEvent.PointerExit);
         GetObject((int)GameObjects.BGMVloume).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.BGMVloume), true), null, EUIEvent.PointerEnter);
         GetObject((int)GameObjects.BGMVloume).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.BGMVloume), false), null, EUIEvent.PointerExit);
-        GetObject((int)GameObjects.SFX).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.SFX), true), null, EUIEvent.PointerEnter);
-        GetObject((int)GameObjects.SFX).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.SFX), false), null, EUIEvent.PointerExit);
+        GetObject((int)GameObjects.SFXObject).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.SFXObject), true), null, EUIEvent.PointerEnter);
+        GetObject((int)GameObjects.SFXObject).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.SFXObject), false), null, EUIEvent.PointerExit);
         GetObject((int)GameObjects.SFXVolume).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.SFXVolume), true), null, EUIEvent.PointerEnter);
         GetObject((int)GameObjects.SFXVolume).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.SFXVolume), false), null, EUIEvent.PointerExit);
-        GetObject((int)GameObjects.Voice).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.Voice), true), null, EUIEvent.PointerEnter);
-        GetObject((int)GameObjects.Voice).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.Voice), false), null, EUIEvent.PointerExit);
+        GetObject((int)GameObjects.VoiceObject).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.VoiceObject), true), null, EUIEvent.PointerEnter);
+        GetObject((int)GameObjects.VoiceObject).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.VoiceObject), false), null, EUIEvent.PointerExit);
         GetObject((int)GameObjects.VoiceVolume).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.VoiceVolume), true), null, EUIEvent.PointerEnter);
         GetObject((int)GameObjects.VoiceVolume).BindEvent(() => OnHoverSetting(GetObject((int)GameObjects.VoiceVolume), false), null, EUIEvent.PointerExit);
     }

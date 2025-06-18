@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using static UnityEngine.Experimental.Rendering.RayTracingAccelerationStructure;
 
 public class GameSettingManager : MonoBehaviour
 {
@@ -16,7 +17,12 @@ public class GameSettingManager : MonoBehaviour
     public float MouseSensitivity { get; private set; }
     public AntialiasingMode AntialiasingMode { get; private set; }
 
-    
+    public float MasterVolume { get; private set; }
+    public float BgmVolume { get; private set; }
+    public float SFXVolume { get; private set; }
+    public float VoiceVolume { get; private set; }
+
+
     [SerializeField] private GameSettings baseSettings;
 
     [SerializeField] private GameObject gameVolumesRoot;
@@ -36,6 +42,7 @@ public class GameSettingManager : MonoBehaviour
         SetAntiAliasingMode(baseSettings.antialiasing);
     }
 
+ 
     public void SetFov(float value)
     {
         value = Mathf.Clamp(value, Constants.MinFOV, Constants.MaxFOV);
