@@ -37,6 +37,13 @@ public class UI_EditSetting : UI_Base
 
     private void OnEnable()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        
+        StageManager.Instance.PlayerController.BlockInput();
+
+        Time.timeScale = 0;
+        
         _DisplayPopup.gameObject.SetActive(true);
     }
 
@@ -44,6 +51,13 @@ public class UI_EditSetting : UI_Base
     {
         if (_DisplayPopup == null || _AudioPopup == null) return;
 
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        
+        StageManager.Instance.PlayerController.UnblockInput();
+        
+        Time.timeScale = 1;
+        
         _DisplayPopup.gameObject.SetActive(false);
         _AudioPopup.gameObject.SetActive(false);
     }
