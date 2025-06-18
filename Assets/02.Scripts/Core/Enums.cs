@@ -1,6 +1,6 @@
 ﻿
 
-public enum AudioType { Master, BGM, SFX }
+public enum AudioType { Master, BGM, SFX,Voice }
 
 public enum AudioID
 {
