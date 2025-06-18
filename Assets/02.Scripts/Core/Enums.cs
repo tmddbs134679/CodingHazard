@@ -8,6 +8,7 @@ public enum AudioID
     PlayerWalk1,
     PlayerWalk2,
     ClickUI,
+    EnterUI,
     PlayerInteract,
     
 }
