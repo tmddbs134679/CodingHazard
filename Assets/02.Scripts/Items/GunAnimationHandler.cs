@@ -31,6 +31,6 @@ public class GunAnimationHandler : MonoBehaviour
 
     public void StartAming()
     {
-        _gun.FPSVirtualCamera.ZoomIn(20, 0.5f);
+        _gun.FPSVirtualCamera.ZoomIn(-25, 0.33f);
     }
 }

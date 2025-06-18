@@ -108,7 +108,7 @@ public class Gun : Weapon
 
         if (!isZoom)
         {
-            fpsVirtualCamera.ZoomOut(0.5f);
+            fpsVirtualCamera.ZoomOut(0.33f);
         }
     }
     
