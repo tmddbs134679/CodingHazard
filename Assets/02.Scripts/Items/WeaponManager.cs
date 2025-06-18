@@ -12,9 +12,7 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private Transform weaponAnchor;
     
     
-    [Header("무기 프리팹들")]
-    [SerializeField] private GameObject[] weaponPrefabs;
-    
+    [SerializeField] private GameObject[] weapons;
 
     private int _curWeaponIndex = -1;
 
@@ -24,21 +22,13 @@ public class WeaponManager : MonoBehaviour
 
     private Dictionary<WeaponType, Weapon> _weaponSlots = new();
 
-    private List<GameObject> _weapons = new();
-    
     private void Awake()
     {
-        for (int i = 0; i < weaponPrefabs.Length; i++)
+        for (int i = 0; i < weapons.Length; i++)
         {
-            GameObject newWeaponGO = Instantiate(weaponPrefabs[i], weaponAnchor,false);
-            newWeaponGO.transform.localPosition = weaponPrefabs[i].transform.localPosition;
-            newWeaponGO.transform.localRotation = weaponPrefabs[i].transform.localRotation;
-            
-            newWeaponGO.SetActive(false);
-            
-            _weapons.Add(newWeaponGO);
-            
-            _weaponSlots[(WeaponType)i] = newWeaponGO.GetComponentInChildren<Weapon>();
+            weapons[i].SetActive(false);
+
+            _weaponSlots[(WeaponType)i] = weapons[i].GetComponentInChildren<Weapon>();
         }
     }
 
@@ -54,7 +44,7 @@ public class WeaponManager : MonoBehaviour
 
     private void EquipWeapon(int index)
     {
-        if (index == _curWeaponIndex || index >= weaponPrefabs.Length)
+        if (index == _curWeaponIndex || index >= weapons.Length)
         {
             return;
         }
@@ -67,7 +57,7 @@ public class WeaponManager : MonoBehaviour
             //_currentWeaponGO = null;
         }
 
-        _currentWeaponGO = _weapons[index];
+        _currentWeaponGO = weapons[index];
         _currentWeaponGO.SetActive(true);
         
         _curWeaponIndex = index;

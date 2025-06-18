@@ -200,9 +200,6 @@ public class PlayerController : MonoBehaviour
     
     public void Attack()
     {
-        
-        Debug.Log("PlayerController Attack Method");
-        fpsVirtualCamera.PlayRecoilToFire(Vector3.one);
         PlayerEvent.OnAttack?.Invoke();
         //공격 입력시 호출해주고 무기에서 Fire구독해서 사용할예정
         

@@ -36,16 +36,6 @@ public abstract class PlayerBaseState : State
     
     protected bool IsAttackTriggered()
     {
-        if (_controller.WeaponManager.CurrentWpeaWeapon is Gun gun)
-        {
-            if (gun.CurAmmo <= 0)
-            {
-                //틱틱 사운드
-                
-                return false;
-            }
-        }
-        
         return _controller.playerActions.Attack.triggered;
     }
 }

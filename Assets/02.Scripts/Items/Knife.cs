@@ -16,13 +16,18 @@ public class Knife : Weapon
     public override void Fire()
     {
         base.Fire();
+        
+        Debug.Log(1);
+        
         if (!isShootable)
         {
+            Debug.Log(2);
             return;
         }
 
         if (IsAttacking)
         {
+            Debug.Log(3);
             return;
         }
 
@@ -41,21 +46,6 @@ public class Knife : Weapon
         base.Update();
        
     }
-
-
-    private IEnumerator AttackRoutine()
-    {
-        IsAttacking = true;
-
-        PlayAttackAnimation(false);
-        yield return new WaitForSeconds(attackDelay);
-        HitWeapon();
-
-        yield return new WaitForSeconds(fireRate); // 광클하면 애니메이션 이상해짐
-
-        IsAttacking = false;
-    }
-
 
     public void HitWeapon()
     {

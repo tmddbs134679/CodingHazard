@@ -42,6 +42,7 @@ public class Gun : Weapon
     [SerializeField] private AudioID audioID;
     [SerializeField] private GameObject bulletDecalPrefab;
 
+    [SerializeField] private FPSVirtualCamera fpsVirtualCamera;
 
     private Camera mainCam;
     private bool isZoom = false;
@@ -97,55 +98,17 @@ public class Gun : Weapon
     private void PlayReloadAnimation()
     {
         WeaponAnimator.SetTrigger(ReLoadingTrigger);
-
-        /*
-        if (curAmmo < maxAmmo && spareAmmo > 0)
-        {
-            int neededAmmo = maxAmmo - curAmmo;
-
-
-            if (spareAmmo >= neededAmmo)
-            {
-                curAmmo += neededAmmo;
-                spareAmmo -= neededAmmo;
-            }
-
-            else
-            {
-                curAmmo += spareAmmo;
-                spareAmmo = 0;
-            }
-        }
-
-        PlayerEvent.OnUpdateBullet?.Invoke(spareAmmo, curAmmo);*/
     }
 
     private void ZoomWeapon(bool isZoom)
     {
         this.isZoom = isZoom;
         WeaponAnimator.SetBool(IsAiming, isZoom);
-
     }
 
-
-    private void HandleFireInput()
-    {
-        switch (fireMode)
-        {
-            case FireMode.Single:
-                if (Input.GetMouseButtonDown(0))
-                    Fire();
-                break;
-            case FireMode.Auto:
-                if (Input.GetMouseButton(0))
-                    Fire();
-                break;
-        }
-    }
 
     public override void Fire()
     {
-
         if (curAmmo <= 0)
         {
             return;
@@ -178,7 +141,8 @@ public class Gun : Weapon
         
         _audioManager.PlayAudio(audioID, 0.10f);
         
-
+        fpsVirtualCamera.PlayRecoilToFire(Vector3.one);
+        
         PlayAttackAnimation(isZoom);
 
         LayerMask layerMask = 1 << 9;
@@ -200,8 +164,6 @@ public class Gun : Weapon
 
     private IEnumerator ApplyRecoil()
     {
-
-
         Vector3 recoil = new Vector3(Random.Range(-recoilx, recoilx), Random.Range(-recoily, recoily), -recoilz);
         Vector3 originPos = this.transform.localPosition;
         Vector3 targetPos = originPos + recoil;
