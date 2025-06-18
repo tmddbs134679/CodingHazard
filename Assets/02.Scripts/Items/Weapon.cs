@@ -54,6 +54,7 @@ public abstract class Weapon : MonoBehaviour
 
     protected virtual void OnEnable()
     {
+        AudioManager.Instance.PlayAudio(AudioID.WeaponSwap, 1f);
         PlayerEvent.OnAttack += Fire;
         PlayerEvent.OnSprint += SprintMove;
     }

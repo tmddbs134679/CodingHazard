@@ -62,6 +62,7 @@ public class WeaponManager : MonoBehaviour
         
         _curWeaponIndex = index;
         _currentWeapon = _weaponSlots[(WeaponType)_curWeaponIndex];
+       
         
         /*GameObject newWeaponGO = Instantiate(weaponPrefabs[index], weaponAnchor,false);
         newWeaponGO.transform.localPosition = weaponPrefabs[index].transform.localPosition;

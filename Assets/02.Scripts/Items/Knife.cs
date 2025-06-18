@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Knife : Weapon
@@ -12,6 +13,7 @@ public class Knife : Weapon
     [SerializeField] private float attackDelay = 1f;
     [SerializeField] private LayerMask hitLayer; //적layer
 
+    
 
     public override void Fire()
     {
