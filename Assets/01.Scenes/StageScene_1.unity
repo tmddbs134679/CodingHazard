@@ -16240,6 +16240,10 @@ PrefabInstance:
       propertyPath: itemText
       value: 
       objectReference: {fileID: 153518535}
+    - target: {fileID: 2695891007372459281, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
+      propertyPath: isReloading
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4430118988471167130, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
       propertyPath: m_Name
       value: Player

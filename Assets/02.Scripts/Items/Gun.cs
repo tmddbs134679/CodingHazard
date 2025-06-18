@@ -181,14 +181,11 @@ public class Gun : Weapon
     }
 
 
-
-    //탄약 먹으면 증가해야하잖아
     public void AddSpareAmmo(int count)
     {
         spareAmmo += count;
+        
+        PlayerEvent.OnUpdateBullet?.Invoke(curAmmo, spareAmmo);
     }
-
-
-
 
 }
