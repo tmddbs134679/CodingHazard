@@ -25,6 +25,9 @@ public class LobbyManager : MonoBehaviour
     public void StartStage(int level)
     {
         SceneLoadManager.Instance.LoadScene(Constants.StageSceneName + level);
+        
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void QuitGame()
