@@ -12,7 +12,7 @@ public class UI_HPBar : UI_Base
         HPDamageBar,
         HPBar,
     }
-    public void OnEnable()
+    void Start()
     {
         PlayerEvent.OnHpChanged += SetHpRatio;
     }

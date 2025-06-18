@@ -12,7 +12,7 @@ public class UI_StaminaBar : UI_Base
         StaminaDamageBar,
         StaminaBar,
     }
-    public void OnEnable()
+    void Start()
     {
        PlayerEvent.OnStaminaChanged += SetStaminaRatio;
     }

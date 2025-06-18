@@ -17094,6 +17094,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6708160062106879136, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
+      propertyPath: attackAngle
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 6708160062106879136, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
+      propertyPath: attackRange
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8504809558934303775, guid: 2d900c335592344ab9a9f46420240dd0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 23.46
