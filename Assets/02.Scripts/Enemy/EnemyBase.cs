@@ -83,6 +83,7 @@ public class EnemyBase : MonoBehaviour
             StartCoroutine(MotionE(aniPara.DamagedParaHash));
         }
     }
+   
     public void Dead()
     {
         isDead=true;
@@ -143,7 +144,7 @@ public class EnemyBase : MonoBehaviour
         //if(DmdC == null) 
        // DmdC = StartCoroutine(MotionE(aniPara.DamagedParaHash));
     }
-    Coroutine DeadC;
+    Coroutine DeadC=null;
     IEnumerator MotionE2(int para)
     {
         
@@ -158,12 +159,11 @@ public class EnemyBase : MonoBehaviour
 
         stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        while (!stateInfo.IsName("Dead")||stateInfo.normalizedTime < 1f)
-        {
-            yield return null;
-            stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        }
-
+         yield return new WaitForSeconds(3.0f);
+           
+       
+        Debug.Log("삭제 처리 확인");
+        sound.StopMusic();
         Component[] components = GetComponents<Component>();
         foreach (Component comp in components)
         {
@@ -176,7 +176,7 @@ public class EnemyBase : MonoBehaviour
     }
     public void DeadMotion()
     {
-        StopAllCoroutines();
+        //StopAllCoroutines();
         if (DeadC == null)
             DeadC = StartCoroutine(MotionE2(aniPara.DeadParaHash));
        
