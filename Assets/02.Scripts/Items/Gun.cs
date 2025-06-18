@@ -172,7 +172,10 @@ public class Gun : Weapon
         {
             if (hit.collider.TryGetComponent<HitBox>(out var enemy))
             {
-                enemy.Damaged(damage, hit);
+                if (enemy != null)
+                {
+                    enemy.Damaged(damage, hit);
+                }
             }
             else if(hit.collider.gameObject.layer != 9)
             {

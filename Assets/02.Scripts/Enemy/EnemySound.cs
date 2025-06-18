@@ -63,6 +63,8 @@ public class EnemySound : MonoBehaviour
     }
     public void PlayFootstep(monSound mod)
     {
+        return;
+        
         source.loop = true;
         if (clipList[(int)mod] == nowClip && source.isPlaying)
         {

@@ -20,9 +20,13 @@ public class AmmoBox : MonoBehaviour, IDetectable, IInteractable
         _outline.enabled = false;
     }
 
+  
     public void Enter()
     {
-        _outline.enabled = true;
+        if (!IsLockDetect)
+        {
+            _outline.enabled = true;
+        }
     }
 
     public void Exit()
@@ -44,6 +48,7 @@ public class AmmoBox : MonoBehaviour, IDetectable, IInteractable
                 gun.AddSpareAmmo(fillAmount);
 
                 IsLockInteract = true;
+                IsLockDetect = true;
                 _outline.enabled = false;
             }
         }
