@@ -12,7 +12,7 @@ public class UI_StaminaBar : UI_Base
         StaminaDamageBar,
         StaminaBar,
     }
-    void Start()
+    void OnEnable()
     {
        PlayerEvent.OnStaminaChanged += SetStaminaRatio;
     }
@@ -32,6 +32,8 @@ public class UI_StaminaBar : UI_Base
     float _lastFillAmount = -1;
     public void SetStaminaRatio(float curvalue)
     {
+        if (!_init) return;
+
         float max = StageManager.Instance.PlayerController.GetComponent<PlayerCondition>().stamina.maxValue;
         float ratio = Mathf.Clamp01(curvalue / max);
         float scaledRatio = ratio * clampratio;
