@@ -13,7 +13,7 @@ public class StageManager : MonoBehaviour
 
     public event UnityAction<StageObjective> OnChangedObjective;
     public event Action OnClearStage;
-
+    public Action OnFailStage;
 
     [field: SerializeField] public PlayerController PlayerController { get; private set; }
 

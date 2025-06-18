@@ -6,6 +6,7 @@ public class Gun : Weapon
 {
     public enum FireMode { Single, Auto }
 
+    public FireMode CurFireMode => fireMode;
     public int CurAmmo { get { return curAmmo; } }
     public int MaxAmmo { get { return maxAmmo; } }
     public int SpareAmmo { get { return spareAmmo; } }
@@ -223,17 +224,9 @@ public class Gun : Weapon
     public void AddSpareAmmo(int count)
     {
         spareAmmo += count;
-        
-        PlayerEvent.OnUpdateBullet?.Invoke(spareAmmo, curAmmo);
     }
 
 
-    private void SpawnBulletDecal(RaycastHit hit)
-    {
-        Vector3 position = hit.point + hit.normal * 0.01f;
-        Quaternion rotation = Quaternion.LookRotation(hit.normal); 
 
-        Instantiate(bulletDecalPrefab, position, rotation);
-    }
 
 }
