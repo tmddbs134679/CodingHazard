@@ -21,7 +21,24 @@ public class PlayerController : MonoBehaviour
     public bool isSprintHold => (playerActions.Sprint.IsPressed() 
                                  && (Condition.stamina.curValue > 0f));
     public bool isReloading = false;
-    public bool isReloadPressed => playerActions.Reloading.WasPressedThisFrame();
+
+    public bool isReloadPressed
+    {
+        get
+        {
+            if (playerActions.Reloading.WasPressedThisFrame())
+            {
+                if (WeaponManager.CurrentWpeaWeapon is Gun gun)
+                {
+                    if (gun.CurAmmo < gun.MaxAmmo)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+    }
     public bool isAiming = false;
     public bool isAimHold => playerActions.Aiming.IsPressed();
     public bool isAttacking = false;

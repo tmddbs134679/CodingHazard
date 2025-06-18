@@ -6,7 +6,7 @@ public class Gun : Weapon
 {
     public enum FireMode { Single, Auto }
 
-    public int CuAmmo { get { return curAmmo; } }
+    public int CurAmmo { get { return curAmmo; } }
     public int MaxAmmo { get { return maxAmmo; } }
     public int SpareAmmo { get { return spareAmmo; } }
 
@@ -55,34 +55,49 @@ public class Gun : Weapon
     {
         base.OnEnable();
         PlayerEvent.Aiming += ZoomWeapon;
-        PlayerEvent.OnReLoad += ReLoading;
+        PlayerEvent.Reload += PlayReloadAnimation;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
         PlayerEvent.Aiming -= ZoomWeapon;
-        PlayerEvent.OnReLoad -= ReLoading;
+        PlayerEvent.Reload -= PlayReloadAnimation;
     }
 
     protected void Update()
     {
         base.Update();
     }
+
+
+    public void Reload()
+    {
+        if (curAmmo < maxAmmo && spareAmmo > 0)
+        {
+            int neededAmmo = maxAmmo - curAmmo;
+
+
+            if (spareAmmo >= neededAmmo)
+            {
+                curAmmo += neededAmmo;
+                spareAmmo -= neededAmmo;
+            }
+
+            else
+            {
+                curAmmo += spareAmmo;
+                spareAmmo = 0;
+            }
+        }
+    }
     
 
-    private void SpawnBulletDecal(RaycastHit hit)
-    {
-        Vector3 position = hit.point + hit.normal * 0.01f;
-        Quaternion rotation = Quaternion.LookRotation(hit.normal); 
-
-        Instantiate(bulletDecalPrefab, position, rotation);
-    }
-
-    private void ReLoading()
+    private void PlayReloadAnimation()
     {
         WeaponAnimator.SetTrigger(ReLoadingTrigger);
 
+        /*
         if (curAmmo < maxAmmo && spareAmmo > 0)
         {
             int neededAmmo = maxAmmo - curAmmo;
@@ -101,7 +116,7 @@ public class Gun : Weapon
             }
         }
 
-        PlayerEvent.OnUpdateBullet?.Invoke(spareAmmo, curAmmo);
+        PlayerEvent.OnUpdateBullet?.Invoke(spareAmmo, curAmmo);*/
     }
 
     private void ZoomWeapon(bool isZoom)
@@ -208,9 +223,17 @@ public class Gun : Weapon
     public void AddSpareAmmo(int count)
     {
         spareAmmo += count;
+        
+        PlayerEvent.OnUpdateBullet?.Invoke(spareAmmo, curAmmo);
     }
 
 
+    private void SpawnBulletDecal(RaycastHit hit)
+    {
+        Vector3 position = hit.point + hit.normal * 0.01f;
+        Quaternion rotation = Quaternion.LookRotation(hit.normal); 
 
+        Instantiate(bulletDecalPrefab, position, rotation);
+    }
 
 }

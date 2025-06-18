@@ -24,12 +24,21 @@ public class WeaponManager : MonoBehaviour
 
     private Dictionary<WeaponType, Weapon> _weaponSlots = new();
 
-
+    private List<GameObject> _weapons = new();
+    
     private void Awake()
     {
         for (int i = 0; i < weaponPrefabs.Length; i++)
         {
-            _weaponSlots[(WeaponType)i] = weaponPrefabs[i].GetComponentInChildren<Weapon>();
+            GameObject newWeaponGO = Instantiate(weaponPrefabs[i], weaponAnchor,false);
+            newWeaponGO.transform.localPosition = weaponPrefabs[i].transform.localPosition;
+            newWeaponGO.transform.localRotation = weaponPrefabs[i].transform.localRotation;
+            
+            newWeaponGO.SetActive(false);
+            
+            _weapons.Add(newWeaponGO);
+            
+            _weaponSlots[(WeaponType)i] = newWeaponGO.GetComponentInChildren<Weapon>();
         }
     }
 
@@ -37,6 +46,7 @@ public class WeaponManager : MonoBehaviour
     private void Start()
     {
         PlayerEvent.Swap  += EquipWeapon;
+        
 
         EquipWeapon(0);
     }
@@ -51,18 +61,24 @@ public class WeaponManager : MonoBehaviour
 
         if (_currentWeaponGO != null)
         {
-            Destroy(_currentWeaponGO);
-            _currentWeaponGO = null;
+            _currentWeaponGO.SetActive(false);
+            
+            //Destroy(_currentWeaponGO);
+            //_currentWeaponGO = null;
         }
-       
 
-        GameObject newWeaponGO = Instantiate(weaponPrefabs[index], weaponAnchor,false);
+        _currentWeaponGO = _weapons[index];
+        _currentWeaponGO.SetActive(true);
+        
+        _curWeaponIndex = index;
+        _currentWeapon = _weaponSlots[(WeaponType)_curWeaponIndex];
+        
+        /*GameObject newWeaponGO = Instantiate(weaponPrefabs[index], weaponAnchor,false);
         newWeaponGO.transform.localPosition = weaponPrefabs[index].transform.localPosition;
         newWeaponGO.transform.localRotation = weaponPrefabs[index].transform.localRotation;
 
-        _currentWeaponGO = newWeaponGO;
-        _curWeaponIndex = index;
-        _currentWeapon = _weaponSlots[(WeaponType)_curWeaponIndex];
+        _currentWeaponGO = newWeaponGO;*/
+      
 
         
         //_currentWeapon = newWeaponGO.GetComponentInChildren<Weapon>();
