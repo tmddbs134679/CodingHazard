@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Rendering;
 
+
 public class AudioManager : Singleton<AudioManager>
 {
     private Dictionary<AudioID, AudioEntry> _audioEntries = new();
