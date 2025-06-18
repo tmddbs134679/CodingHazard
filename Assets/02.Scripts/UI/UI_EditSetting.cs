@@ -45,6 +45,7 @@ public class UI_EditSetting : UI_Base
         Time.timeScale = 0;
         
         _DisplayPopup.gameObject.SetActive(true);
+        AudioManager.Instance.PlayAudio(AudioID.EnterUI, 0.5f);
     }
 
     private void OnDisable()
@@ -79,6 +80,7 @@ public class UI_EditSetting : UI_Base
         TogglesInit();
         GetToggle((int)Toggles.DisplayToggle).gameObject.GetComponent<Toggle>().isOn = true;
         OnClickDisplayToggle();
+
 
         _AudioPopup.gameObject.SetActive(false);
 
