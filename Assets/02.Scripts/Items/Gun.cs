@@ -47,6 +47,9 @@ public class Gun : Weapon
     private Camera mainCam;
     private bool isZoom = false;
 
+    private float timer;
+    private float interval = 0.35f;
+
 
     protected void Start()
     {
@@ -111,6 +114,16 @@ public class Gun : Weapon
     {
         if (curAmmo <= 0)
         {
+            timer -= Time.deltaTime;
+            if (timer <= 0f)
+            {
+                AudioManager.Instance.PlayAudio(AudioID.EmptyGun, 0.3f);
+                
+                Debug.Log(1);
+                
+                timer = interval;
+            }
+            
             return;
         }
         base.Fire();

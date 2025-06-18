@@ -2745,25 +2745,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 6372134418788297312}
     m_Modifications:
     - target: {fileID: 189590087450581915, guid: ad90a3ab56919fe4097de62ce95910b5, type: 3}
-      propertyPath: fireRate
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 189590087450581915, guid: ad90a3ab56919fe4097de62ce95910b5, type: 3}
       propertyPath: playerArm
       value: 
       objectReference: {fileID: 1603891455436130839}
     - target: {fileID: 189590087450581915, guid: ad90a3ab56919fe4097de62ce95910b5, type: 3}
-      propertyPath: DropObject
-      value: 
-      objectReference: {fileID: 100000, guid: 4e966f021159c3f4893bd5340fad7cd3, type: 3}
-    - target: {fileID: 189590087450581915, guid: ad90a3ab56919fe4097de62ce95910b5, type: 3}
       propertyPath: WeaponAnimator
       value: 
       objectReference: {fileID: 4555474633825793865}
-    - target: {fileID: 189590087450581915, guid: ad90a3ab56919fe4097de62ce95910b5, type: 3}
-      propertyPath: hitLayer.m_Bits
-      value: 512
-      objectReference: {fileID: 0}
     - target: {fileID: 2731910635836497707, guid: ad90a3ab56919fe4097de62ce95910b5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.12

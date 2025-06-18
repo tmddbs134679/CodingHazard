@@ -11,12 +11,12 @@ public enum AudioID
     EnterUI,
     PlayerInteract,
     Reload,
+    AxeSwap,
     AxeAttack,
     AxeHit,
     PlayerHurt,
     Environment,
-    WeaponSwap
-
+    EmptyGun
 }
 
 
