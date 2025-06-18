@@ -51,16 +51,16 @@ public class UI_EditSetting : UI_Base
     private void OnDisable()
     {
         if (_DisplayPopup == null || _AudioPopup == null) return;
+        
+        _DisplayPopup.gameObject.SetActive(false);
+        _AudioPopup.gameObject.SetActive(false);
+        
+        Time.timeScale = 1;
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         
         StageManager.Instance.PlayerController.UnblockInput();
-        
-        Time.timeScale = 1;
-        
-        _DisplayPopup.gameObject.SetActive(false);
-        _AudioPopup.gameObject.SetActive(false);
     }
     public override bool Init()
     {
