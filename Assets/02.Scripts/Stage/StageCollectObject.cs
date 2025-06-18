@@ -19,7 +19,10 @@ public class StageCollectObject : StageObjectiveObject, IInteractable, IDetectab
     
     public void Collect()
     {
-        _outline.enabled = false;
+        if (_outline != null)
+        {
+            _outline.enabled = false;
+        }
         
         StageManager.Instance.UpdateObjectives(this);
     }
@@ -32,7 +35,10 @@ public class StageCollectObject : StageObjectiveObject, IInteractable, IDetectab
 
     public void Exit()
     {
-        _outline.enabled = false;
+        if (_outline != null)
+        {
+            _outline.enabled = false;
+        }
     }
     
 
