@@ -27,6 +27,7 @@ public class PlayerCondition : MonoBehaviour
         // Dead
         if (hp.CurValue <= 0f)
         {
+            StageManager.Instance.PlayerController.BlockInput();
             StageManager.Instance.OnFailStage?.Invoke();
         }
     }
