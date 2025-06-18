@@ -15,7 +15,8 @@ public enum AudioID
     AxeAttack,
     AxeHit,
     PlayerHurt,
-    Environment
+    Environment,
+    EmptyGun
 }
 
 
