@@ -1,4 +1,4 @@
-
+﻿
 
 public enum AudioType { Master, BGM, SFX }
 
@@ -11,6 +11,9 @@ public enum AudioID
     EnterUI,
     PlayerInteract,
     Reload,
+    AxeSwap,
+    AxeAttack,
+    AxeHit
 }
 
 
