@@ -48,15 +48,6 @@ public class WeaponManager : MonoBehaviour
 
     private void EquipWeapon(int index)
     {
-        if (!_isStart)
-        {
-            AudioManager.Instance.PlayAudio(AudioID.WeaponSwap, 1f);
-        }
-        else
-        {
-            _isStart = false;
-        }
-
         if (index == _curWeaponIndex || index >= weapons.Length)
         {
             return;
@@ -69,6 +60,18 @@ public class WeaponManager : MonoBehaviour
             //Destroy(_currentWeaponGO);
             //_currentWeaponGO = null;
         }
+        
+        if (!_isStart)
+        {
+            AudioManager.Instance.PlayAudio(AudioID.WeaponSwap, 1f);
+        }
+        else
+        {
+            _isStart = false;
+        }
+        
+        PlayerEvent.Aiming?.Invoke(false);
+
 
         _currentWeaponGO = weapons[index];
         _currentWeaponGO.SetActive(true);
