@@ -21,12 +21,7 @@ public class ChaseNode : ActionNode
 
         enemy.Controller.StartMove();
         float distance = Vector3.Distance(enemy.detection.Target.transform.position, enemy.transform.position);
-     
-        if (distance < 3.0f)
-        {
-            enemy.Controller.Agent.isStopped = true;
-            return BT.State.Sucess;
-        }
+        enemy.Controller.Agent.isStopped = false;
        
         enemy.Controller.MoveTo(enemy.detection.Target.transform.position, true);
         Debug.Log("플레이어 위치"+enemy.detection.Target.transform.position);

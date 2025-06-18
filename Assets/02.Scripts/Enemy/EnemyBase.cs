@@ -183,22 +183,10 @@ public class EnemyBase : MonoBehaviour
 
     IEnumerator AttackE()
     {
-        Vector3 dir = (detection.Target.transform.position - transform.position);
+        Vector3 dir = (detection.Target.transform.position - transform.position).normalized;
         dir.y = 0;
 
-        while (dir != Vector3.zero)
-        {
-            Quaternion targetRot = Quaternion.LookRotation(dir);
-            float angle = Quaternion.Angle(transform.rotation, targetRot);
-
-            if (angle < 10f) break; 
-
-            controller.Look(dir);
-            yield return null;
-
-            dir = detection.Target.transform.position - transform.position;
-            dir.y = 0;
-        }
+        transform.rotation = Quaternion.LookRotation(dir);
         animator.applyRootMotion = true;
         isAttack = true;
             animator.SetBool(aniPara.AttackParaHash, true);
