@@ -31,7 +31,7 @@ public class HitBox : MonoBehaviour
         );
         blood.transform.SetParent(enemy.transform);
         
-        Destroy(blood, 1f);
+        Destroy(blood, 0.5f);
     }
     public void Damaged(float dmg,Vector3 pos, Vector3 normal)
     {

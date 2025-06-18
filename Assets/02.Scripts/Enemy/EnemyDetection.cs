@@ -14,6 +14,7 @@ public class EnemyDetection :MonoBehaviour
     private float alertLevel;
     [SerializeField]
     private LayerMask obstacleMask;
+    public bool isRun=true;
     private PlayerCondition target; //아직 모르겠지만 플레이어 스크립트로 변경 필요
     public PlayerCondition Target { get { return target; } }
     public AlertState State {  get { return state; } }
@@ -53,12 +54,14 @@ public class EnemyDetection :MonoBehaviour
        
 
     }
+    
     private void ChangeState(AlertState st)
     {
         if(st== state)
             return; 
         if(st==AlertState.Calm)
         {
+            if(state == AlertState.Suspicious) 
             MonsterManager.Instance.Suspicious(false);
             state = st;
             return;
@@ -79,8 +82,14 @@ public class EnemyDetection :MonoBehaviour
             state = st; return;
         }
     }
+    private void Start()
+    {
+        isRun = true;
+    }
     public void Update()
     {
+        if(!isRun)
+            return;
         if(alertLevel>=0)
         alertLevel-=Time.deltaTime;
         if (alertLevel >= 30)

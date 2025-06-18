@@ -86,11 +86,14 @@ public class EnemyBase : MonoBehaviour
    
     public void Dead()
     {
+        if(isDead) return;
         isDead=true;
         Debug.Log("»ç¸Á");
+        StopAllCoroutines();
         if (DeadC == null)
             DeadC = StartCoroutine(MotionE2(aniPara.DeadParaHash));
         sound.PlaySound(EnemySound.monSound.Dead);
+        detection.isRun = false;
         MonsterManager.Instance.Dead(this);
         PlayerEvent.OnKillConfirmed?.Invoke();
         OnDead.Invoke();
@@ -174,13 +177,7 @@ public class EnemyBase : MonoBehaviour
         }
 
     }
-    public void DeadMotion()
-    {
-        //StopAllCoroutines();
-        if (DeadC == null)
-            DeadC = StartCoroutine(MotionE2(aniPara.DeadParaHash));
-       
-    }
+ 
  
     void Attack()
     {
