@@ -5,6 +5,17 @@
 
 ---
 
+## 🧑‍💻 개발 정보
+
+### 🕒 개발 기간
+- **2025.06.12 ~ 2025.06.18 (약 7일)**  
+  기획부터 프로토타입, 주요 시스템 구현 및 리팩토링까지 포함된 전체 기간입니다.
+
+### 👥 개발 인원
+- **5인 개발**
+  - 기획, 디자인, 프로그래밍, 애니메이션, 이펙트, 사운드 조정 모두 직접 수행  
+
+
 ## 📽️ 주요 기능
 
 ### 🏠 1. 로비 시스템
@@ -40,6 +51,7 @@
 
 ### 👁️ 5. 좀비 시야 감지 시스템
 > 좀비는 특정 거리 내의 플레이어를 감지할 수 있습니다.
+> 몬스터는 소음을 감지하여 경계 레벨을 변경합니다.
 > 좀비에게 발각되면 플레이어 UI로 확인할 수 있습니다.
 > 
 ![zombie_vision.gif](https://github.com/PKingTeak/CodingHazard/blob/main/Assets/gif/Detect.gif)
@@ -130,3 +142,18 @@
 
 ## 🗂️ 프로젝트 구조
 > ???
+
+---
+
+### 🧰 사용 에셋 및 외부 리소스
+- [FREE Shirtless Zombie](https://assetstore.unity.com/packages/3d/characters/humanoids/free-shirtless-zombie-276762) (좀비 모델 및 애니메이션)
+- [Starfield Skybox](https://assetstore.unity.com/packages/2d/textures-materials/sky/8k-skybox-pack-free-150926) (스카이박스)
+- [RPG/FPS Game Assets for PC/Mobile (Industrial Set v3.0)](https://assetstore.unity.com/packages/3d/environments/industrial/rpg-fps-game-assets-for-pc-mobile-industrial-set-v3-0-101429) (Map)
+- [Survival Props Pack 1.0](https://assetstore.unity.com/packages/3d/props/survival-props-pack-1-0-312823) (Props)
+- [Quick Outline](https://assetstore.unity.com/packages/tools/particles-effects/quick-outline-115488) (Outline)
+- [Ammo](https://assetstore.unity.com/packages/3d/props/ammo-157327) (탄약 상자)
+- [UX Flat Icons [Free]](
+- [Universal Render Pipeline (URP)](https://assetstore.unity.com/packages/2d/gui/icons/ux-flat-icons-free-202525) (UI Icon)
+- [Classic Footstep SFX](https://assetstore.unity.com/packages/audio/sound-fx/classic-footstep-sfx-173668) (Player Sound)
+- [Free Sound Effects Pack](https://assetstore.unity.com/packages/audio/sound-fx/free-sound-effects-pack-155776) (Game Sound)
+- 그 외 무료/CC0 사운드 및 이미지 리소스 사용
