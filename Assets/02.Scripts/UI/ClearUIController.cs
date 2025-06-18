@@ -45,6 +45,8 @@ public class ClearUIController : MonoBehaviour
         yield return _popup.FadeInCoroutine();             // 1. FadeIn 완료 대기
         yield return _popup.ToastCoroutine();               // 2. Toast 애니메이션 완료 대기
         yield return _popup.StartCreditScrollCoroutine(); // 3. 크레딧 스크롤 완료 대기
+        yield return _popup.ButtonActive();
+
     }
 
 

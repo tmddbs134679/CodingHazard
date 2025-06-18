@@ -31,7 +31,6 @@ public abstract class Weapon : MonoBehaviour
     #region Sound & Animation
     [SerializeField] protected Animator WeaponAnimator;
     [SerializeField] protected GameObject playerArm;
-    #endregion
 
     
     protected static readonly int IsAiming = Animator.StringToHash("IsAiming");
@@ -40,6 +39,7 @@ public abstract class Weapon : MonoBehaviour
     protected static readonly int AimFireTrigger = Animator.StringToHash("AimFire");
     protected static readonly int FireTrigger = Animator.StringToHash("Fire"); //일단 칼은 이거 그대로 가져가서 사용함
 
+    #endregion
     protected bool isShootable;
     protected float lastFireTime;
 
@@ -69,7 +69,7 @@ public abstract class Weapon : MonoBehaviour
 
     public virtual void Fire()
     {
-        if (Time.time < lastFireTime + fireRate)
+        if (!GetFirerate())
         {
             isShootable = false;
         }
@@ -155,6 +155,10 @@ public abstract class Weapon : MonoBehaviour
         this.gameObject.SetActive(true);
     }
 
+    public bool GetFirerate()
+    {
+        return Time.time >= lastFireTime + fireRate;  
+    }
     protected void PlayAttackAnimation(bool isAiming)
     {
         if (WeaponAnimator == null)

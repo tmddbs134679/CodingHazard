@@ -27,7 +27,10 @@ public class AmmoBox : MonoBehaviour, IDetectable, IInteractable
 
     public void Exit()
     {
-        _outline.enabled = false;
+        if (_outline != null)
+        {
+            _outline.enabled = false;
+        }
     }
 
     public void Interact()

@@ -1,27 +1,33 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
     public float interactableDistance = 3f;
+    public float detectionRadius = 10f;
+    
     public LayerMask interactableLayer;
+    
     public float checkRate = 0.05f;
+    
     private float lastCheckTime;
 
-    private IInteractable currentTargetItem;
-
-    public float detectionRadius = 10f;
-    private Vector3 playerPos;
+ 
     private HashSet<IDetectable> preDetectedItems = new();
+
+    private IInteractable _currentInteractable;
+
+    private Camera _mainCamera;
 
     public TextMeshProUGUI itemText;
 
     private void Start()
     {
+        _mainCamera = Camera.main;
+        
         StartCoroutine(ItemDetectorLoop());
     }
 
@@ -31,14 +37,39 @@ public class PlayerInteraction : MonoBehaviour
         {
             lastCheckTime = Time.time;
             
-            Ray ray = GetComponentInChildren<Camera>().ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+            Ray ray = _mainCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+            
             RaycastHit hit;
             
             Debug.DrawRay(ray.origin, ray.direction * interactableDistance, Color.red, 0.1f);
-            
+
             if (Physics.Raycast(ray, out hit, interactableDistance, interactableLayer))
             {
-                IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+                if (hit.collider != null)
+                {
+                    if (hit.collider.TryGetComponent(out IInteractable interactable))
+                    {
+                        if (!interactable.IsLockInteract)
+                        {
+                            if (interactable != _currentInteractable)
+                            {
+                                PlayerEvent.OnItemCheck.Invoke(interactable);
+
+                                _currentInteractable = interactable;
+                            }
+
+                            return;
+                        }
+                    }
+                }
+            }
+            
+            
+            _currentInteractable = null;
+            
+            itemText.gameObject.SetActive(false);
+
+            /*IInteractable interactable = hit.collider.GetComponent<IInteractable>();
 
                 if (interactable != null)
                 {
@@ -66,7 +97,7 @@ public class PlayerInteraction : MonoBehaviour
             {
                 currentTargetItem = null;
                 itemText.gameObject.SetActive(false);
-            }
+            }*/
         }
     }
     
@@ -84,9 +115,8 @@ public class PlayerInteraction : MonoBehaviour
 
     private void DetectItems()
     {
-        playerPos = gameObject.transform.position;
+        Collider[] detectedColliders = Physics.OverlapSphere(transform.position, detectionRadius, interactableLayer);
         
-        Collider[] detectedColliders = Physics.OverlapSphere(playerPos, detectionRadius, interactableLayer);
         HashSet<IDetectable> curDetectedItems = new();
         
         foreach (Collider col in detectedColliders)
@@ -107,11 +137,16 @@ public class PlayerInteraction : MonoBehaviour
 
         foreach (var preItem in preDetectedItems)
         {
+            if (preItem == null)
+                continue;
+
             if (!curDetectedItems.Contains(preItem))
             {
                 preItem.Exit();
             }
         }
+        
+        preDetectedItems.RemoveWhere(item => item == null);
 
         preDetectedItems = curDetectedItems;
     }
@@ -119,15 +154,17 @@ public class PlayerInteraction : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(playerPos, detectionRadius);
+        
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
 
     
     public void OnInteractInput()
     {
-        if (currentTargetItem != null)
+        if (_currentInteractable != null)
         {
-            currentTargetItem.Interact();
+            _currentInteractable.Interact();
+            AudioManager.Instance.PlayAudio(AudioID.PlayerInteract, 0.2f);
             itemText.gameObject.SetActive(false);
         }
     }

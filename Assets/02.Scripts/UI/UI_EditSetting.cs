@@ -31,21 +31,36 @@ public class UI_EditSetting : UI_Base
     }
     #endregion
 
-    //ÀÓ½Ã ¿¬°á
+    //ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½
     [SerializeField] private UI_AudioPopup _AudioPopup;
     [SerializeField] private UI_DisplayPopup _DisplayPopup;
 
     private void OnEnable()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        
+        StageManager.Instance.PlayerController.BlockInput();
+
+        Time.timeScale = 0;
+        
         _DisplayPopup.gameObject.SetActive(true);
+        AudioManager.Instance.PlayAudio(AudioID.EnterUI, 0.5f);
     }
 
     private void OnDisable()
     {
         if (_DisplayPopup == null || _AudioPopup == null) return;
-
+        
         _DisplayPopup.gameObject.SetActive(false);
         _AudioPopup.gameObject.SetActive(false);
+        
+        Time.timeScale = 1;
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        
+        StageManager.Instance.PlayerController.UnblockInput();
     }
     public override bool Init()
     {
@@ -57,7 +72,7 @@ public class UI_EditSetting : UI_Base
         BindToggle(typeof(Toggles));
   
 
-        // Åä±Û Å¬¸¯ ½Ã Çàµ¿
+        // ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ ï¿½ï¿½ ï¿½àµ¿
         GetToggle((int)Toggles.DisplayToggle).gameObject.BindEvent(OnClickDisplayToggle);
         GetToggle((int)Toggles.AudioToggle).gameObject.BindEvent(OnClickAudioToggle);
         #endregion
@@ -65,6 +80,7 @@ public class UI_EditSetting : UI_Base
         TogglesInit();
         GetToggle((int)Toggles.DisplayToggle).gameObject.GetComponent<Toggle>().isOn = true;
         OnClickDisplayToggle();
+
 
         _AudioPopup.gameObject.SetActive(false);
 
@@ -80,8 +96,8 @@ public class UI_EditSetting : UI_Base
     void OnClickDisplayToggle()
     {
         ShowUI(_DisplayPopup.gameObject, GetObject((int)GameObjects.CheckDisplaymarkObject));
-
-        //ÀÏ´Ü ²ô±â
+        
+        //ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
         _AudioPopup.gameObject.SetActive(false);
     }
 
@@ -94,7 +110,7 @@ public class UI_EditSetting : UI_Base
     private void ShowUI(GameObject Popup, GameObject checkmark)
     {
         TogglesInit();
-
+        
         Popup.SetActive(true);
         checkmark.SetActive(true);
 

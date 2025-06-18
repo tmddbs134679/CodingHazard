@@ -196,7 +196,7 @@ public class UI_GameScene : UI_Base
         Color color = GetImage((int)Images.BloodScreen).color;
         color.a = 0f;
         GetImage((int)Images.BloodScreen).color = color;
-        _bloodTween = GetImage((int)Images.BloodScreen).DOFade(0.3f, 0.2f)
+        _bloodTween = GetImage((int)Images.BloodScreen).DOFade(0.2f, 0.2f)
             .SetLoops(2, LoopType.Yoyo)
             .SetEase(Ease.InOutSine);
     }

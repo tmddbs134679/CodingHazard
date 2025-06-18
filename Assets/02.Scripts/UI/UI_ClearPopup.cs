@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class UI_ClearPopup : UI_Base
 {
@@ -15,9 +17,13 @@ public class UI_ClearPopup : UI_Base
     enum Texts
     {
         ToastPopupText,
-        TeamNameText
+        TeamNameText,
+        ButtonText,
     }
-
+    enum Buttons
+    {
+        TouchScreen,
+    }
     enum Images
     {
         background,
@@ -34,6 +40,7 @@ public class UI_ClearPopup : UI_Base
         BindObject(typeof(GameObjects));
         BindText(typeof(Texts));
         BindImage(typeof(Images));
+        BindButton(typeof(Buttons));
         #endregion
 
 
@@ -44,7 +51,7 @@ public class UI_ClearPopup : UI_Base
     {
         Init();
         GetImage((int)Images.background).gameObject.SetActive(false);
-
+        GetButton((int)Buttons.TouchScreen).gameObject.SetActive(false);
         #region Color √ ±‚»≠
 
         Color c = GetText((int)Texts.ToastPopupText).color;
@@ -53,7 +60,15 @@ public class UI_ClearPopup : UI_Base
         GetText((int)Texts.ToastPopupText).gameObject.SetActive(false);
 
         #endregion
+
+        GetButton((int)Buttons.TouchScreen).gameObject.BindEvent(OnClickScreenButton);
     }
+
+    private void OnClickScreenButton()
+    {
+        SceneManager.LoadScene(1);
+    }
+
     public IEnumerator StartCreditScrollCoroutine()
     {
         var rt = GetObject((int)GameObjects.TextObject).GetComponent<RectTransform>();
@@ -86,4 +101,17 @@ public class UI_ClearPopup : UI_Base
             .SetEase(Ease.Linear)
             .WaitForCompletion();
     }
+
+    public IEnumerator ButtonActive()
+    {
+
+        yield return GetObject((int)GameObjects.TextObject).GetComponent<CanvasGroup>().DOFade(0f, 1f).SetEase(Ease.OutQuad).WaitForCompletion();
+
+        //GetButton((int)Buttons.TouchScreen).gameObject.SetActive(true);
+        //yield return GetText((int)Texts.ButtonText).DOFade(1f, 1f).SetEase(Ease.InQuad).WaitForCompletion();
+
+        SceneManager.LoadScene(1);
+    }
+
+
 }

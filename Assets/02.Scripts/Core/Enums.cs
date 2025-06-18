@@ -1,4 +1,4 @@
-
+﻿
 
 public enum AudioType { Master, BGM, SFX }
 
@@ -7,11 +7,16 @@ public enum AudioID
     AkFire,
     PlayerWalk1,
     PlayerWalk2,
-    ZombieWalk,
-    ZombieRun,
-    ZombieAttack,
-    ZombieDamaged,
-    ZombieDead
+    ClickUI,
+    EnterUI,
+    PlayerInteract,
+    Reload,
+    AxeSwap,
+    AxeAttack,
+    AxeHit,
+    PlayerHurt,
+    Environment,
+    EmptyGun
 }
 
 

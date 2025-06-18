@@ -53,6 +53,8 @@ public class StageManager : MonoBehaviour
                 CurObjective.Enter();
             }
         }
+        
+        AudioManager.Instance.PlayAudio(AudioID.Environment, 1f);
     }
     
 

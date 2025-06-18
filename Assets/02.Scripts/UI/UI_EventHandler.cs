@@ -25,6 +25,7 @@ public class UI_EventHandler : MonoBehaviour, IPointerEnterHandler, IPointerExit
         if (OnClickHandler != null)
         {
             OnClickHandler.Invoke();
+            AudioManager.Instance.PlayAudio(AudioID.ClickUI, 0.3f);
         }
     }
 

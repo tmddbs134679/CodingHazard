@@ -1,4 +1,4 @@
-using DG.Tweening;
+ï»¿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 public class UI_HPBar : UI_Base
 {
-    private const float clampratio = 0.35f; //0.35 ~ 0 À» 1ºÎÅÍ 0ºñÀ²·Î ¸ÂÃß´Â °ª
+    private const float clampratio = 0.35f; //0.35 ~ 0 ï¿½ï¿½ 1ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß´ï¿½ ï¿½ï¿½
     enum Images
     {
         HPDamageBar,
@@ -15,7 +15,6 @@ public class UI_HPBar : UI_Base
     public void OnEnable()
     {
         PlayerEvent.OnHpChanged += SetHpRatio;
-
     }
 
     public void OnDisable()

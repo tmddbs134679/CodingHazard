@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,10 +19,26 @@ public class PlayerController : MonoBehaviour
     public bool isCrouching = false;
     public bool isSprinting = false;
     public bool canSprint = false;
-    public bool isSprintHold => (playerActions.Sprint.IsPressed() 
-                                 && (Condition.stamina.curValue > 0f));
+    public bool isSprintHold => (playerActions.Sprint.IsPressed() && (Condition.stamina.curValue > 0f));
     public bool isReloading = false;
-    public bool isReloadPressed => playerActions.Reloading.WasPressedThisFrame();
+
+    public bool isReloadPressed
+    {
+        get
+        {
+            if (playerActions.Reloading.WasPressedThisFrame())
+            {
+                if (WeaponManager.CurrentWpeaWeapon is Gun gun)
+                {
+                    if (gun.CurAmmo < gun.MaxAmmo)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+    }
     public bool isAiming = false;
     public bool isAimHold => playerActions.Aiming.IsPressed();
     public bool isAttacking = false;
@@ -101,10 +118,10 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         if (IsInputBlocked) return;
-        
+
         // Player 시선에 따른 카메라 이동
         //Look();
-        
+        FireInput();
         fpsVirtualCamera.MouseDelta = playerActions.Look.ReadValue<Vector2>();
 
         if (Condition.stamina.CurValue <= 0f)
@@ -183,9 +200,6 @@ public class PlayerController : MonoBehaviour
     
     public void Attack()
     {
-        
-        Debug.Log("PlayerController Attack Method");
-        fpsVirtualCamera.PlayRecoilToFire(Vector3.one);
         PlayerEvent.OnAttack?.Invoke();
         //공격 입력시 호출해주고 무기에서 Fire구독해서 사용할예정
         
@@ -195,5 +209,39 @@ public class PlayerController : MonoBehaviour
         
             // 주/보조 무기(총)일 경우 총을 쏘는 Method 실행
         */
+    }
+
+
+    private void FireInput()
+    {
+        if (!(WeaponManager.CurrentWpeaWeapon is Gun))
+        {
+            return;
+        }
+
+        Gun gun = (Gun)WeaponManager.CurrentWpeaWeapon;
+
+        if (gun.CurFireMode == Gun.FireMode.Auto)
+        {
+            if (playerActions.Attack.IsPressed() && gun.GetFirerate())
+            {
+                Attack();
+            }
+        }
+
+        else
+        {
+            if (playerActions.Attack.WasPressedThisFrame())
+            {
+                Attack();
+            }
+        }
+       
+
+        //뭐가 필요하지??
+        //눌렸나? 클릭인가? 총종류가 뭔가 이걸 총에서 해야하나?? x 총은 쏘기만 담당하기로 
+
+
+
     }
 }

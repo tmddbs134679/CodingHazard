@@ -65,6 +65,8 @@ public class FPSVirtualCamera : MonoBehaviour
 
         _gameSettingManager.OnChangedMouseSensitivity += ChangeMouseSensitivity;
         
+        PlayerEvent.OnTakeDamaged += PlayHitFeedback;
+
         
         ChangeFOV(_gameSettingManager.FOV);
         ChangeAntiMode(_gameSettingManager.AntialiasingMode);
@@ -72,6 +74,7 @@ public class FPSVirtualCamera : MonoBehaviour
         
         
         _defaultLocalPos = cameraRoot.localPosition;
+
     }
 
     private void OnDestroy()
@@ -81,6 +84,8 @@ public class FPSVirtualCamera : MonoBehaviour
         _gameSettingManager.OnChangedAntialiasingMode -= ChangeAntiMode;
 
         _gameSettingManager.OnChangedMouseSensitivity -= ChangeMouseSensitivity;
+        
+        PlayerEvent.OnTakeDamaged -= PlayHitFeedback;
     }
 
 
@@ -112,7 +117,6 @@ public class FPSVirtualCamera : MonoBehaviour
         _curRecoil = Vector3.zero;
     }
 
-    private Material mat;
     
     public void ZoomIn(float zoomValue, float duration)
     {

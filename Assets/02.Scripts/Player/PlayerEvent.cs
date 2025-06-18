@@ -8,7 +8,7 @@ public static class PlayerEvent
     public static Action OnAttack;
     public static Action OnTakeDamaged;
     public static Action<IInteractable> OnItemCheck;
-    public static Action OnReLoad;
+    public static Action Reload;
     public static Action<int,int> OnUpdateBullet;
     public static Action OnJump;
     public static Action<bool> OnSprint;
