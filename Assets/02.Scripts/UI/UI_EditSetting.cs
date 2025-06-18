@@ -31,7 +31,7 @@ public class UI_EditSetting : UI_Base
     }
     #endregion
 
-    //ÀÓ½Ã ¿¬°á
+    //ï¿½Ó½ï¿½ ï¿½ï¿½ï¿½ï¿½
     [SerializeField] private UI_AudioPopup _AudioPopup;
     [SerializeField] private UI_DisplayPopup _DisplayPopup;
 
@@ -57,7 +57,7 @@ public class UI_EditSetting : UI_Base
         BindToggle(typeof(Toggles));
   
 
-        // Åä±Û Å¬¸¯ ½Ã Çàµ¿
+        // ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ ï¿½ï¿½ ï¿½àµ¿
         GetToggle((int)Toggles.DisplayToggle).gameObject.BindEvent(OnClickDisplayToggle);
         GetToggle((int)Toggles.AudioToggle).gameObject.BindEvent(OnClickAudioToggle);
         #endregion
@@ -80,8 +80,8 @@ public class UI_EditSetting : UI_Base
     void OnClickDisplayToggle()
     {
         ShowUI(_DisplayPopup.gameObject, GetObject((int)GameObjects.CheckDisplaymarkObject));
-
-        //ÀÏ´Ü ²ô±â
+        
+        //ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
         _AudioPopup.gameObject.SetActive(false);
     }
 
@@ -94,7 +94,7 @@ public class UI_EditSetting : UI_Base
     private void ShowUI(GameObject Popup, GameObject checkmark)
     {
         TogglesInit();
-
+        
         Popup.SetActive(true);
         checkmark.SetActive(true);
 
