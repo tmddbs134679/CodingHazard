@@ -76,10 +76,11 @@ public class PlayerWalkState : PlayerBaseState
         // Aim 가능
         if (_stateMachine.Controller.isAimHold)
         {
-            if (_controller.WeaponManager.CurrentWpeaWeapon is Gun)
+            if (_controller.WeaponManager.CurrentWpeaWeapon is Gun gun)
             {
                 _stateMachine.Controller.isMoving = false;
-                _stateMachine.ChangeState(new PlayerAimState(_stateMachine));
+                
+                gun.ZoomWeapon(true);
             }
         }
         

@@ -28,4 +28,9 @@ public class GunAnimationHandler : MonoBehaviour
     {
         _playerStateMachine.ChangeState(new PlayerIdleState(_playerStateMachine));
     }
+
+    public void StartAming()
+    {
+        _playerStateMachine.ChangeState(new PlayerAimState(_playerStateMachine));
+    }
 }

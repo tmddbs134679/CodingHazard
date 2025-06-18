@@ -97,7 +97,7 @@ public class Gun : Weapon
         WeaponAnimator.SetTrigger(ReLoadingTrigger);
     }
 
-    private void ZoomWeapon(bool isZoom)
+    public void ZoomWeapon(bool isZoom)
     {
         this.isZoom = isZoom;
         WeaponAnimator.SetBool(IsAiming, isZoom);
