@@ -6,6 +6,7 @@ public class Gun : Weapon
 {
     public enum FireMode { Single, Auto }
 
+    public FireMode CurFireMode => fireMode;
     public int CuAmmo { get { return curAmmo; } }
     public int MaxAmmo { get { return maxAmmo; } }
     public int SpareAmmo { get { return spareAmmo; } }
