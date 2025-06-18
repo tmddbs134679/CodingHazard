@@ -10,7 +10,7 @@ public enum AudioID
     ClickUI,
     EnterUI,
     PlayerInteract,
-    
+    Reload,
 }
 
 

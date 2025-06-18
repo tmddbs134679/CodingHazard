@@ -15,6 +15,7 @@ public class PlayerReloadState : PlayerBaseState
         _stateMachine.Controller.isReloading = true;
         //timer = 2f; // 장전 시간 설정 / 후에 아마 애니메이션 길이로 설정
         PlayerEvent.Reload?.Invoke();
+        AudioManager.Instance.PlayAudio(AudioID.Reload, 1f);
     }
 
     public override void Update()
