@@ -2745,16 +2745,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 103859558285227509}
     m_Modifications:
     - target: {fileID: 680182615532408467, guid: 2ef791e35ae1b514fa519e6b344cf842, type: 3}
+      propertyPath: curAmmo
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 680182615532408467, guid: 2ef791e35ae1b514fa519e6b344cf842, type: 3}
+      propertyPath: maxAmmo
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 680182615532408467, guid: 2ef791e35ae1b514fa519e6b344cf842, type: 3}
       propertyPath: playerArm
       value: 
       objectReference: {fileID: 6520109395152534269}
+    - target: {fileID: 680182615532408467, guid: 2ef791e35ae1b514fa519e6b344cf842, type: 3}
+      propertyPath: spareAmmo
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 680182615532408467, guid: 2ef791e35ae1b514fa519e6b344cf842, type: 3}
       propertyPath: WeaponAnimator
       value: 
       objectReference: {fileID: 6439077386580802560}
     - target: {fileID: 680182615532408467, guid: 2ef791e35ae1b514fa519e6b344cf842, type: 3}
       propertyPath: hitLayerMask.m_Bits
-      value: 1985
+      value: 1920
       objectReference: {fileID: 0}
     - target: {fileID: 6239359517610320279, guid: 2ef791e35ae1b514fa519e6b344cf842, type: 3}
       propertyPath: m_LocalPosition.x
