@@ -54,7 +54,7 @@ public class StageManager : MonoBehaviour
             }
         }
         
-        AudioManager.Instance.PlayAudio(AudioID.Environment, 0.5f);
+        AudioManager.Instance.PlayAudio(AudioID.Environment, 1f);
     }
     
 
