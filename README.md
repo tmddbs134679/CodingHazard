@@ -63,8 +63,7 @@
 > 조준 상태와 비조준 상태로 공격이 가능하며, 각각의 상태에 따라 정확도가 달라집니다.
 #### 🎯 조준 사격
 
-![aim_fire_zombie.gif]
-(https://github.com/PKingTeak/CodingHazard/blob/main/Assets/gif/Aim.gif)
+![aim_fire_zombie.gif](https://github.com/PKingTeak/CodingHazard/blob/main/Assets/gif/Aim.gif)
 
 #### ❌ 비조준 사격
 
