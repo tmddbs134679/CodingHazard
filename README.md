@@ -152,8 +152,7 @@
 - [Survival Props Pack 1.0](https://assetstore.unity.com/packages/3d/props/survival-props-pack-1-0-312823) (Props)
 - [Quick Outline](https://assetstore.unity.com/packages/tools/particles-effects/quick-outline-115488) (Outline)
 - [Ammo](https://assetstore.unity.com/packages/3d/props/ammo-157327) (탄약 상자)
-- [UX Flat Icons [Free]](
-- [Universal Render Pipeline (URP)](https://assetstore.unity.com/packages/2d/gui/icons/ux-flat-icons-free-202525) (UI Icon)
+- [UX Flat Icons [Free]](https://assetstore.unity.com/packages/2d/gui/icons/ux-flat-icons-free-202525) (UI Icon)
 - [Classic Footstep SFX](https://assetstore.unity.com/packages/audio/sound-fx/classic-footstep-sfx-173668) (Player Sound)
 - [Free Sound Effects Pack](https://assetstore.unity.com/packages/audio/sound-fx/free-sound-effects-pack-155776) (Game Sound)
 - 그 외 무료/CC0 사운드 및 이미지 리소스 사용
