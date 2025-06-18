@@ -67,7 +67,7 @@ public class PlayerInteraction : MonoBehaviour
             
             _currentInteractable = null;
             
-           // itemText.gameObject.SetActive(false);
+            itemText.gameObject.SetActive(false);
 
             /*IInteractable interactable = hit.collider.GetComponent<IInteractable>();
 
