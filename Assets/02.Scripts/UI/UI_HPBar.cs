@@ -1,4 +1,4 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,12 +14,12 @@ public class UI_HPBar : UI_Base
     }
     public void OnEnable()
     {
-        PlayerEvent.OnHpChanged += SetHpRatio;
+      //  PlayerEvent.OnHpChanged += SetHpRatio;
     }
 
     public void OnDisable()
     {
-        PlayerEvent.OnHpChanged -= SetHpRatio;
+        //PlayerEvent.OnHpChanged -= SetHpRatio;
     }
 
     public override bool Init()

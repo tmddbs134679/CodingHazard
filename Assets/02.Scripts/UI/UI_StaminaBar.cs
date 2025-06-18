@@ -14,12 +14,12 @@ public class UI_StaminaBar : UI_Base
     }
     public void OnEnable()
     {
-       PlayerEvent.OnStaminaChanged += SetStaminaRatio;
+    //   PlayerEvent.OnStaminaChanged += SetStaminaRatio;
     }
 
     public void OnDisable()
     {
-       PlayerEvent.OnStaminaChanged -= SetStaminaRatio;
+     //  PlayerEvent.OnStaminaChanged -= SetStaminaRatio;
     }
     public override bool Init()
     {
