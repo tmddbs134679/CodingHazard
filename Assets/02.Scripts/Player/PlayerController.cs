@@ -21,7 +21,24 @@ public class PlayerController : MonoBehaviour
     public bool canSprint = false;
     public bool isSprintHold => (playerActions.Sprint.IsPressed() && (Condition.stamina.curValue > 0f));
     public bool isReloading = false;
-    public bool isReloadPressed => playerActions.Reloading.WasPressedThisFrame();
+
+    public bool isReloadPressed
+    {
+        get
+        {
+            if (playerActions.Reloading.WasPressedThisFrame())
+            {
+                if (WeaponManager.CurrentWpeaWeapon is Gun gun)
+                {
+                    if (gun.CurAmmo < gun.MaxAmmo)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+    }
     public bool isAiming = false;
     public bool isAimHold => playerActions.Aiming.IsPressed();
     public bool isAttacking = false;
@@ -183,9 +200,6 @@ public class PlayerController : MonoBehaviour
     
     public void Attack()
     {
-        
-        Debug.Log("PlayerController Attack Method");
-        fpsVirtualCamera.PlayRecoilToFire(Vector3.one);
         PlayerEvent.OnAttack?.Invoke();
         //공격 입력시 호출해주고 무기에서 Fire구독해서 사용할예정
         

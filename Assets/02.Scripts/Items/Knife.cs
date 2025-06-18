@@ -4,35 +4,41 @@ using UnityEngine;
 
 public class Knife : Weapon
 {
+    public bool IsAttacking { get; set; }
 
     [Header("Setting")]
-    [SerializeField] private float attackRange = 2f;
+    [SerializeField] private float attackRange = 2.5f;
     [SerializeField] private float attackAngle = 90f;
     [SerializeField] private float attackDelay = 1f;
     [SerializeField] private LayerMask hitLayer; //적layer
 
-    private bool attackQueued = false;
-    private bool isAttacking = false;
 
     public override void Fire()
     {
         base.Fire();
+        
+        Debug.Log(1);
+        
         if (!isShootable)
         {
+            Debug.Log(2);
             return;
         }
 
-        if (isAttacking)
+        if (IsAttacking)
         {
-            attackQueued = true;
+            Debug.Log(3);
             return;
         }
 
-        StartCoroutine(AttackRoutine());
+        //StartCoroutine(AttackRoutine());
 
         //칼 애니메이션
 
-
+        if (!IsAttacking)
+        {
+            PlayAttackAnimation(false);
+        }
     }
 
     private void Update()
@@ -41,25 +47,7 @@ public class Knife : Weapon
        
     }
 
-
-    private IEnumerator AttackRoutine()
-    {
-        isAttacking = true;
-        attackQueued = false;
-
-        PlayAttackAnimation(false);
-        yield return new WaitForSeconds(attackDelay);
-        HitWeapon();
-
-        yield return new WaitForSeconds(fireRate); // 광클하면 애니메이션 이상해짐
-
-        isAttacking = false;
-
-
-    }
-
-
-    private void HitWeapon()
+    public void HitWeapon()
     {
         Vector3 origin = transform.position + transform.forward * 1.2f;
         Collider[] hits = Physics.OverlapSphere(origin, attackRange, hitLayer);

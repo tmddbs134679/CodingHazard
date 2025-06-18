@@ -12,9 +12,7 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private Transform weaponAnchor;
     
     
-    [Header("무기 프리팹들")]
-    [SerializeField] private GameObject[] weaponPrefabs;
-    
+    [SerializeField] private GameObject[] weapons;
 
     private int _curWeaponIndex = -1;
 
@@ -24,12 +22,13 @@ public class WeaponManager : MonoBehaviour
 
     private Dictionary<WeaponType, Weapon> _weaponSlots = new();
 
-
     private void Awake()
     {
-        for (int i = 0; i < weaponPrefabs.Length; i++)
+        for (int i = 0; i < weapons.Length; i++)
         {
-            _weaponSlots[(WeaponType)i] = weaponPrefabs[i].GetComponentInChildren<Weapon>();
+            weapons[i].SetActive(false);
+
+            _weaponSlots[(WeaponType)i] = weapons[i].GetComponentInChildren<Weapon>();
         }
     }
 
@@ -37,6 +36,7 @@ public class WeaponManager : MonoBehaviour
     private void Start()
     {
         PlayerEvent.Swap  += EquipWeapon;
+        
 
         EquipWeapon(0);
     }
@@ -44,25 +44,31 @@ public class WeaponManager : MonoBehaviour
 
     private void EquipWeapon(int index)
     {
-        if (index == _curWeaponIndex || index >= weaponPrefabs.Length)
+        if (index == _curWeaponIndex || index >= weapons.Length)
         {
             return;
         }
 
         if (_currentWeaponGO != null)
         {
-            Destroy(_currentWeaponGO);
-            _currentWeaponGO = null;
+            _currentWeaponGO.SetActive(false);
+            
+            //Destroy(_currentWeaponGO);
+            //_currentWeaponGO = null;
         }
-       
 
-        GameObject newWeaponGO = Instantiate(weaponPrefabs[index], weaponAnchor,false);
+        _currentWeaponGO = weapons[index];
+        _currentWeaponGO.SetActive(true);
+        
+        _curWeaponIndex = index;
+        _currentWeapon = _weaponSlots[(WeaponType)_curWeaponIndex];
+        
+        /*GameObject newWeaponGO = Instantiate(weaponPrefabs[index], weaponAnchor,false);
         newWeaponGO.transform.localPosition = weaponPrefabs[index].transform.localPosition;
         newWeaponGO.transform.localRotation = weaponPrefabs[index].transform.localRotation;
 
-        _currentWeaponGO = newWeaponGO;
-        _curWeaponIndex = index;
-        _currentWeapon = _weaponSlots[(WeaponType)_curWeaponIndex];
+        _currentWeaponGO = newWeaponGO;*/
+      
 
         
         //_currentWeapon = newWeaponGO.GetComponentInChildren<Weapon>();

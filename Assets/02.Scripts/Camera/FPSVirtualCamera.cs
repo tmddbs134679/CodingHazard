@@ -112,7 +112,6 @@ public class FPSVirtualCamera : MonoBehaviour
         _curRecoil = Vector3.zero;
     }
 
-    private Material mat;
     
     public void ZoomIn(float zoomValue, float duration)
     {

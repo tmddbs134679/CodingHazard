@@ -7,7 +7,7 @@ public class Gun : Weapon
     public enum FireMode { Single, Auto }
 
     public FireMode CurFireMode => fireMode;
-    public int CuAmmo { get { return curAmmo; } }
+    public int CurAmmo { get { return curAmmo; } }
     public int MaxAmmo { get { return maxAmmo; } }
     public int SpareAmmo { get { return spareAmmo; } }
 
@@ -42,6 +42,7 @@ public class Gun : Weapon
     [SerializeField] private AudioID audioID;
     [SerializeField] private GameObject bulletDecalPrefab;
 
+    [SerializeField] private FPSVirtualCamera fpsVirtualCamera;
 
     private Camera mainCam;
     private bool isZoom = false;
@@ -56,34 +57,24 @@ public class Gun : Weapon
     {
         base.OnEnable();
         PlayerEvent.Aiming += ZoomWeapon;
-        PlayerEvent.OnReLoad += ReLoading;
+        PlayerEvent.Reload += PlayReloadAnimation;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
         PlayerEvent.Aiming -= ZoomWeapon;
-        PlayerEvent.OnReLoad -= ReLoading;
+        PlayerEvent.Reload -= PlayReloadAnimation;
     }
 
     protected void Update()
     {
         base.Update();
     }
-    
 
-    private void SpawnBulletDecal(RaycastHit hit)
+
+    public void Reload()
     {
-        Vector3 position = hit.point + hit.normal * 0.01f;
-        Quaternion rotation = Quaternion.LookRotation(hit.normal); 
-
-        Instantiate(bulletDecalPrefab, position, rotation);
-    }
-
-    private void ReLoading()
-    {
-        WeaponAnimator.SetTrigger(ReLoadingTrigger);
-
         if (curAmmo < maxAmmo && spareAmmo > 0)
         {
             int neededAmmo = maxAmmo - curAmmo;
@@ -101,36 +92,23 @@ public class Gun : Weapon
                 spareAmmo = 0;
             }
         }
+    }
+    
 
-        PlayerEvent.OnUpdateBullet?.Invoke(spareAmmo, curAmmo);
+    private void PlayReloadAnimation()
+    {
+        WeaponAnimator.SetTrigger(ReLoadingTrigger);
     }
 
     private void ZoomWeapon(bool isZoom)
     {
         this.isZoom = isZoom;
         WeaponAnimator.SetBool(IsAiming, isZoom);
-
     }
 
-
-    private void HandleFireInput()
-    {
-        switch (fireMode)
-        {
-            case FireMode.Single:
-                if (Input.GetMouseButtonDown(0))
-                    Fire();
-                break;
-            case FireMode.Auto:
-                if (Input.GetMouseButton(0))
-                    Fire();
-                break;
-        }
-    }
 
     public override void Fire()
     {
-
         if (curAmmo <= 0)
         {
             return;
@@ -163,7 +141,8 @@ public class Gun : Weapon
         
         _audioManager.PlayAudio(audioID, 0.10f);
         
-
+        fpsVirtualCamera.PlayRecoilToFire(Vector3.one);
+        
         PlayAttackAnimation(isZoom);
 
         LayerMask layerMask = 1 << 9;
@@ -185,8 +164,6 @@ public class Gun : Weapon
 
     private IEnumerator ApplyRecoil()
     {
-
-
         Vector3 recoil = new Vector3(Random.Range(-recoilx, recoilx), Random.Range(-recoily, recoily), -recoilz);
         Vector3 originPos = this.transform.localPosition;
         Vector3 targetPos = originPos + recoil;
